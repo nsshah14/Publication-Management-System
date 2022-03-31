@@ -22,13 +22,15 @@ public class App {
 
             //connect to the database
             Class.forName("org.mariadb.jdbc.Driver"); 
-            Connection con=DriverManager.getConnection("jdbc:mariadb://classdb2.csc.ncsu.edu:3306/" + user,user,password);  
-            
+             Connection con=DriverManager.getConnection("jdbc:mariadb://classdb2.csc.ncsu.edu:3306/" + user,user,password);  
+                    
             //TODO: Issue with dropping tables when they have constraints - may have to manually drop and re-add tables in mariadb server.
             //drop, and re-create all tables
             Initializer.dropTables(con);
             Initializer.createTables(con);
-            Initializer.addDummyValues(con);
+
+            System.out.println("\n\n+-------------------------------+\n|\tTABLES CREATED!!!\t|\n+-------------------------------+\n\n");
+//            Initializer.addDummyValues(con);
 
             //USER INPUT PROCESSING
             do {
@@ -158,4 +160,6 @@ public class App {
         System.out.println();
         
     }
+
+    
 }
