@@ -43,6 +43,7 @@ public class App {
                 //check case 7 for example
                 // input routing
                 switch(userInput){
+                	case "0" : break;
                     case "1" : System.out.println("Unimplemented");
                                 break;
                     case "2" : System.out.println("Unimplemented");
