@@ -1,8 +1,16 @@
 # csc540_project README
+##TODO
+* TODO: Try out the test demo data on our database(make sure that all information can be represented in the database. 
+* TODO: Do Report Queries - Assigned Prashan
+* TODO: Do Distribution Queries - Assigned ???
+* TODO: Do Production Queries - Assigned ???
+* TODO: Do Editing and Publishing Queries - Assigned ???
+* TODO: Combine code and make sure there is not code issues from interaction between different peoples code. 
+
 ## Thing to remember when adding to database: 
-* TODO: When you add an order add a transaction detail for given order.
-* TODO: on order being submitted increment pastOrders value for order number
-* TODO: ensure 1 publication id for 1 order.
+* When you add an order add a transaction detail for given order.
+* on order being submitted increment pastOrders value for order number
+* ensure 1 publication id for 1 order.
 
 
 ## Project Structure 
