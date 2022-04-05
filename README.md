@@ -18,9 +18,8 @@ There are 6 files in this program located in the main/src/operations folder with
 ## Running Code
 
 1. To run code import the code into an ide like eclipse as a java project.
-2. Make sure to add a directory called 'lib' inside the 'main' directory. inside the lib directory make sure to have the mariadb-java-client-3.0.4.jar. (basically add following folder and file in project: /Main/lib/mariadb-java-client-3.0.4.jar)
-3. In the file App.java change the user and password variable to your mariadb user and password.
-4. Run the file App.java
+2. In the file App.java change the user and password variable to your mariadb user and password.
+3. Run the file App.java
 
 ## Development Help
 
