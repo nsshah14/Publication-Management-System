@@ -1,8 +1,8 @@
 # csc540_project README
-## TODO: 
-* TODO: Ensure each order has transaction detail
-* TODO: on order being submitted increment pastOrders value
-* TODO: 1 publication id for 1 order.
+## Thing to remember when adding to database: 
+* TODO: When you add an order add a transaction detail for given order.
+* TODO: on order being submitted increment pastOrders value for order number
+* TODO: ensure 1 publication id for 1 order.
 
 
 ## Project Structure 
