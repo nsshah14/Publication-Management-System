@@ -56,8 +56,12 @@ public class App {
                                 break;
                     case "6" : System.out.println("Unimplemented");
                                 break;
-                    case "7" : Production.createPublication(con, inputReader); //call createPublication method in Production.java file
-                                break;
+                    case "7" : con.setSavepoint("beforeProdInsert");
+                                if(Production.newPublication(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback();
+                                break; //call createPublication method in Production.java file
                     case "8" : System.out.println("Unimplemented");
                                 break;
                     case "9" : System.out.println("Unimplemented");
