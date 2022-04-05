@@ -2,6 +2,7 @@ package operations;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.sql.Connection;
@@ -83,19 +84,32 @@ public class Distribution {
          return true;
       }
 
-      boolean deleteDist(Connection conn, List<String> deletecolname, List<Object> cond){
+      public static boolean deleteDist(Connection conn, Scanner inputreader){
+         List<String> delcolnames=new ArrayList();
+         List<Object> delcolvals=new ArrayList();
+
+         System.out.println("enter number of conditions:");
+         int n=inputreader.nextInt();
+         for(int i=0;i<n;i++){
+            System.out.println("Enter col name:");
+            delcolnames.add(inputreader.next());
+            System.out.println("Enter col value:");
+            delcolvals.add(inputreader.next());
+         }
+         
          try{
             StringBuilder query=new StringBuilder("DELETE FROM Distributor where ");
-            for(int i=0; i<deletecolname.size();i++){
-               query.append(deletecolname.get(i) + " =? and ");
+            for(int i=0; i<delcolnames.size();i++){
+               query.append(delcolnames.get(i) + "=? and ");
             }
             query.replace(query.length()-6,query.length()-1,";");
-            PreparedStatement stdelete=conn.prepareStatement("DELETE FROM Distributor where "+deletecolname+"="+cond);
+            // PreparedStatement stdelete=conn.prepareStatement(query);
             
-            for(int i=0;i<cond.size();i++)
-               stdelete.setObject(i, cond.get(i));
+            // for(int i=0;i<delcolvals.size();i++)
+            //    stdelete.setObject(i, delcolvals.get(i));
 
-            stdelete.executeQuery();
+            System.out.println(query.toString());
+            // stdelete.executeQuery();
 
          }catch(Exception e){
             e.printStackTrace();

@@ -44,8 +44,12 @@ public class App {
                 con.setAutoCommit(false);
                 switch(userInput){
                 	case "0" : break;
-                    case "1" : System.out.println("Unimplemented");
-                                break;
+                    case "1" :  con.setSavepoint("beforeProdInsert");
+                                if(Production.newPublication(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback();
+                                break; //call createPublication method in Production.java file
                     case "2" : System.out.println("Unimplemented");
                             break;
                     case "3" : System.out.println("Unimplemented");
@@ -82,7 +86,11 @@ public class App {
                                 break;
                     case "15" : System.out.println("Unimplemented");
                                 break;
-                    case "16" : System.out.println("Unimplemented");
+                    case "16" : con.setSavepoint("beforeDistInsert");
+                                if(Distribution.deleteDist(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback();
                                 break;
                     case "17" : System.out.println("Unimplemented");
                                 break;
@@ -103,7 +111,7 @@ public class App {
                     case "25" : System.out.println("Unimplemented");
                                 break;
                     case "26" : Statement st=con.createStatement();
-                            ResultSet rs=st.executeQuery("Select * from Distributor");
+                            ResultSet rs=st.executeQuery("Select * from Publication");
                             while(rs.next()){
                                 System.out.println(rs.getInt(1));
                             }

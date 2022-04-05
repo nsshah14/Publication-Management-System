@@ -1,6 +1,8 @@
 package operations;
 import java.util.Scanner;
+import java.util.Date;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 
 public class Production {
     /**
@@ -21,28 +23,35 @@ public class Production {
       * @param con is the object used to connect and send queries to mariadb
       * @param scan is the object used to get user input. 
       */
+
       public static boolean newPublication(Connection conn, Scanner inputReader){
-        System.out.println("Enter Publication ID:");
-        int pubId=inputReader.nextInt();
+        // System.out.println("Enter Publication ID:");
+        int pubId;
         System.out.println("Enter Title for Publcation:");
         String pubTitle=inputReader.next();
-        System.out.println("Enter the Date of Publication:");
-        String pubDate=inputReader.next();
+        System.out.println("Enter the Date of Publication (dd-mm-yyyy):");
+        String date=inputReader.next();
         System.out.println("Enter the Topics of Publication:");
         String pubTopics=inputReader.next();
         System.out.println("Enter the Periodicity of Publication:");
         String pubPeriodicity=inputReader.next();
- 
+        ResultSet rs = null;
         
-
         try{
            PreparedStatement stinsert=conn.prepareStatement("INSERT INTO Publication VALUES(?,?,?,?,?);");
 
-           stinsert.setInt(1, pubId);
-           stinsert.setString(2, pubTitle);
-           stinsert.setDate(3, pubDate);
-           stinsert.setString(4, pubTopics);
-           stinsert.setString(5, pubPeriodicity);
+            rs = stinsert.getGeneratedKeys();
+            // if (rs != null && rs.next()) 
+            //     pubId = rs.getInt(1);
+            // else
+            //     return false;
+            System.out.print(rs.getInt(1));
+            pubId=1;
+            stinsert.setInt(1, pubId);
+            stinsert.setString(2, pubTitle);
+            stinsert.setDate(3,java.sql.Date.valueOf(date));
+            stinsert.setString(4, pubTopics);
+            stinsert.setString(5, pubPeriodicity);
 
            stinsert.executeQuery();
 
@@ -51,7 +60,7 @@ public class Production {
            return false;
         }
         return true;
-     }
+    }
    /**  public static void createPublication(Connection con, Scanner scan ){
         //Title VARCHAR(128) NOT NULL,
         //Date DATE NOT NULL,
