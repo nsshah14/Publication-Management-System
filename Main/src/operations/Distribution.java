@@ -49,7 +49,6 @@ public class Distribution {
          String cp=inputReader.next();
          System.out.println("Enter balance:");
          int bal=inputReader.nextInt();
-         
 
          try{
             PreparedStatement stinsert=conn.prepareStatement("INSERT INTO Distributor VALUES(?,?,?,?,?,?,?);");

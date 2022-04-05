@@ -29,7 +29,7 @@ public class App {
             Initializer.createTables(con);
 
             System.out.println("\n\n+-------------------------------+\n|\tTABLES CREATED!!!\t|\n+-------------------------------+\n\n");
-            Initializer.addDummyValues(con);
+            // Initializer.addDummyValues(con);
 
             //USER INPUT PROCESSING
             do {
@@ -98,6 +98,12 @@ public class App {
                                 break;
                     case "25" : System.out.println("Unimplemented");
                                 break;
+                    case "26" : Statement st=con.createStatement();
+                            ResultSet rs=st.executeQuery("Select * from Distributor");
+                            while(rs.next()){
+                                System.out.println(rs.getInt(1));
+                            }
+                            break;
                     default:  System.out.println("Invalid Input");
                                 break;
                 }
