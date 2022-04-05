@@ -1,5 +1,5 @@
 # csc540_project README
-##TODO
+## TODO
 * TODO: Try out the test demo data on our database(make sure that all information can be represented in the database. 
 * TODO: Do Report Queries - Assigned Prashan
 * TODO: Do Distribution Queries - Assigned ???
