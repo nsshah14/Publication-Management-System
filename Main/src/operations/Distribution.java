@@ -34,15 +34,30 @@ public class Distribution {
      //TODO create methods for each task and operation above like the one in production.java  
 
      String[] columns={"distributorID", "Name", "Type", "Address", "Phone", "ContactPerson", "Balance"};
-      boolean newDist(Connection conn, int distID, String name, String type, String address, String phone, String cp,int bal){
+      public static boolean newDist(Connection conn, Scanner inputReader){
+         System.out.println("Enter Distributor ID:");
+         int distId=inputReader.nextInt();
+         System.out.println("Enter Distributor name:");
+         String name=inputReader.next();
+         System.out.println("Enter Distributor type:");
+         String type=inputReader.next();
+         System.out.println("Enter Distributor Address:");
+         String add=inputReader.next();
+         System.out.println("Enter Distributor Phone:");
+         String phone=inputReader.next();
+         System.out.println("Enter Distributor Contact person:");
+         String cp=inputReader.next();
+         System.out.println("Enter balance:");
+         int bal=inputReader.nextInt();
          
+
          try{
             PreparedStatement stinsert=conn.prepareStatement("INSERT INTO Distributor VALUES(?,?,?,?,?,?,?);");
 
-            stinsert.setInt(1, distID);
+            stinsert.setInt(1, distId);
             stinsert.setString(2, name);
             stinsert.setString(3, type);
-            stinsert.setString(4, address);
+            stinsert.setString(4, add);
             stinsert.setString(5, phone);
             stinsert.setString(6, cp);
             stinsert.setInt(7, bal);

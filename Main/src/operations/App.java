@@ -42,6 +42,7 @@ public class App {
                 //TODO: Replace the println's with calls to the different methods in the Distribution, Edit_Publish, Report, Production.java files.
                 //check case 7 for example
                 // input routing
+                con.setAutoCommit(false);
                 switch(userInput){
                 	case "0" : break;
                     case "1" : System.out.println("Unimplemented");
@@ -70,7 +71,11 @@ public class App {
                                 break;
                     case "13" : System.out.println("Unimplemented");
                                 break;
-                    case "14" : System.out.println("Unimplemented");
+                    case "14" : con.setSavepoint("beforeDistInsert");
+                                if(Distribution.newDist(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback();
                                 break;
                     case "15" : System.out.println("Unimplemented");
                                 break;
