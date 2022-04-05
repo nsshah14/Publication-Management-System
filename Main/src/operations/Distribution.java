@@ -1,6 +1,9 @@
 package operations;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.List;
+import java.util.Scanner;
 import java.sql.Connection;
 
 public class Distribution {
@@ -31,13 +34,23 @@ public class Distribution {
      //TODO create methods for each task and operation above like the one in production.java  
 
      String[] columns={"distributorID", "Name", "Type", "Address", "Phone", "ContactPerson", "Balance"};
-      boolean newDist(Connection conn, int id, String name, String type, String address, String phone, String cp, int bal){
+      boolean newDist(Connection conn, int distID, String name, String type, String address, String phone, String cp,int bal){
+         
          try{
             PreparedStatement stinsert=conn.prepareStatement("INSERT INTO Distributor VALUES(?,?,?,?,?,?,?);");
 
+            stinsert.setInt(1, distID);
+            stinsert.setString(2, name);
+            stinsert.setString(3, type);
+            stinsert.setString(4, address);
+            stinsert.setString(5, phone);
+            stinsert.setString(6, cp);
+            stinsert.setInt(7, bal);
+
+            stinsert.executeQuery();
 
          } catch(Exception e){
-
+            e.printStackTrace();
             return false;
          }
          return true;
@@ -47,23 +60,34 @@ public class Distribution {
          try{
             PreparedStatement stupdate=conn.prepareStatement("UPDATE Distributor SET "+updatecolname+"=? WHERE "+condcolname+"=?;");
             
+            //todo
 
-         }catch(Exception e){
+         } catch(Exception e){
 
             return false;
          }
          return true;
       }
 
-      boolean deleteDist(Connection conn, String condcolname, String deletecolname, Object cond, Object newval){
+      boolean deleteDist(Connection conn, List<String> deletecolname, List<Object> cond){
          try{
-            PreparedStatement stdelete=conn.prepareStatement("UPDATE Distributor SET "+deletecolname+"=? WHERE "+condcolname+"=?;");
+            StringBuilder query=new StringBuilder("DELETE FROM Distributor where ");
+            for(int i=0; i<deletecolname.size();i++){
+               query.append(deletecolname.get(i) + " =? and ");
+            }
+            query.replace(query.length()-6,query.length()-1,";");
+            PreparedStatement stdelete=conn.prepareStatement("DELETE FROM Distributor where "+deletecolname+"="+cond);
             
+            for(int i=0;i<cond.size();i++)
+               stdelete.setObject(i, cond.get(i));
+
+            stdelete.executeQuery();
 
          }catch(Exception e){
-
+            e.printStackTrace();
             return false;
          }
          return true;
       }
+
 }
