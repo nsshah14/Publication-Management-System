@@ -1,7 +1,9 @@
 package operations;
 
+import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -36,8 +38,7 @@ public class Distribution {
 
      String[] columns={"distributorID", "Name", "Type", "Address", "Phone", "ContactPerson", "Balance"};
       public static boolean newDist(Connection conn, Scanner inputReader){
-         System.out.println("Enter Distributor ID:");
-         int distId=inputReader.nextInt();
+
          System.out.println("Enter Distributor name:");
          String name=inputReader.next();
          System.out.println("Enter Distributor type:");
@@ -51,19 +52,20 @@ public class Distribution {
          System.out.println("Enter balance:");
          int bal=inputReader.nextInt();
 
+         String query = "INSERT INTO Distributor (Name, Type, Address, Phone, ContactPerson, Balance) VALUES(?,?,?,?,?,?);";
          try{
-            PreparedStatement stinsert=conn.prepareStatement("INSERT INTO Distributor VALUES(?,?,?,?,?,?,?);");
+            PreparedStatement stinsert=conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
-            stinsert.setInt(1, distId);
-            stinsert.setString(2, name);
-            stinsert.setString(3, type);
-            stinsert.setString(4, add);
-            stinsert.setString(5, phone);
-            stinsert.setString(6, cp);
-            stinsert.setInt(7, bal);
+            stinsert.setString(1, name);
+            stinsert.setString(2, type);
+            stinsert.setString(3, add);
+            stinsert.setString(4, phone);
+            stinsert.setString(5, cp);
+            stinsert.setInt(6, bal);
 
             stinsert.executeQuery();
 
+            System.out.println("1 Row inserted!");
          } catch(Exception e){
             e.printStackTrace();
             return false;
@@ -71,7 +73,10 @@ public class Distribution {
          return true;
       }
 
-      boolean updateDist(Connection conn, String condcolname, String updatecolname, Object cond, Object newval){
+      boolean updateDist(Connection conn, Scanner inputreader){
+
+         // String condcolname, String updatecolname, Object cond, Object newval
+
          try{
             PreparedStatement stupdate=conn.prepareStatement("UPDATE Distributor SET "+updatecolname+"=? WHERE "+condcolname+"=?;");
             

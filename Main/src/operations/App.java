@@ -29,7 +29,7 @@ public class App {
             Initializer.createTables(con);
 
             System.out.println("\n\n+-------------------------------+\n|\tTABLES CREATED!!!\t|\n+-------------------------------+\n\n");
-            Initializer.addDummyValues(con);
+            // Initializer.addDummyValues(con);
 
             //USER INPUT PROCESSING
             do {
