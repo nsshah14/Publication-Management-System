@@ -29,7 +29,7 @@ public class App {
             Initializer.createTables(con);
 
             System.out.println("\n\n+-------------------------------+\n|\tTABLES CREATED!!!\t|\n+-------------------------------+\n\n");
-            // Initializer.addDummyValues(con);
+            Initializer.addDummyValues(con);
 
             //USER INPUT PROCESSING
             do {
@@ -78,13 +78,17 @@ public class App {
                                 break;
                     case "13" : System.out.println("Unimplemented");
                                 break;
-                    case "14" : con.setSavepoint("beforeDistInsert");
+                    case "14" : Savepoint distInsert=con.setSavepoint("beforeDistInsert");
                                 if(Distribution.newDist(con,inputReader))
                                     con.commit();
                                 else
-                                    con.rollback();
+                                    con.rollback(distInsert);
                                 break;
-                    case "15" : System.out.println("Unimplemented");
+                    case "15" : Savepoint distUpdate=con.setSavepoint("beforeDistupdate");
+                                if(Distribution.updateDist(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(distUpdate);
                                 break;
                     case "16" : con.setSavepoint("beforeDistInsert");
                                 if(Distribution.deleteDist(con,inputReader))
@@ -114,12 +118,13 @@ public class App {
                                 break;
                     case "25" : System.out.println("Unimplemented");
                                 break;
-                    case "26" : Statement st=con.createStatement();
-                            ResultSet rs=st.executeQuery("Select * from Publication");
-                            while(rs.next()){
-                                System.out.println(rs.getInt(1));
-                            }
-                            break;
+                    case "26" : 
+                                Statement st=con.createStatement();
+                                ResultSet rs=st.executeQuery("Select * from Publication");
+                                while(rs.next()){
+                                    System.out.println(rs.getInt(1));
+                                }
+                                break;
                     default:  System.out.println("Invalid Input");
                                 break;
                 }
