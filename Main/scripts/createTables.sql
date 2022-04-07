@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS GeneratePaymentReport(
 
 CREATE TABLE IF NOT EXISTS CollectRevenueReport(
     ManagementID INT,
-    ReportID INT,
+    RevenueReportID INT,
     PRIMARY KEY(RevenueReportID,ManagementID),
     FOREIGN KEY(ManagementID) REFERENCES Management(ManagementID) 
     ON UPDATE CASCADE
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS CollectRevenueReport(
 CREATE TABLE IF NOT EXISTS CollectPaymentReport(
     ManagementID INT,
     PaymentReportID INT,
-    PRIMARY KEY(ReportID,DistributorID),
+    PRIMARY KEY(PaymentReportID,ManagementID),
     FOREIGN KEY(ManagementID) REFERENCES Management(ManagementID) 
     ON UPDATE CASCADE
     ON DELETE CASCADE,
