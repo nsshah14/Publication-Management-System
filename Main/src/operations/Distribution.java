@@ -101,7 +101,7 @@ public class Distribution {
              }
              query.replace(query.length()-5,query.length()-1,";");
 
-             System.out.println(query.toString());
+            //  System.out.println(query.toString());
              PreparedStatement stupdate=conn.prepareStatement(query.toString());
              stupdate.setObject(1,toUpdateVal);
              for(int i=0; i<condcolnames.size();i++){
@@ -136,15 +136,16 @@ public class Distribution {
             for(int i=0; i<delcolnames.size();i++){
                query.append(delcolnames.get(i) + "=? and ");
             }
-            query.replace(query.length()-6,query.length()-1,";");
+            query.replace(query.length()-5,query.length()-1,";");
             PreparedStatement stdelete=conn.prepareStatement(query.toString());
             
             for(int i=0;i<delcolvals.size();i++)
-               stdelete.setObject(i, delcolvals.get(i));
+               stdelete.setObject(i+1, delcolvals.get(i));
 
             // System.out.println(query.toString());
             stdelete.executeQuery();
 
+            System.out.println("Rows Deleted");
          }catch(Exception e){
             e.printStackTrace();
             return false;

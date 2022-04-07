@@ -9,7 +9,7 @@ import operations.Report;
 
 public class App {
     //database parameters Replace with your parameters
-    static String user = "nssshah5";
+    static String user = "nsshah5";
     static String password = "200421362";
 
     public static void main(String[] args) throws Exception {
@@ -90,12 +90,12 @@ public class App {
                                 else
                                     con.rollback(distUpdate);
                                 break;
-                    // case "16" : con.setSavepoint("beforeDistInsert");
-                    //             if(Distribution.deleteDist(con,inputReader))
-                    //                 con.commit();
-                    //             else
-                    //                 con.rollback();
-                    //             break;
+                    case "16" : Savepoint deldist=con.setSavepoint("beforeDistInsert");
+                                if(Distribution.deleteDist(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(deldist);
+                                break;
                     case "17" : System.out.println("Unimplemented");
                                 break;
                     case "18" : System.out.println("Unimplemented");
