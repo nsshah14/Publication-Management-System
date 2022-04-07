@@ -1,6 +1,6 @@
 
 CREATE TABLE IF NOT EXISTS Distributor(
-    distributorID INT,
+    distributorID INT AUTO_INCREMENT,
     Name VARCHAR(128) NOT NULL,
     Type VARCHAR(128) NOT NULL,
     Address VARCHAR(256) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS Distributor(
 );
 
 CREATE TABLE IF NOT EXISTS Editor(
-    EID INT,
+    EID INT AUTO_INCREMENT,
     Name VARCHAR(128) NOT NULL,
     Address VARCHAR(256) NOT NULL,
     Contact VARCHAR(16) NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS Payment(
 );
 
 CREATE TABLE IF NOT EXISTS Publication(
-    PublicationID INT,
+    PublicationID INT AUTO_INCREMENT,
     Title VARCHAR(128) NOT NULL,
     Date DATE NOT NULL,
     Topics VARCHAR(128),
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS Publication(
 );
 
 CREATE TABLE IF NOT EXISTS Publisher(
-    PID INT,
+    PID INT AUTO_INCREMENT,
     Name VARCHAR(128) NOT NULL,
     Contact VARCHAR(16) NOT NULL,
     Address VARCHAR(256) NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS Publisher(
 );
 
 CREATE TABLE IF NOT EXISTS Books(
-    PublicationID INT,
+    PublicationID INT AUTO_INCREMENT,
     ISBN VARCHAR(128) NOT NULL,
     Edition VARCHAR(128) NOT NULL,
     PRIMARY KEY(PublicationID),
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS Articles(
 );
 
 CREATE TABLE IF NOT EXISTS Management(
-    ManagementID INT,
+    ManagementID INT AUTO_INCREMENT,
     Name VARCHAR(128) NOT NULL,
     Department VARCHAR(128) NOT NULL,
     PRIMARY KEY(ManagementID)
@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS CollectPaymentReport(
 );
 
 CREATE TABLE IF NOT EXISTS Orders(
-    OrderID INT,
+    OrderID INT AUTO_INCREMENT,
     Price Decimal(9,2) NOT NULL,
     ShippingCost Decimal(9,2) NOT NULL,
     NumCopies INT NOT NULL,
