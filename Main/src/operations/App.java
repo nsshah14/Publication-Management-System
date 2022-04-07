@@ -9,8 +9,8 @@ import operations.Report;
 
 public class App {
     //database parameters Replace with your parameters
-    static String user = "pthosan";
-    static String password = "200401606";
+    static String user = "nssshah5";
+    static String password = "200421362";
 
     public static void main(String[] args) throws Exception {
         
