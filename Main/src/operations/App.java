@@ -14,22 +14,22 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         
+        //connect to the database
+        Class.forName("org.mariadb.jdbc.Driver"); 
+
+        Connection con=DriverManager.getConnection("jdbc:mariadb://classdb2.csc.ncsu.edu:3306/" + user,user,password); 
         try{ 
             //INITIALIZE PROJECT
             //create scanner to read user input
             Scanner inputReader = new Scanner(System.in);  // Create a Scanner object
             String userInput = "";
-
-            //connect to the database
-            Class.forName("org.mariadb.jdbc.Driver"); 
-             Connection con=DriverManager.getConnection("jdbc:mariadb://classdb2.csc.ncsu.edu:3306/" + user,user,password);  
                     
             //drop, and re-create all tables
             Initializer.dropTables(con);
             Initializer.createTables(con);
 
             System.out.println("\n\n+-------------------------------+\n|\tTABLES CREATED!!!\t|\n+-------------------------------+\n\n");
-            // Initializer.addDummyValues(con);
+            Initializer.addDummyValues(con);
 
             //USER INPUT PROCESSING
             do {
@@ -78,20 +78,24 @@ public class App {
                                 break;
                     case "13" : System.out.println("Unimplemented");
                                 break;
-                    // case "14" : con.setSavepoint("beforeDistInsert");
-                    //             if(Distribution.newDist(con,inputReader))
-                    //                 con.commit();
-                    //             else
-                    //                 con.rollback();
-                    //             break;
-                    case "15" : System.out.println("Unimplemented");
+                    case "14" : Savepoint distInsert=con.setSavepoint("beforeDistInsert");
+                                if(Distribution.newDist(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(distInsert);
                                 break;
-                    // case "16" : con.setSavepoint("beforeDistInsert");
-                    //             if(Distribution.deleteDist(con,inputReader))
-                    //                 con.commit();
-                    //             else
-                    //                 con.rollback();
-                    //             break;
+                    case "15" : Savepoint distUpdate=con.setSavepoint("beforeDistupdate");
+                                if(Distribution.updateDist(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(distUpdate);
+                                break;
+                    case "16" : Savepoint deldist=con.setSavepoint("beforeDistInsert");
+                                if(Distribution.deleteDist(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(deldist);
+                                break;
                     case "17" : System.out.println("Unimplemented");
                                 break;
                     case "18" : System.out.println("Unimplemented");
@@ -153,11 +157,11 @@ public class App {
             //close sql connection and scanner object
             con.close();
             inputReader.close();
-            
-               
                
         }catch(Exception e){ 
             System.out.println(e);
+        }finally{
+            con.close();
         }
     }
 

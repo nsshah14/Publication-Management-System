@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.sql.*;
 import java.util.Map;
-//import static java.util.Map.entry;
+import static java.util.Map.entry; 
 
 public class Initializer {
     public static void dropTables(Connection con){
