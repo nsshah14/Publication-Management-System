@@ -153,17 +153,4 @@ public class Distribution {
          return true;
       }
 
-      public static boolean getOrderAndBillDist(Connection conn, Scanner inputreader){
-         try{
-            System.out.println("Enter Distributor ID");
-            String did=inputreader.nextLine();
-            // Statement deleteSelect=new State
-            
-         } catch(Exception e){
-            e.printStackTrace();
-            return false;
-         }
-         return true;
-      }
-
 }

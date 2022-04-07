@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS Publisher(
 );
 
 CREATE TABLE IF NOT EXISTS Books(
-    PublicationID INT,
+    PublicationID INT AUTO_INCREMENT,
     ISBN VARCHAR(128) NOT NULL,
     Edition VARCHAR(128) NOT NULL,
     PRIMARY KEY(PublicationID),
@@ -177,12 +177,9 @@ CREATE TABLE IF NOT EXISTS Orders(
     Price Decimal(9,2) NOT NULL,
     ShippingCost Decimal(9,2) NOT NULL,
     NumCopies INT NOT NULL,
-    PublicationID INT,
+    Book VARCHAR(128) NOT NULL,
     Date DATE NOT NULL,
-    PRIMARY KEY(OrderID),
-    FOREIGN KEY(PublicationID) REFERENCES Publication(PublicationID)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE
+    PRIMARY KEY(OrderID)
 );
 
 CREATE TABLE IF NOT EXISTS PlacesOrder(
