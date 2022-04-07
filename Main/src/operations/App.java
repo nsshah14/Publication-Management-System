@@ -9,8 +9,8 @@ import operations.Report;
 
 public class App {
     //database parameters Replace with your parameters
-    static String user = "psengo";
-    static String password = "csc540";
+    static String user = "pthosan";
+    static String password = "200401606";
 
     public static void main(String[] args) throws Exception {
         
@@ -78,20 +78,20 @@ public class App {
                                 break;
                     case "13" : System.out.println("Unimplemented");
                                 break;
-                    case "14" : con.setSavepoint("beforeDistInsert");
-                                if(Distribution.newDist(con,inputReader))
-                                    con.commit();
-                                else
-                                    con.rollback();
-                                break;
+                    // case "14" : con.setSavepoint("beforeDistInsert");
+                    //             if(Distribution.newDist(con,inputReader))
+                    //                 con.commit();
+                    //             else
+                    //                 con.rollback();
+                    //             break;
                     case "15" : System.out.println("Unimplemented");
                                 break;
-                    case "16" : con.setSavepoint("beforeDistInsert");
-                                if(Distribution.deleteDist(con,inputReader))
-                                    con.commit();
-                                else
-                                    con.rollback();
-                                break;
+                    // case "16" : con.setSavepoint("beforeDistInsert");
+                    //             if(Distribution.deleteDist(con,inputReader))
+                    //                 con.commit();
+                    //             else
+                    //                 con.rollback();
+                    //             break;
                     case "17" : System.out.println("Unimplemented");
                                 break;
                     case "18" : System.out.println("Unimplemented");

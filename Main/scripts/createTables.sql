@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS Publisher(
 );
 
 CREATE TABLE IF NOT EXISTS Books(
-    PublicationID INT AUTO_INCREMENT,
+    PublicationID INT,
     ISBN VARCHAR(128) NOT NULL,
     Edition VARCHAR(128) NOT NULL,
     PRIMARY KEY(PublicationID),
