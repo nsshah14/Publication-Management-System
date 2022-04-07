@@ -9,8 +9,8 @@ import operations.Report;
 
 public class App {
     //database parameters Replace with your parameters
-    static String user = "psengo";
-    static String password = "csc540";
+    static String user = "ssingha2";
+    static String password = "200370963";
 
     public static void main(String[] args) throws Exception {
         
@@ -78,20 +78,20 @@ public class App {
                                 break;
                     case "13" : System.out.println("Unimplemented");
                                 break;
-                    case "14" : con.setSavepoint("beforeDistInsert");
-                                if(Distribution.newDist(con,inputReader))
-                                    con.commit();
-                                else
-                                    con.rollback();
-                                break;
+                    // case "14" : con.setSavepoint("beforeDistInsert");
+                    //             if(Distribution.newDist(con,inputReader))
+                    //                 con.commit();
+                    //             else
+                    //                 con.rollback();
+                    //             break;
                     case "15" : System.out.println("Unimplemented");
                                 break;
-                    case "16" : con.setSavepoint("beforeDistInsert");
-                                if(Distribution.deleteDist(con,inputReader))
-                                    con.commit();
-                                else
-                                    con.rollback();
-                                break;
+                    // case "16" : con.setSavepoint("beforeDistInsert");
+                    //             if(Distribution.deleteDist(con,inputReader))
+                    //                 con.commit();
+                    //             else
+                    //                 con.rollback();
+                    //             break;
                     case "17" : System.out.println("Unimplemented");
                                 break;
                     case "18" : System.out.println("Unimplemented");
@@ -120,8 +120,30 @@ public class App {
                                 System.out.println(rs.getInt(1));
                             }
                             break;
+        
+                    
+                    case "27" : con.setSavepoint("beforeEditorInsert");
+                                if(Edit_Publish.newEditor(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback();
+                                break;
+                    case "28" : con.setSavepoint("AfterEditorInsert");
+                                if(Edit_Publish.newStaffEditor(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback();
+                                break;
+                    case "29" : con.setSavepoint("AfterStaffEditorInsert");
+                                if(Edit_Publish.newInvitedAuthor(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback();
+                                break;
+
                     default:  System.out.println("Invalid Input");
                                 break;
+                    
                 }
      
             } while(!userInput.equals("0"));
@@ -186,6 +208,12 @@ public class App {
         System.out.println("\t\t [25] - Calculate total payments to the editors and authors, per time period and per work type (book authorship, article authorship, or editorial work)");
         System.out.println();
         
+        //instructions for editor
+        System.out.println("\tEditor");
+        System.out.println("\t\t [27] - Enter basic information of a Editor");
+        System.out.println("\t\t [28] - Enter basic information of a Staff Editor");
+        System.out.println("\t\t [29] - Enter basic information of a Invited Author");
+
     }
 
     
