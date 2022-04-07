@@ -73,46 +73,17 @@ public class Distribution {
          return true;
       }
 
-      public static boolean updateDist(Connection conn, Scanner inputreader){
+      boolean updateDist(Connection conn, Scanner inputreader){
 
-         List<String> condcolnames=new ArrayList();
-         List<Object> condcolvals=new ArrayList();
-
-         System.out.println("Enter number of conditions:");
-         int n=inputreader.nextInt();
-         for(int i=0;i<n;i++){
-            System.out.println("Enter Column name:");
-            condcolnames.add(inputreader.next());
-            System.out.println("Enter column value:");
-            condcolvals.add(inputreader.next());
-         }
-         
-         System.out.println("Enter Column Name to update:");
-         String toUpdateCol=inputreader.next();
-
-         System.out.println("Enter new value:");
-         String toUpdateVal=inputreader.next();
-
+         // String condcolname, String updatecolname, Object cond, Object newval
 
          try{
-            StringBuilder query=new StringBuilder("UPDATE Distributor SET "+toUpdateCol+"=? where ");
-            for(int i=0; i<condcolnames.size();i++){
-               query.append(condcolnames.get(i) + "=? and ");
-            }
-            query.replace(query.length()-5,query.length()-1,";");
+            PreparedStatement stupdate=conn.prepareStatement("UPDATE Distributor SET "+updatecolname+"=? WHERE "+condcolname+"=?;");
+            
+            //todo
 
-            System.out.println(query.toString());
-            PreparedStatement stupdate=conn.prepareStatement(query.toString());
-            stupdate.setObject(1,toUpdateVal);
-            for(int i=0; i<condcolnames.size();i++){
-               stupdate.setObject(i+2,condcolvals.get(i));
-            }
-
-            stupdate.executeQuery();
-
-            System.out.println("Rows Updated");
          } catch(Exception e){
-            e.printStackTrace();
+
             return false;
          }
          return true;
@@ -137,7 +108,13 @@ public class Distribution {
                query.append(delcolnames.get(i) + "=? and ");
             }
             query.replace(query.length()-6,query.length()-1,";");
-            // System.out.println(query.toString());
+            // PreparedStatement stdelete=conn.prepareStatement(query);
+            
+            // for(int i=0;i<delcolvals.size();i++)
+            //    stdelete.setObject(i, delcolvals.get(i));
+
+            System.out.println(query.toString());
+            // stdelete.executeQuery();
 
          }catch(Exception e){
             e.printStackTrace();
