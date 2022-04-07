@@ -29,7 +29,7 @@ public class App {
             Initializer.createTables(con);
 
             System.out.println("\n\n+-------------------------------+\n|\tTABLES CREATED!!!\t|\n+-------------------------------+\n\n");
-            // Initializer.addDummyValues(con);
+            Initializer.addDummyValues(con);
 
             //USER INPUT PROCESSING
             do {
@@ -98,8 +98,12 @@ public class App {
                                 break;
                     case "19" : System.out.println("Unimplemented");
                                 break;
-                    case "20" : System.out.println("Unimplemented");
-                                break;
+                    case "20" : con.setSavepoint("beforeDistInsert");
+			                    if(Report.monthlyPublication(con,inputReader))
+			                        con.commit();
+			                    else
+			                        con.rollback();
+			                    break;	
                     case "21" : System.out.println("Unimplemented");
                                 break;
                     case "22" : System.out.println("Unimplemented");
