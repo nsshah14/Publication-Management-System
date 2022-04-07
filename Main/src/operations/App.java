@@ -9,20 +9,22 @@ import operations.Report;
 
 public class App {
     //database parameters Replace with your parameters
-    static String user = "psengo";
-    static String password = "csc540";
+    // static String user = "psengo";
+    static String user = "nsshah5";
+    // static String password = "csc540";
+    static String password = "200421362";
 
     public static void main(String[] args) throws Exception {
         
+        //connect to the database
+        Class.forName("org.mariadb.jdbc.Driver"); 
+
+        Connection con=DriverManager.getConnection("jdbc:mariadb://classdb2.csc.ncsu.edu:3306/" + user,user,password); 
         try{ 
             //INITIALIZE PROJECT
             //create scanner to read user input
             Scanner inputReader = new Scanner(System.in);  // Create a Scanner object
             String userInput = "";
-
-            //connect to the database
-            Class.forName("org.mariadb.jdbc.Driver"); 
-             Connection con=DriverManager.getConnection("jdbc:mariadb://classdb2.csc.ncsu.edu:3306/" + user,user,password);  
                     
             //drop, and re-create all tables
             Initializer.dropTables(con);
@@ -136,11 +138,11 @@ public class App {
             //close sql connection and scanner object
             con.close();
             inputReader.close();
-            
-               
                
         }catch(Exception e){ 
             System.out.println(e);
+        }finally{
+            con.close();
         }
     }
 

@@ -177,9 +177,12 @@ CREATE TABLE IF NOT EXISTS Orders(
     Price Decimal(9,2) NOT NULL,
     ShippingCost Decimal(9,2) NOT NULL,
     NumCopies INT NOT NULL,
-    Book VARCHAR(128) NOT NULL,
+    PublicationID INT,
     Date DATE NOT NULL,
-    PRIMARY KEY(OrderID)
+    PRIMARY KEY(OrderID),
+    FOREIGN KEY(PublicationID) REFERENCES Publication(PublicationID)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS PlacesOrder(
