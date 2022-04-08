@@ -77,7 +77,11 @@ public class App {
                                 else
                                     con.rollback();
                                 break;
-                    case "9" : System.out.println("Unimplemented");
+                    case "9" : con.setSavepoint("beforeProdDelete");
+                                if(Production.deleteProd(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback();
                                 break;
                     case "10" : System.out.println("Unimplemented");
                                 break;
@@ -201,9 +205,9 @@ public class App {
         //instructions for production
         System.out.println("\tProduction:");
         System.out.println("\t\t [7] - Enter a new book edition or new issue of a publication");
-        System.out.println("\t\t [8] - Update, Delete a book edition or publication issue.");
-        System.out.println("\t\t [9] - Enter/Update an article or chapter");
-        System.out.println("\t\t [10] - Enter/Update text of an article");
+        System.out.println("\t\t [8] - Update a book edition or publication issue.");
+        System.out.println("\t\t [9] - Delete a book edition or publication issue.");
+        System.out.println("\t\t [10] - Enter/Update an article or chapter OR Enter/Update text of an article");
         System.out.println("\t\t [11] - Find books and articles by topic, date, author's name");
         System.out.println("\t\t [12] - Enter payment for author or editor");
         System.out.println("\t\t [13] - Keep track of when each payment was claimed by its addressee");

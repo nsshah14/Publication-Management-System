@@ -205,4 +205,40 @@ public class Production {
          return true;
      }
 
+     public static boolean deleteProd(Connection conn, Scanner inputreader){
+        List<String> delcolnames=new ArrayList();
+        List<Object> delcolvals=new ArrayList();
+
+        System.out.println("enter number of conditions:");
+        int n=inputreader.nextInt();
+        for(int i=0;i<n;i++){
+           System.out.println("Enter col name:");
+           delcolnames.add(inputreader.next());
+           System.out.println("Enter col value:");
+           delcolvals.add(inputreader.next());
+        }
+        
+        try{
+           StringBuilder query=new StringBuilder("DELETE FROM Publication where ");
+           for(int i=0; i<delcolnames.size();i++){
+              query.append(delcolnames.get(i) + "=? and ");
+           }
+           query.replace(query.length()-5,query.length()-1,";");
+           PreparedStatement stdelete=conn.prepareStatement(query.toString());
+           
+           for(int i=0;i<delcolvals.size();i++)
+              stdelete.setObject(i+1, delcolvals.get(i));
+
+           // System.out.println(query.toString());
+           stdelete.executeQuery();
+
+           System.out.println("Rows Deleted");
+        }catch(Exception e){
+           e.printStackTrace();
+           return false;
+        }
+        return true;
+     }
+
+
 }
