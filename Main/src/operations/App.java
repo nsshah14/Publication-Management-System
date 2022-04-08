@@ -44,45 +44,55 @@ public class App {
                 con.setAutoCommit(false);
                 switch(userInput){
                 	case "0" : break;
-                    case "1" :  con.setSavepoint("beforeProdInsert");
+                    case "1" :  Savepoint prodInsert=con.setSavepoint("beforeProdInsert");
                                 if(Production.newPublication(con,inputReader))
                                     con.commit();
                                 else
-                                    con.rollback();
+                                    con.rollback(prodInsert);
                                 break; //call createPublication method in Production.java file
-                    case "2" : con.setSavepoint("beforeEditorInsert");
+                    case "2" : Savepoint editorInsert = con.setSavepoint("beforeEditorInsert");
                                 if(Edit_Publish.newEditor(con,inputReader))
                                     con.commit();
                                 else
-                                    con.rollback();
+                                    con.rollback(editorInsert);
                                 break;
-                    case "3" : System.out.println("Unimplemented");
-                            break;
-                    case "4" : con.setSavepoint("beforeupdateEditor");
+                    case "3" : Savepoint prodUpdate = con.setSavepoint("beforeProdUpdate");
+                                if(Production.updateProd(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(prodUpdate);
+                                break;
+                    case "4" : Savepoint editorEditor =con.setSavepoint("beforeupdateEditor");
                                 if(Edit_Publish.updateEditor(con,inputReader))
                                     con.commit();
                                 else
-                                    con.rollback();
+                                    con.rollback(editorEditor);
                                 break;
-                    
-                    case "5" : con.setSavepoint("AfterEditorInsert");
+                    case "5" : Savepoint assignAuthor = con.setSavepoint("AfterEditorInsert");
                                 if(Edit_Publish.assignsnewAuthors(con,inputReader))
                                     con.commit();
                                 else
-                                    con.rollback();
+                                    con.rollback(assignAuthor);
                                 break;
-                    case "6" : con.setSavepoint("editorviewPublication");
+                    case "6" : Savepoint editorView = con.setSavepoint("editorviewPublication");
                                 if(Edit_Publish.editorviewPublication(con,inputReader))
                                     con.commit();
                                 else
-                                    con.rollback();
-                                
+                                    con.rollback(editorView);
                                 break;
-                    case "7" : System.out.println("Unimplemented");
+                    case "7" : Savepoint newProd = con.setSavepoint("beforeProdInsert");
+                                if(Production.newPublication(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(newProd);
                                 break;
                     case "8" : System.out.println("Unimplemented");
                                 break;
-                    case "9" : System.out.println("Unimplemented");
+                    case "9" : con.setSavepoint("beforeArticledelete");
+                                if(Production.deleteArticles(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback();
                                 break;
                     case "10" : System.out.println("Unimplemented");
                                 break;
