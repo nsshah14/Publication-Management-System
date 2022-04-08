@@ -45,41 +45,50 @@ public class Edit_Publish {
 
             System.out.println("1 Row inserted!");
 
-            System.out.println("\t\t [1] Enter information for New book");
-            System.out.println("\t\t [2] Enter information for Periodic Publication (Articles, Magazines)");
+            System.out.println("\t\t [1] Enter Staff Editor Information");
+            System.out.println("\t\t [2] Enter Invited Author Information");
             
             Scanner inputRead = new Scanner(System.in);  // Create a Scanner object
             String userInput = "";
             System.out.print("Input Command: ");
             userInput = inputRead.next();
+            
+            String getEID = "SELECT EID FROM Editor ORDER BY EID DESC LIMIT 1";
+                PreparedStatement getValueofID=conn.prepareStatement(getEID);
+                ResultSet EID =  getValueofID.executeQuery();
+                EID.first();
+                int Eid=EID.getInt("EID");
+
+                
 
             if(userInput.equals("1"))
             {
-                String getEID = "SELECT EID FROM Editor ORDER BY EID DESC LIMIT 1";
-                PreparedStatement getValueofID=conn.prepareStatement(getEID);
-                ResultSet EID =  getValueofID.executeQuery();
-                System.out.println(EID);
-                EID.first();
-                int EID=EID.getInt("EID");
-                System.out.println(EID);
-
                 System.out.println("Enter Editor Experience:");
                 String experience=inputReader.next();
-
-                String query = "INSERT INTO StaffEditor (EID, Experience) VALUES(?,?);";
+                String staffquery = "INSERT INTO StaffEditor (EID, Experience) VALUES(?,?);";
          
-                PreparedStatement stinsert=conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement stinsertstaff=conn.prepareStatement(staffquery, Statement.RETURN_GENERATED_KEYS);
 
-                stinsert.setInt(1, EID);
-                stinsert.setString(2, experience);
-                stinsert.executeQuery();
+                stinsertstaff.setInt(1, Eid);
+                stinsertstaff.setString(2, experience);
+                stinsertstaff.executeQuery();
 
                 System.out.println("1 Row inserted!");
 
             }
              else if(userInput.equals("2"))
             {
+                System.out.println("Enter Editor Date_of_invitation:");
+                String date=inputReader.next();
+                String authorquery = "INSERT INTO InvitedAuthor (EID, Date_of_invitation) VALUES(?,?);";
+            
+                PreparedStatement authorstinsert=conn.prepareStatement(authorquery, Statement.RETURN_GENERATED_KEYS);
 
+                authorstinsert.setInt(1, Eid);
+                authorstinsert.setDate(2, java.sql.Date.valueOf(date));
+                authorstinsert.executeQuery();
+
+            System.out.println("1 Row inserted for Author!");
             }
             else{
                 System.out.println("Wrong Input Given");
@@ -93,60 +102,11 @@ public class Edit_Publish {
          return true;
       }
     
-    // Enter basic information of a Staff Editor
-    String[] staffeditorcolumns={"EID", "Experience"};
-      public static boolean newStaffEditor(Connection conn, Scanner inputReader){
-
-         System.out.println("Enter Editor ID:");
-         int eid=inputReader.nextInt();
-         System.out.println("Enter Editor Experience:");
-         String experience=inputReader.next();
-        
-         String query = "INSERT INTO StaffEditor (EID, Experience) VALUES(?,?);";
-         try{
-            PreparedStatement stinsert=conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-
-            stinsert.setInt(1, eid);
-            stinsert.setString(2, experience);
-            stinsert.executeQuery();
-
-            System.out.println("1 Row inserted!");
-         } catch(Exception e){
-            e.printStackTrace();
-            return false;
-         }
-         return true;
-      }
-
-    //Enter basic information of a Invited Author
-    String[] inivitedautorcolumns={"EID", "Date_of_invitation"};
-      public static boolean newInvitedAuthor(Connection conn, Scanner inputReader){
-
-         System.out.println("Enter Editor ID:");
-         int eid=inputReader.nextInt();
-         System.out.println("Enter Editor Date_of_invitation:");
-         String date=inputReader.next();
-        
-         String query = "INSERT INTO InvitedAuthor (EID, Date_of_invitation) VALUES(?,?);";
-         try{
-            PreparedStatement stinsert=conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-
-            stinsert.setInt(1, eid);
-            stinsert.setDate(2, java.sql.Date.valueOf(date));
-            stinsert.executeQuery();
-
-            System.out.println("1 Row inserted!");
-         } catch(Exception e){
-            e.printStackTrace();
-            return false;
-         }
-         return true;
-      }
-
+    
     // Assign Editor to Publication
 
-    String[] writePublicationcol={"PID", "EID"};
-      public static boolean writePublication(Connection conn, Scanner inputReader){
+    String[] assignsAuthor={"PID", "EID"};
+      public static boolean assignsnewAuthors(Connection conn, Scanner inputReader){
 
          System.out.println("Enter PID:");
          int pid=inputReader.nextInt();
@@ -168,5 +128,30 @@ public class Edit_Publish {
          }
          return true;
       }
+
+    public static boolean editorviewPublication(Connection conn, Scanner inputReader){
+         String query = "SELECT wp.EID, p.* FROM Publication p JOIN writesPublication wp on p.PublicationID=wp.PublicationID;";
+        try (Statement stmt = conn.createStatement()) {
+      ResultSet rs = stmt.executeQuery(query);
+      while (rs.next()) {
+        int EID=rs.getInt("EID");
+        int PublicationID=rs.getInt("PublicationID");
+        String Title=rs.getString("Title");
+        Date Date=rs.getDate("Date");
+        String Topics=rs.getString("Topics");
+        String Periodicity=rs.getString("Periodicity");
+
+        System.out.println(EID + ", " + PublicationID + ", " + Title +
+                           ", " + Date + ", " + Topics+", "+Periodicity);
+        }
+        }
+      catch(Exception e){
+         e.printStackTrace();
+         return false;
+      }
+      return true;
+
+    }
+
 
 }

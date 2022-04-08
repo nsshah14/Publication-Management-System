@@ -54,7 +54,12 @@ public class App {
                             break;
                     case "3" : System.out.println("Unimplemented");
                                 break;
-                    case "4" : System.out.println("Unimplemented");
+                    case "4" : con.setSavepoint("editorviewPublication");
+                                if(Edit_Publish.editorviewPublication(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback();
+                                
                                 break;
                     case "5" : System.out.println("Unimplemented");
                                 break;
@@ -132,18 +137,14 @@ public class App {
                                 else
                                     con.rollback();
                                 break;
+                    
                     case "28" : con.setSavepoint("AfterEditorInsert");
-                                if(Edit_Publish.newStaffEditor(con,inputReader))
+                                if(Edit_Publish.assignsnewAuthors(con,inputReader))
                                     con.commit();
                                 else
                                     con.rollback();
                                 break;
-                    case "29" : con.setSavepoint("AfterStaffEditorInsert");
-                                if(Edit_Publish.newInvitedAuthor(con,inputReader))
-                                    con.commit();
-                                else
-                                    con.rollback();
-                                break;
+                    
 
                     default:  System.out.println("Invalid Input");
                                 break;
@@ -215,8 +216,8 @@ public class App {
         //instructions for editor
         System.out.println("\tEditor");
         System.out.println("\t\t [27] - Enter basic information of a Editor");
-        System.out.println("\t\t [28] - Enter basic information of a Staff Editor");
-        System.out.println("\t\t [29] - Enter basic information of a Invited Author");
+        System.out.println("\t\t [28] - Assign Editor to Publication ");
+        
 
     }
 
