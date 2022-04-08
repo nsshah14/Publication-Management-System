@@ -100,7 +100,6 @@ public class Production {
                     insertPagesIntoBook.setInt(3, numOfPages);
                     insertPagesIntoBook.executeQuery();
                     System.out.println("Inserted into Chapters Table");
-                    
                 }
                 else{
                     return false;
@@ -124,6 +123,31 @@ public class Production {
                 insertIntoPeriodicPublication.executeQuery();   
                 System.out.println("Inserted into Periodic Publication Table");
 
+                System.out.println("\t\t [1] Enter the Article Information in a Book:");
+                System.out.print("Input Command: ");
+                userInput = inputRead.next();
+
+                if(userInput.equals("1"))
+                {
+                    System.out.println("Enter the Article ID:");
+                    int articleID=inputRead.nextInt();  
+                    System.out.println("Enter the Description of Article:");
+                    String articleDesc=inputRead.next();  
+                    System.out.println("Enter the Text of Article:");
+                    String articleText=inputRead.nextLine();  
+                    String article_query = "INSERT INTO Articles (PublicationID,ArticleID,Description,Text) VALUES(?,?,?,?);";
+                    PreparedStatement insertArticles=conn.prepareStatement(article_query);
+                    insertArticles.setInt(1, PubID);
+                    insertArticles.setInt(2, articleID);
+                    insertArticles.setString(3, articleDesc);
+                    insertArticles.setString(4, articleText);
+                    insertArticles.executeQuery();
+                    System.out.println("Inserted into Articles Table");
+                }
+                else{
+                    return false;
+                }
+                
             }
             else{
                 System.out.println("Wrong Input Given");
