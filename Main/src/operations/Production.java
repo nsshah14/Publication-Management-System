@@ -28,32 +28,130 @@ public class Production {
         // System.out.println("Enter Publication ID:");
         int pubId;
         System.out.println("Enter Title for Publcation:");
-        String pubTitle=inputReader.next();
+        String pubTitle=inputReader.nextLine();
         System.out.println("Enter the Date of Publication (dd-mm-yyyy):");
-        String date=inputReader.next();
+        String date=inputReader.nextLine();
         System.out.println("Enter the Topics of Publication:");
-        String pubTopics=inputReader.next();
+        String pubTopics=inputReader.nextLine();
         System.out.println("Enter the Periodicity of Publication:");
-        String pubPeriodicity=inputReader.next();
+        String pubPeriodicity=inputReader.nextLine();
+        System.out.println("Enter the Price of Publication:");
+        Double pubPrice=inputReader.nextDouble();
         ResultSet rs = null;
-        
+        String query = "INSERT INTO Publication (Title, Date,Topics,Periodicity,Price) VALUES(?,?,?,?,?);";
+
         try{
-           PreparedStatement stinsert=conn.prepareStatement("INSERT INTO Publication VALUES(?,?,?,?,?);");
+            PreparedStatement stinsert=conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
-            rs = stinsert.getGeneratedKeys();
-            // if (rs != null && rs.next()) 
-            //     pubId = rs.getInt(1);
-            // else
-            //     return false;
-            System.out.print(rs.getInt(1));
-            pubId=1;
-            stinsert.setInt(1, pubId);
-            stinsert.setString(2, pubTitle);
-            stinsert.setDate(3,java.sql.Date.valueOf(date));
-            stinsert.setString(4, pubTopics);
-            stinsert.setString(5, pubPeriodicity);
+            stinsert.setString(1, pubTitle);
+            stinsert.setDate(2,java.sql.Date.valueOf(date));
+            stinsert.setString(3, pubTopics);
+            stinsert.setString(4, pubPeriodicity);
+            stinsert.setDouble(5, pubPrice);
+            stinsert.executeQuery();
 
-           stinsert.executeQuery();
+            System.out.println("1 Row inserted!");
+
+            System.out.println("\t\t [1] Enter information for New book");
+            System.out.println("\t\t [2] Enter information for Periodic Publication (Articles, Magazines)");
+            
+            Scanner inputRead = new Scanner(System.in);  // Create a Scanner object
+            String userInput = "";
+            System.out.print("Input Command: ");
+            userInput = inputRead.next();
+
+            String getpublicationID = "SELECT PublicationID FROM Publication ORDER BY PublicationID DESC LIMIT 1";
+            PreparedStatement getValueofID=conn.prepareStatement(getpublicationID);
+            ResultSet publicationID =  getValueofID.executeQuery();
+            publicationID.first();
+            int PubID=publicationID.getInt("PublicationID");
+
+            if(userInput.equals("1"))
+            {
+                System.out.println("Enter ISBN for Books:");
+                String bookISBN=inputRead.next();
+                System.out.println("Enter the Edition of Book:");
+                inputRead.next();
+                String bookEdition=inputRead.nextLine();   
+                String book_query = "INSERT INTO Books (PublicationID, ISBN,Edition) VALUES(?,?,?);";
+                PreparedStatement insertIntoBook=conn.prepareStatement(book_query);
+
+                insertIntoBook.setInt(1, PubID);
+                insertIntoBook.setString(2,bookISBN);
+                insertIntoBook.setString(3, bookEdition);
+                insertIntoBook.executeQuery();
+
+                System.out.println("Inserted into Books Table");
+                
+                System.out.println("\t\t [1] Enter the Chapter Information in a Book:");
+                System.out.print("Input Command: ");
+                userInput = inputRead.next();
+
+                if(userInput.equals("1"))
+                {
+                    System.out.println("Enter the Chapter ID:");
+                    int chapID=inputRead.nextInt();  
+                    System.out.println("Enter the Number of Pages Chapters of Book:");
+                    int numOfPages=inputRead.nextInt();  
+                    String pages_query = "INSERT INTO Chapters (PublicationID,ChapterID,Number_of_pages) VALUES(?,?,?);";
+                    PreparedStatement insertPagesIntoBook=conn.prepareStatement(pages_query);
+                    insertPagesIntoBook.setInt(1, PubID);
+                    insertPagesIntoBook.setInt(2, chapID);
+                    insertPagesIntoBook.setInt(3, numOfPages);
+                    insertPagesIntoBook.executeQuery();
+                    System.out.println("Inserted into Chapters Table");
+                }
+                else{
+                    return false;
+                }
+            }
+            else if(userInput.equals("2"))
+            {
+                System.out.println("Enter Type of Periodic Publication:");
+                String type=inputRead.next();
+                System.out.println("Enter the Periodic Length of Publication:");
+                int periodicLength=inputRead.nextInt();  
+                System.out.println("Enter the Issue Date of Publication:");
+                String issueDate=inputRead.next();                  
+                String periodic_publication_query = "INSERT INTO PeriodicPublication (PublicationID,Type,Periodic_length,Issue_date) VALUES(?,?,?,?);";
+                PreparedStatement insertIntoPeriodicPublication=conn.prepareStatement(periodic_publication_query);
+
+                insertIntoPeriodicPublication.setInt(1, PubID);
+                insertIntoPeriodicPublication.setString(2,type);
+                insertIntoPeriodicPublication.setInt(3, periodicLength);
+                insertIntoPeriodicPublication.setDate(4,java.sql.Date.valueOf(issueDate));
+                insertIntoPeriodicPublication.executeQuery();   
+                System.out.println("Inserted into Periodic Publication Table");
+
+                System.out.println("\t\t [1] Enter the Article Information in a Book:");
+                System.out.print("Input Command: ");
+                userInput = inputRead.next();
+
+                if(userInput.equals("1"))
+                {
+                    System.out.println("Enter the Article ID:");
+                    int articleID=inputRead.nextInt();  
+                    System.out.println("Enter the Description of Article:");
+                    String articleDesc=inputRead.next();  
+                    System.out.println("Enter the Text of Article:");
+                    String articleText=inputRead.nextLine();  
+                    String article_query = "INSERT INTO Articles (PublicationID,ArticleID,Description,Text) VALUES(?,?,?,?);";
+                    PreparedStatement insertArticles=conn.prepareStatement(article_query);
+                    insertArticles.setInt(1, PubID);
+                    insertArticles.setInt(2, articleID);
+                    insertArticles.setString(3, articleDesc);
+                    insertArticles.setString(4, articleText);
+                    insertArticles.executeQuery();
+                    System.out.println("Inserted into Articles Table");
+                }
+                else{
+                    return false;
+                }
+                
+            }
+            else{
+                System.out.println("Wrong Input Given");
+            }
 
         } catch(Exception e){
            e.printStackTrace();
@@ -61,39 +159,5 @@ public class Production {
         }
         return true;
     }
-   /**  public static void createPublication(Connection con, Scanner scan ){
-        //Title VARCHAR(128) NOT NULL,
-        //Date DATE NOT NULL,
-        //Topics VARCHAR(128),
-        //Periodicity VARCHAR(128),
-
-        //TODO: request more information from user( publication name, etc.)
-        System.out.print("Enter the ID of Publication: "); //TODO: change this to get unused id from mariadb and use that instead of prompting.
-        String id = scan.nextLine();
-
-        System.out.print("Enter the Title of Publication: ");
-        String title = scan.nextLine();
-
-        System.out.print("Enter the Date of Publication: ");
-        String date = scan.nextLine();
-        
-        System.out.print("Enter the Topics of Publication: "); //TODO: unsure how to send multiple topics to backend
-        String topics = scan.nextLine();
-
-        System.out.print("Enter the Periodicity of Publication: "); //TODO: create checks to prevent invalid values from being added.
-        String periodicity = scan.nextLine();
-
-        //TODO: send query to create publication to mariadb
-        try(Statement stmt = con.createStatement()){
-            String inputStatement = String.format("INSERT into Publication VALUES(%s, '%s', '%s', '%s', '%s')", id, title, date, topics, periodicity);
-            stmt.executeUpdate(inputStatement);
-            
-            //TODO: output the result of the query to the commandline.
-            System.out.println("Ok");
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-    }
-    **/
 
 }
