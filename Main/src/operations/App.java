@@ -9,8 +9,8 @@ import operations.Report;
 
 public class App {
     //database parameters Replace with your parameters
-    static String user = "nsshah5";
-    static String password = "200421362";
+    static String user = "pthosan";
+    static String password = "200401606";
 
     public static void main(String[] args) throws Exception {
         
@@ -86,37 +86,53 @@ public class App {
                                 else
                                     con.rollback(newProd);
                                 break;
-                    case "8" : System.out.println("Unimplemented");
-                                break;
-                    case "9" : con.setSavepoint("beforeArticledelete");
-                                if(Production.deleteArticles(con,inputReader))
-                                    con.commit();
-                                else
-                                    con.rollback();
-                                break;
-                    case "10" : System.out.println("Unimplemented");
-                                break;
-                    case "11" : con.setSavepoint("beforeProdInsert");
+                    case "8" : Savepoint chapterInsert = con.setSavepoint("beforeChapterInsert");
                                 if(Production.newPublication(con,inputReader))
                                     con.commit();
                                 else
-                                    con.rollback();
+                                    con.rollback(chapterInsert);
+                                break;
+                    case "9" : Savepoint articleDelete=con.setSavepoint("beforeArticledelete");
+                                if(Production.deleteArticles(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(articleDelete);
+                                break;
+                    case "10" : Savepoint chapterDelete =con.setSavepoint("beforeChaptersedelete");
+                                if(Production.deleteChapters(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(chapterDelete);
+                                break;
+                    case "11" : Savepoint addProd=con.setSavepoint("beforeProdInsert");
+                                if(Production.newPublication(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(addProd);
                                 break; //call createPublication method in Production.java file
-                    case "12" : con.setSavepoint("beforeProdUpdate");
+                    case "12" : Savepoint updateProd = con.setSavepoint("beforeProdUpdate");
                                 if(Production.updateProd(con,inputReader))
                                     con.commit();
                                 else
-                                    con.rollback();
+                                    con.rollback(updateProd);
                                 break;
-                    case "13" : con.setSavepoint("beforeProdDelete");
+                    case "13" : Savepoint deleteProd = con.setSavepoint("beforeProdDelete");
                                 if(Production.deleteProd(con,inputReader))
                                     con.commit();
                                 else
-                                    con.rollback();
+                                    con.rollback(deleteProd);
                                 break;
-                    case "14" : System.out.println("Unimplemented");
+                    case "14" : Savepoint updateArticle = con.setSavepoint("beforeArticleUpdate");
+                                if(Production.updateArticles(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(updateArticle);
                                 break;
-                    case "15" : System.out.println("Unimplemented");
+                    case "15" : Savepoint updateChapters = con.setSavepoint("beforeChaptersUpdate");
+                                if(Production.updateChapters(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(updateChapters);
                                 break;
                     case "16" : System.out.println("Unimplemented");
                                 break;
@@ -215,31 +231,32 @@ public class App {
         System.out.println("\t\t [11] - Enter a new book edition or new issue of a publication");
         System.out.println("\t\t [12] - Update a book edition or publication issue.");
         System.out.println("\t\t [13] - Delete a book edition or publication issue.");
-        System.out.println("\t\t [14] - Enter/Update an article or chapter");
-        System.out.println("\t\t [15] - Enter/Update text of an article");
-        System.out.println("\t\t [16] - Find books and articles by topic, date, author's name");
-        System.out.println("\t\t [17] - Enter payment for author or editor");
-        System.out.println("\t\t [18] - Keep track of when each payment was claimed by its addressee");
+        System.out.println("\t\t [14] - Enter/Update an article");
+        System.out.println("\t\t [15] - Enter/Update an chapter");        
+        System.out.println("\t\t [16] - Enter/Update text of an article");
+        System.out.println("\t\t [17] - Find books and articles by topic, date, author's name");
+        System.out.println("\t\t [18] - Enter payment for author or editor");
+        System.out.println("\t\t [19] - Keep track of when each payment was claimed by its addressee");
         System.out.println();
     
         //instructions for distribution
         System.out.println("\tDistribution");
-        System.out.println("\t\t [19] - Enter new distributor");
-        System.out.println("\t\t [20] - Update distributor information");
-        System.out.println("\t\t [21] - Delete a distributor. ");
-        System.out.println("\t\t [22] - Input orders from distributors, for a book edition or an issue of a publication per distributor, for a certain date.");
-        System.out.println("\t\t [23] - Bill distributor for an order");
-        System.out.println("\t\t [24] - Change outstanding balance of a distributor on receipt of a payment.");
+        System.out.println("\t\t [20] - Enter new distributor");
+        System.out.println("\t\t [21] - Update distributor information");
+        System.out.println("\t\t [22] - Delete a distributor. ");
+        System.out.println("\t\t [23] - Input orders from distributors, for a book edition or an issue of a publication per distributor, for a certain date.");
+        System.out.println("\t\t [24] - Bill distributor for an order");
+        System.out.println("\t\t [25] - Change outstanding balance of a distributor on receipt of a payment.");
         System.out.println();   
         
         //instructions for reports
         System.out.println("\tReports");
-        System.out.println("\t\t [25] - Generate montly reports: number and total price of copies of each publication bought per distributor per month");
-        System.out.println("\t\t [26] - Generate montly reports: total revenue of the publishing house");
-        System.out.println("\t\t [27] - Generate montly reports: total expenses (i.e., shipping costs and salaries)");
-        System.out.println("\t\t [28] - Calculate the total current number of distributors");
-        System.out.println("\t\t [29] - Calculate total revenue (since inception) per city, per distributor, and per location");
-        System.out.println("\t\t [30] - Calculate total payments to the editors and authors, per time period and per work type (book authorship, article authorship, or editorial work)");
+        System.out.println("\t\t [26] - Generate montly reports: number and total price of copies of each publication bought per distributor per month");
+        System.out.println("\t\t [27] - Generate montly reports: total revenue of the publishing house");
+        System.out.println("\t\t [28] - Generate montly reports: total expenses (i.e., shipping costs and salaries)");
+        System.out.println("\t\t [29] - Calculate the total current number of distributors");
+        System.out.println("\t\t [30] - Calculate total revenue (since inception) per city, per distributor, and per location");
+        System.out.println("\t\t [31] - Calculate total payments to the editors and authors, per time period and per work type (book authorship, article authorship, or editorial work)");
         System.out.println();
         
 

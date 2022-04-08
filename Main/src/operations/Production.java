@@ -29,7 +29,7 @@ public class Production {
         int pubId;
         System.out.println("Enter Title for Publcation:");
         String pubTitle=inputReader.nextLine();
-        System.out.println("Enter the Date of Publication (dd-mm-yyyy):");
+        System.out.println("Enter the Date of Publication (yyyy-mm-dd):");
         String date=inputReader.nextLine();
         System.out.println("Enter the Topics of Publication:");
         String pubTopics=inputReader.nextLine();
@@ -322,4 +322,86 @@ public class Production {
         return true;
      }
 
+     public static boolean updateChapters(Connection conn, Scanner inputreader){
+
+        List<String> condcolnames=new ArrayList();
+         List<Object> condcolvals=new ArrayList();
+
+         System.out.println("Enter number of conditions:");
+         int n=inputreader.nextInt();
+         for(int i=0;i<n;i++){
+            System.out.println("Enter Column name:");
+            condcolnames.add(inputreader.next());
+            System.out.println("Enter column value:");
+            condcolvals.add(inputreader.next());
+         }
+
+         System.out.println("Enter Column Name to update:");
+         String toUpdateCol=inputreader.next();
+         inputreader.next();
+
+         System.out.println("Enter new value:");
+         String toUpdateVal=inputreader.next();
+
+
+         try{
+            StringBuilder query=new StringBuilder("UPDATE Chapters SET "+toUpdateCol+"=? where ");
+            for(int i=0; i<condcolnames.size();i++){
+               query.append(condcolnames.get(i) + "=? and ");
+            }
+            query.replace(query.length()-5,query.length()-1,";");
+
+
+           //  System.out.println(query.toString());
+            PreparedStatement stupdate=conn.prepareStatement(query.toString());
+            stupdate.setObject(1,toUpdateVal);
+            for(int i=0; i<condcolnames.size();i++){
+               stupdate.setObject(i+2,condcolvals.get(i));
+            }
+
+            stupdate.executeQuery();
+
+            System.out.println("Rows Updated");
+         } catch(Exception e){
+            e.printStackTrace();
+            return false;
+         }
+         return true;
+     }
+
+     public static boolean deleteChapters(Connection conn, Scanner inputreader){
+        List<String> delcolnames=new ArrayList();
+        List<Object> delcolvals=new ArrayList();
+
+        System.out.println("enter number of conditions:");
+        int n=inputreader.nextInt();
+        for(int i=0;i<n;i++){
+           System.out.println("Enter col name:");
+           delcolnames.add(inputreader.next());
+           System.out.println("Enter col value:");
+           delcolvals.add(inputreader.next());
+        }
+        
+        try{
+           StringBuilder query=new StringBuilder("DELETE FROM Chapters where ");
+           for(int i=0; i<delcolnames.size();i++){
+              query.append(delcolnames.get(i) + "=? and ");
+           }
+           query.replace(query.length()-5,query.length()-1,";");
+           PreparedStatement stdelete=conn.prepareStatement(query.toString());
+           
+           for(int i=0;i<delcolvals.size();i++)
+              stdelete.setObject(i+1, delcolvals.get(i));
+
+           // System.out.println(query.toString());
+           stdelete.executeQuery();
+
+           System.out.println("Rows Deleted");
+        }catch(Exception e){
+           e.printStackTrace();
+           return false;
+        }
+        return true;
+     }
+    
 }
