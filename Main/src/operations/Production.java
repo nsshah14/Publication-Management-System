@@ -28,15 +28,17 @@ public class Production {
         // System.out.println("Enter Publication ID:");
         int pubId;
         System.out.println("Enter Title for Publcation:");
-        String pubTitle=inputReader.next();
+        String pubTitle=inputReader.nextLine();
         System.out.println("Enter the Date of Publication (dd-mm-yyyy):");
-        String date=inputReader.next();
+        String date=inputReader.nextLine();
         System.out.println("Enter the Topics of Publication:");
-        String pubTopics=inputReader.next();
+        String pubTopics=inputReader.nextLine();
         System.out.println("Enter the Periodicity of Publication:");
-        String pubPeriodicity=inputReader.next();
+        String pubPeriodicity=inputReader.nextLine();
+        System.out.println("Enter the Price of Publication:");
+        Double pubPrice=inputReader.nextDouble();
         ResultSet rs = null;
-        String query = "INSERT INTO Publication (Title, Date,Topics,Periodicity) VALUES(?,?,?,?);";
+        String query = "INSERT INTO Publication (Title, Date,Topics,Periodicity,Price) VALUES(?,?,?,?,?);";
 
         try{
             PreparedStatement stinsert=conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -45,6 +47,7 @@ public class Production {
             stinsert.setDate(2,java.sql.Date.valueOf(date));
             stinsert.setString(3, pubTopics);
             stinsert.setString(4, pubPeriodicity);
+            stinsert.setDouble(5, pubPrice);
             stinsert.executeQuery();
 
             System.out.println("1 Row inserted!");
@@ -57,18 +60,19 @@ public class Production {
             System.out.print("Input Command: ");
             userInput = inputRead.next();
 
+            String getpublicationID = "SELECT PublicationID FROM Publication ORDER BY PublicationID DESC LIMIT 1";
+            PreparedStatement getValueofID=conn.prepareStatement(getpublicationID);
+            ResultSet publicationID =  getValueofID.executeQuery();
+            publicationID.first();
+            int PubID=publicationID.getInt("PublicationID");
+
             if(userInput.equals("1"))
             {
-                String getpublicationID = "SELECT PublicationID FROM Publication ORDER BY PublicationID DESC LIMIT 1";
-                PreparedStatement getValueofID=conn.prepareStatement(getpublicationID);
-                ResultSet publicationID =  getValueofID.executeQuery();
-                publicationID.first();
-                int PubID=publicationID.getInt("PublicationID");
-                System.out.println(PubID);
                 System.out.println("Enter ISBN for Books:");
                 String bookISBN=inputRead.next();
                 System.out.println("Enter the Edition of Book:");
-                String bookEdition=inputRead.next();   
+                inputRead.next();
+                String bookEdition=inputRead.nextLine();   
                 String book_query = "INSERT INTO Books (PublicationID, ISBN,Edition) VALUES(?,?,?);";
                 PreparedStatement insertIntoBook=conn.prepareStatement(book_query);
 
@@ -96,6 +100,7 @@ public class Production {
                     insertPagesIntoBook.setInt(3, numOfPages);
                     insertPagesIntoBook.executeQuery();
                     System.out.println("Inserted into Chapters Table");
+                    
                 }
                 else{
                     return false;
@@ -103,7 +108,22 @@ public class Production {
             }
             else if(userInput.equals("2"))
             {
-                
+                System.out.println("Enter Type of Periodic Publication:");
+                String type=inputRead.next();
+                System.out.println("Enter the Periodic Length of Publication:");
+                int periodicLength=inputRead.nextInt();  
+                System.out.println("Enter the Issue Date of Publication:");
+                String issueDate=inputRead.next();                  
+                String periodic_publication_query = "INSERT INTO PeriodicPublication (PublicationID,Type,Periodic_length,Issue_date) VALUES(?,?,?,?);";
+                PreparedStatement insertIntoPeriodicPublication=conn.prepareStatement(periodic_publication_query);
+
+                insertIntoPeriodicPublication.setInt(1, PubID);
+                insertIntoPeriodicPublication.setString(2,type);
+                insertIntoPeriodicPublication.setInt(3, periodicLength);
+                insertIntoPeriodicPublication.setDate(4,java.sql.Date.valueOf(issueDate));
+                insertIntoPeriodicPublication.executeQuery();   
+                System.out.println("Inserted into Periodic Publication Table");
+
             }
             else{
                 System.out.println("Wrong Input Given");

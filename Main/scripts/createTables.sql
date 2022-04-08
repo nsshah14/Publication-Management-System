@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS Publication(
     Date DATE NOT NULL,
     Topics VARCHAR(128),
     Periodicity VARCHAR(128),
+    Price DECIMAL(9,2) NOT NULL,
     PRIMARY KEY(PublicationID)
 );
 
