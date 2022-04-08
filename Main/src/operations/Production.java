@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.Date;
 import java.sql.*;
 import java.text.SimpleDateFormat;
-
+import java.util.*;
 public class Production {
     /**
      * System.out.println("\tProduction:");
@@ -159,5 +159,50 @@ public class Production {
         }
         return true;
     }
+    
+    public static boolean updateProd(Connection conn, Scanner inputreader){
+
+        List<String> condcolnames=new ArrayList();
+         List<Object> condcolvals=new ArrayList();
+
+         System.out.println("Enter number of conditions:");
+         int n=inputreader.nextInt();
+         for(int i=0;i<n;i++){
+            System.out.println("Enter Column name:");
+            condcolnames.add(inputreader.next());
+            System.out.println("Enter column value:");
+            condcolvals.add(inputreader.next());
+         }
+
+         System.out.println("Enter Column Name to update:");
+         String toUpdateCol=inputreader.next();
+
+         System.out.println("Enter new value:");
+         String toUpdateVal=inputreader.next();
+
+
+         try{
+            StringBuilder query=new StringBuilder("UPDATE Publication SET "+toUpdateCol+"=? where ");
+            for(int i=0; i<condcolnames.size();i++){
+               query.append(condcolnames.get(i) + "=? and ");
+            }
+            query.replace(query.length()-5,query.length()-1,";");
+
+           //  System.out.println(query.toString());
+            PreparedStatement stupdate=conn.prepareStatement(query.toString());
+            stupdate.setObject(1,toUpdateVal);
+            for(int i=0; i<condcolnames.size();i++){
+               stupdate.setObject(i+2,condcolvals.get(i));
+            }
+
+            stupdate.executeQuery();
+
+            System.out.println("Rows Updated");
+         } catch(Exception e){
+            e.printStackTrace();
+            return false;
+         }
+         return true;
+     }
 
 }

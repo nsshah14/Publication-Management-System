@@ -9,8 +9,8 @@ import operations.Report;
 
 public class App {
     //database parameters Replace with your parameters
-    static String user = "ssingha2";
-    static String password = "200370963";
+    static String user = "pthosan";
+    static String password = "200401606";
 
     public static void main(String[] args) throws Exception {
         
@@ -71,7 +71,11 @@ public class App {
                                 else
                                     con.rollback();
                                 break; //call createPublication method in Production.java file
-                    case "8" : System.out.println("Unimplemented");
+                    case "8" : con.setSavepoint("beforeProdUpdate");
+                                if(Production.updateProd(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback();
                                 break;
                     case "9" : System.out.println("Unimplemented");
                                 break;
