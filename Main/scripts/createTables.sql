@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS Distributor(
     Address VARCHAR(256) NOT NULL,
     Phone VARCHAR(16) NOT NULL,
     ContactPerson VARCHAR(128),
-    Balance INT NULL,
+    Balance DECIMAL(9,2) NULL,
     PRIMARY KEY(distributorID)
 );
 
@@ -178,14 +178,19 @@ CREATE TABLE IF NOT EXISTS Orders(
     Price Decimal(9,2) NOT NULL,
     ShippingCost Decimal(9,2) NOT NULL,
     NumCopies INT NOT NULL,
-    Book VARCHAR(128) NOT NULL,
+    PublicationID INT,
     Date DATE NOT NULL,
-    PRIMARY KEY(OrderID)
+    PRIMARY KEY(OrderID),
+    FOREIGN KEY(PublicationID) REFERENCES Publication(PublicationID) 
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS PlacesOrder(
+CREATE TABLE IF NOT EXISTS AddOrUpdateOrder(
     DistributorID INT,
     OrderID INT,
+    Amount Decimal(9,2) Not NULL,
+    Status BINARY(1);
     PRIMARY KEY(DistributorID, OrderID),
     FOREIGN KEY(DistributorID) REFERENCES Distributor(DistributorID) 
     ON UPDATE CASCADE

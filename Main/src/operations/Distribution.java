@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.sql.Connection;
+import java.sql.Date;
 
 public class Distribution {
     /**
@@ -108,9 +109,9 @@ public class Distribution {
                 stupdate.setObject(i+2,condcolvals.get(i));
              }
 
-             stupdate.executeQuery();
+             int rowCount = stupdate.executeUpdate();
 
-             System.out.println("Rows Updated");
+             System.out.println(rowCount+" rows Updated");
           } catch(Exception e){
              e.printStackTrace();
              return false;
@@ -118,39 +119,111 @@ public class Distribution {
           return true;
       }
 
-      public static boolean deleteDist(Connection conn, Scanner inputreader){
-         List<String> delcolnames=new ArrayList();
-         List<Object> delcolvals=new ArrayList();
+    public static boolean deleteDist(Connection conn, Scanner inputreader){
+        List<String> delcolnames=new ArrayList();
+        List<Object> delcolvals=new ArrayList();
 
-         System.out.println("enter number of conditions:");
-         int n=inputreader.nextInt();
-         for(int i=0;i<n;i++){
-            System.out.println("Enter col name:");
-            delcolnames.add(inputreader.next());
-            System.out.println("Enter col value:");
-            delcolvals.add(inputreader.next());
-         }
+        System.out.println("enter number of conditions:");
+        int n=inputreader.nextInt();
+        for(int i=0;i<n;i++){
+        System.out.println("Enter col name:");
+        delcolnames.add(inputreader.next());
+        System.out.println("Enter col value:");
+        delcolvals.add(inputreader.next());
+        }
          
-         try{
+        try{
             StringBuilder query=new StringBuilder("DELETE FROM Distributor where ");
             for(int i=0; i<delcolnames.size();i++){
-               query.append(delcolnames.get(i) + "=? and ");
+                query.append(delcolnames.get(i) + "=? and ");
             }
             query.replace(query.length()-5,query.length()-1,";");
             PreparedStatement stdelete=conn.prepareStatement(query.toString());
             
             for(int i=0;i<delcolvals.size();i++)
-               stdelete.setObject(i+1, delcolvals.get(i));
+                stdelete.setObject(i+1, delcolvals.get(i));
 
             // System.out.println(query.toString());
             stdelete.executeQuery();
 
             System.out.println("Rows Deleted");
-         }catch(Exception e){
+        } catch(Exception e){
             e.printStackTrace();
             return false;
-         }
-         return true;
+        }
+        return true;
       }
 
+    public static boolean addOrderAndBillDist(Connection conn, Scanner inputreader){
+
+        System.out.println("Enter Distributor ID:");
+        int did=inputreader.nextInt();
+        System.out.println("Enter Publication ID:");
+        int pid=inputreader.nextInt();
+        try{
+            Statement checkDist=conn.createStatement();
+            ResultSet rs1=checkDist.executeQuery("Select * from Distributor where distributorID="+did);
+            Statement checkPub=conn.createStatement();
+            ResultSet rs2=checkPub.executeQuery("Select * from Publication where PublicationID="+pid);
+            
+            if(rs1.next() && rs2.next()){
+                double price=rs2.getFloat("Price");
+                System.out.println("Enter the quantity:");
+                int quantity=inputreader.nextInt();
+                double final_amount=price*quantity;
+                double sc=0.1*final_amount;
+                long miliseconds = System.currentTimeMillis();
+                Date date = new Date(miliseconds);
+                String query="INSERT into Orders (Price, ShippingCost, numCopies, PublicationID, Date) Values (?,?,?,?,?)";
+                PreparedStatement insertOrder=conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+                insertOrder.setDouble(1, final_amount);
+                insertOrder.setDouble(2, sc);
+                insertOrder.setInt(3, quantity);
+                insertOrder.setInt(4, pid);
+                insertOrder.setDate(5, date);
+                insertOrder.executeQuery();
+
+                System.out.println(did);
+                ResultSet rs = insertOrder.getGeneratedKeys();
+                int orderId = 0;
+                if(rs.next()){
+                    orderId = rs.getInt(1);
+                }
+                insertOrder.executeQuery();
+
+                String addToRelation="Insert into AddOrUpdateOrder values ("+did+","+orderId+","+(final_amount+sc)+","+"0);";
+                Statement insertPlaceOrder=conn.createStatement();
+                insertPlaceOrder.executeQuery(addToRelation);
+
+                double updatedBal=rs1.getFloat("Balance")+final_amount+sc;
+
+                String queryUpdateDist="UPDATE Distributor set Balance="+updatedBal+" where distributorID="+rs1.getInt("distributorID")+";";
+                Statement updateDist=conn.createStatement();
+                updateDist.executeQuery(queryUpdateDist);
+
+                System.out.println("Distributor placed order!!");
+            }
+            else{
+                System.out.println("Distributor or Publication not present!!!");
+                return false;
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean changeBalOnPayment(Connection conn,Scanner inputreader){
+        System.out.println("Enter Distributor ID:");
+        int did=inputreader.nextInt();
+        
+        try{
+
+        } catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }
