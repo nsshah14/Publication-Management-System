@@ -144,6 +144,18 @@ public class App {
                                 else
                                     con.rollback();
                                 break;
+                    case "29" :con.setSavepoint("beforeupdateEditor");
+                                if(Edit_Publish.updateEditor(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback();
+                                break;
+                    case "30" :con.setSavepoint("beforedeleteEditor");
+                                if(Edit_Publish.deleteEditor(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback();
+                                break;
                     
 
                     default:  System.out.println("Invalid Input");
@@ -217,6 +229,8 @@ public class App {
         System.out.println("\tEditor");
         System.out.println("\t\t [27] - Enter basic information of a Editor");
         System.out.println("\t\t [28] - Assign Editor to Publication ");
+        System.out.println("\t\t [29] - Update Editor ");
+        System.out.println("\t\t [30] - Delete Editor ");
         
 
     }
