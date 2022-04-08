@@ -139,7 +139,7 @@ public class App {
                                     con.commit();
                                 else
                                     con.rollback(updateTextArticles);
-                    break;
+                                break;
                     case "17" : Savepoint placeOrder=con.setSavepoint("beforeDistPlaceOrder");
                                 if(Distribution.addOrderAndBillDist(con,inputReader))
                                     con.commit();

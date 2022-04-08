@@ -23,11 +23,11 @@ INSERT INTO Publisher VALUES(2, "Paul", "+19842239405", "2122 Kensington Park Ro
 INSERT INTO Publisher VALUES(3, "Suzane", "+191041239420", "2620 Kensington Park Road");
 INSERT INTO Publisher VALUES(4, "Maria", "+19841298765", "2524 Kensington Park Road");
 INSERT INTO Publisher VALUES(5, "Michael", "+19863245402", "2519 Kensington Park Road");
-INSERT INTO Publication VALUES(1, "Introduction to Computing", '2020-01-21', "Science", "Yearly",12.45);
-INSERT INTO Publication VALUES(2, "Introduction to Databases", '2020-01-04', "Technology", "Yearly",10.97);
-INSERT INTO Publication VALUES(3, "Autobiography of Sachin Tendulkar", '2019-03-19', "Sports", "Yearly",4.67);
-INSERT INTO Publication VALUES(4, "Mathematics Edition 1", '2021-02-13', "Mathematics", "Monthly",9.43);
-INSERT INTO Publication VALUES(5, "Marvel Comics", '2021-01-26', "Fictional", "Weekly",8.34);
+INSERT INTO Publication VALUES(1, "Introduction to Computing", '2020-01-21', "Science", "Yearly",12.45,1);
+INSERT INTO Publication VALUES(2, "Introduction to Databases", '2020-01-04', "Technology", "Yearly",10.97,1);
+INSERT INTO Publication VALUES(3, "Autobiography of Sachin Tendulkar", '2019-03-19', "Sports", "Yearly",4.67,2);
+INSERT INTO Publication VALUES(4, "Mathematics Edition 1", '2021-02-13', "Mathematics", "Monthly",9.43,3);
+INSERT INTO Publication VALUES(5, "Marvel Comics", '2021-01-26', "Fictional", "Weekly",8.34,4);
 INSERT INTO Books VALUES(1, "978-3-16-148410-0", "1st Edition");
 INSERT INTO Books VALUES(2, "978-3-16-148410-1", "2nd Edition");
 INSERT INTO PeriodicPublication VALUES(3, "Journal", 2, '2020-10-05');
