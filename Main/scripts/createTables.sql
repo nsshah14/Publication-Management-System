@@ -190,7 +190,7 @@ CREATE TABLE IF NOT EXISTS AddOrUpdateOrder(
     DistributorID INT,
     OrderID INT,
     Amount Decimal(9,2) Not NULL,
-    Status BINARY(1);
+    Status BINARY(1),
     PRIMARY KEY(DistributorID, OrderID),
     FOREIGN KEY(DistributorID) REFERENCES Distributor(DistributorID) 
     ON UPDATE CASCADE
