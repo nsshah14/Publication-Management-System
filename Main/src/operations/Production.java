@@ -325,7 +325,7 @@ public class Production {
      public static boolean updateChapters(Connection conn, Scanner inputreader){
 
         List<String> condcolnames=new ArrayList();
-         List<Object> condcolvals=new ArrayList();
+        List<Object> condcolvals=new ArrayList();
 
          System.out.println("Enter number of conditions:");
          int n=inputreader.nextInt();
@@ -402,6 +402,50 @@ public class Production {
            return false;
         }
         return true;
+     }
+
+     public static boolean updateTextOfArticle(Connection conn, Scanner inputreader){
+
+       
+        List<String> condcolnames=new ArrayList();
+        List<Object> condcolvals=new ArrayList();
+
+         System.out.println("Enter number of conditions:");
+         int n=inputreader.nextInt();
+         for(int i=0;i<n;i++){
+            System.out.println("Enter Column name:");
+            condcolnames.add(inputreader.next());
+            System.out.println("Enter column value:");
+            condcolvals.add(inputreader.next());
+         }
+
+         System.out.println("Enter new value:");
+         String toUpdateVal=inputreader.next();
+
+
+         try{
+            StringBuilder query=new StringBuilder("UPDATE Articles SET Text=? where ");
+            for(int i=0; i<condcolnames.size();i++){
+               query.append(condcolnames.get(i) + "=? and ");
+            }
+            query.replace(query.length()-5,query.length()-1,";");
+
+
+           //  System.out.println(query.toString());
+            PreparedStatement stupdate=conn.prepareStatement(query.toString());
+            stupdate.setObject(1,toUpdateVal);
+            for(int i=0; i<condcolnames.size();i++){
+               stupdate.setObject(i+2,condcolvals.get(i));
+            }
+
+            stupdate.executeQuery();
+
+            System.out.println("Rows Updated");
+         } catch(Exception e){
+            e.printStackTrace();
+            return false;
+         }
+         return true;
      }
     
 }

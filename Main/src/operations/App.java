@@ -134,8 +134,12 @@ public class App {
                                 else
                                     con.rollback(updateChapters);
                                 break;
-                    case "16" : System.out.println("Unimplemented");
-                                break;
+                    case "16" : Savepoint updateTextArticles = con.setSavepoint("beforeTextArticleUpdate");
+                                if(Production.updateTextOfArticle(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(updateTextArticles);
+                    break;
                     case "17" : Savepoint placeOrder=con.setSavepoint("beforeDistPlaceOrder");
                                 if(Distribution.addOrderAndBillDist(con,inputReader))
                                     con.commit();
