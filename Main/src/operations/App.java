@@ -9,8 +9,8 @@ import operations.Report;
 
 public class App {
     //database parameters Replace with your parameters
-    static String user = "ssingha2";
-    static String password = "200370963";
+    static String user = "nsshah5";
+    static String password = "200421362";
 
     public static void main(String[] args) throws Exception {
         
@@ -120,7 +120,11 @@ public class App {
                                 break;
                     case "16" : System.out.println("Unimplemented");
                                 break;
-                    case "17" : System.out.println("Unimplemented");
+                    case "17" : Savepoint placeOrder=con.setSavepoint("beforeDistPlaceOrder");
+                                if(Distribution.addOrderAndBillDist(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(placeOrder);
                                 break;
                     case "18" : System.out.println("Unimplemented");
                                 break;

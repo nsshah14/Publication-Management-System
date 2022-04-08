@@ -31,23 +31,23 @@ public class Edit_Publish {
     String[] editorcolumns={"EID", "Name", "Address", "Contact"};
       public static boolean newEditor(Connection conn, Scanner inputReader){
 
-         System.out.println("Enter Editor name:");
-         String name=inputReader.next();
-         System.out.println("Enter Editor Address:");
-         String add=inputReader.next();
-         System.out.println("Enter Editor Contact:");
-         String contact=inputReader.next();
+      //    System.out.println("Enter Editor name:");
+      //    String name=inputReader.next();
+      //    System.out.println("Enter Editor Address:");
+      //    String add=inputReader.next();
+      //    System.out.println("Enter Editor Contact:");
+      //    String contact=inputReader.next();
         
-         String query = "INSERT INTO Editor (Name, Address, Contact) VALUES(?,?,?);";
+      //    String query = "INSERT INTO Editor (Name, Address, Contact) VALUES(?,?,?);";
          try{
-            PreparedStatement stinsert=conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+      //       PreparedStatement stinsert=conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
-            stinsert.setString(1, name);
-            stinsert.setString(2, add);
-            stinsert.setString(3, contact);
-            stinsert.executeQuery();
+      //       stinsert.setString(1, name);
+      //       stinsert.setString(2, add);
+      //       stinsert.setString(3, contact);
+      //       stinsert.executeQuery();
 
-            System.out.println("1 Row inserted!");
+      //       System.out.println("1 Row inserted!");
 
             System.out.println("\t\t [1] Enter Staff Editor Information");
             System.out.println("\t\t [2] Enter Invited Author Information");
@@ -77,7 +77,7 @@ public class Edit_Publish {
                 stinsertstaff.setString(2, experience);
                 stinsertstaff.executeQuery();
 
-                System.out.println("1 Row inserted!");
+      //           System.out.println("1 Row inserted!");
 
             }
              else if(userInput.equals("2"))
