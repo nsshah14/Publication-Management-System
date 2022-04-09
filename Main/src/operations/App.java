@@ -43,7 +43,7 @@ public class App {
                 // input routing
                 con.setAutoCommit(false);
                 switch(userInput){
-                	case "0" : break;
+                    case "0" : break;
                     case "1" :  Savepoint prodInsert=con.setSavepoint("beforeProdInsert");
                                 if(Production.newPublication(con,inputReader))
                                     con.commit();
@@ -162,27 +162,19 @@ public class App {
                                 break;
                     case "21" : 
                                 break;
-                    case "22" : Savepoint addDistOrder=con.setSavepoint("beforeDistAddOrder");
-                                if(Distribution.addOrderAndBillDist(con,inputReader))
-                                    con.commit();
-                                else
-                                    con.rollback(addDistOrder);
+                    case "22" : System.out.println("Unimplemented");
                                 break;
                     case "23" : System.out.println("Unimplemented");
                                 break;
-                    case "24" : Savepoint updateDistReceipt=con.setSavepoint("beforeDistPayment");
-                                if(Distribution.changeBalOnPayment(con,inputReader))
-                                    con.commit();
-                                else
-                                    con.rollback(updateDistReceipt);
+                    case "24" : System.out.println("Unimplemented");
                                 break;
-                    case "25" : Savepoint distInsert=con.setSavepoint("beforeDistInsert");
+                    case "25" :  Savepoint distInsert=con.setSavepoint("beforeDistInsert");
                                 if(Distribution.newDist(con,inputReader))
                                     con.commit();
                                 else
                                     con.rollback(distInsert);
-			                    break;	
-                    case "26" : Savepoint distUpdate=con.setSavepoint("beforeDistupdate");
+                                break;  
+                    case "26" :  Savepoint distUpdate=con.setSavepoint("beforeDistupdate");
                                 if(Distribution.updateDist(con,inputReader))
                                     con.commit();
                                 else
@@ -194,13 +186,24 @@ public class App {
                                 else
                                     con.rollback(deldist);
                                 break;
-                    case "28" :
+                    case "28" :Savepoint addDistOrder=con.setSavepoint("beforeDistAddOrder");
+                                if(Distribution.addOrderAndBillDist(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(addDistOrder);
                                 break;
-                    case "29" : System.out.println("Unimplemented");
+                    case "29" :Savepoint addDistOrderBill=con.setSavepoint("beforeDistAddOrder");
+                                if(Distribution.addOrderAndBillDist(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(addDistOrderBill);
                                 break;
-                    case "30" : System.out.println("Unimplemented");
+                    case "30" : Savepoint updateDistReceipt=con.setSavepoint("beforeDistPayment");
+                                if(Distribution.changeBalOnPayment(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(updateDistReceipt);
                                 break;
-                    
                     case "31" : Savepoint monthlyPub= con.setSavepoint("beforeDistInsert");
                                 if(Report.monthlyPublication(con,inputReader))
                                     con.commit();
@@ -304,3 +307,4 @@ public class App {
 
     
 }
+
