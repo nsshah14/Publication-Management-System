@@ -201,7 +201,7 @@ CREATE TABLE IF NOT EXISTS AddOrUpdateOrder(
     DistributorID INT,
     OrderID INT,
     Amount Decimal(9,2) Not NULL,
-    Status BINARY(1),
+    Status INT,
     PRIMARY KEY(DistributorID, OrderID),
     FOREIGN KEY(DistributorID) REFERENCES Distributor(DistributorID) 
     ON UPDATE CASCADE
@@ -213,7 +213,6 @@ CREATE TABLE IF NOT EXISTS AddOrUpdateOrder(
 
 CREATE TABLE IF NOT EXISTS TransactionDetails(
     OrderID INT,
-    DeliveryTime TIMESTAMP NOT NULL,
     DeliveryDate DATE NOT NULL,
     PRIMARY KEY(OrderID),
     FOREIGN KEY(OrderID) REFERENCES Orders(OrderID) 

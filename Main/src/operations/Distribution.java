@@ -1,14 +1,13 @@
 package operations;
 
-import java.sql.Statement;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.sql.Connection;
-import java.sql.Date;
 
 public class Distribution {
     /**
@@ -143,7 +142,6 @@ public class Distribution {
             for(int i=0;i<delcolvals.size();i++)
                 stdelete.setObject(i+1, delcolvals.get(i));
 
-            // System.out.println(query.toString());
             stdelete.executeQuery();
 
             System.out.println("Rows Deleted");
@@ -172,18 +170,23 @@ public class Distribution {
                 int quantity=inputreader.nextInt();
                 double final_amount=price*quantity;
                 double sc=0.1*final_amount;
-                long miliseconds = System.currentTimeMillis();
-                Date date = new Date(miliseconds);
+
+                LocalDate date=LocalDate.now();
+                LocalDate delivery=date.plusDays(14);
+
+
                 String query="INSERT into Orders (Price, ShippingCost, numCopies, PublicationID, Date) Values (?,?,?,?,?)";
                 PreparedStatement insertOrder=conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
                 insertOrder.setDouble(1, final_amount);
                 insertOrder.setDouble(2, sc);
                 insertOrder.setInt(3, quantity);
                 insertOrder.setInt(4, pid);
-                insertOrder.setDate(5, date);
+                insertOrder.setObject(5, date);
                 insertOrder.executeQuery();
 
-                System.out.println(did);
+                // FOR RETRIVAL OF DATE
+                // LocalDate ld = myResultSet.getObject( … , LocalDate.class ) ;
+
                 ResultSet rs = insertOrder.getGeneratedKeys();
                 int orderId = 0;
                 if(rs.next()){
@@ -201,6 +204,13 @@ public class Distribution {
                 Statement updateDist=conn.createStatement();
                 updateDist.executeQuery(queryUpdateDist);
 
+                String queryInsert="Insert INTO TransactionDetails(OrderID, DeliveryDate) Values (?,?);";
+                PreparedStatement insertTransDetails=conn.prepareStatement(queryInsert);
+                insertTransDetails.setInt(1, orderId);
+                insertTransDetails.setObject(2, delivery);
+
+                insertTransDetails.executeQuery();
+
                 System.out.println("Distributor placed order!!");
             }
             else{
@@ -217,8 +227,27 @@ public class Distribution {
     public static boolean changeBalOnPayment(Connection conn,Scanner inputreader){
         System.out.println("Enter Distributor ID:");
         int did=inputreader.nextInt();
-        
+        System.out.println("Enter Order ID:");
+        int oid=inputreader.nextInt();
+        System.out.println("Enter the Amount Paid:");
+        float paidAmount=inputreader.nextFloat();
+        StringBuilder updateDist=new StringBuilder("UPDATE Distributor set Balance=Balance-"+paidAmount+" where distributorID="+did);
+        StringBuilder updateorderreceipt=new StringBuilder("UPDATE AddOrUpdateOrder set Status=1 where distributorID="+did+" and orderID="+oid);
         try{
+            StringBuilder querydistorder=new StringBuilder("Select * from Distributor d,Orders o,AddOrUpdateOrder a where d.distributorID = a.distributorID and o.orderID = a.orderID and d.distributorID ="+did+" and o.OrderID = "+oid);
+            ResultSet getdist=conn.createStatement().executeQuery(querydistorder.toString());
+            if(getdist.next()){
+                if(getdist.getInt("Status")==0){
+                    conn.createStatement().executeUpdate(updateDist.toString());
+                    conn.createStatement().executeUpdate(updateorderreceipt.toString());
+
+                    System.out.println("Distributor Balance Updated");
+                } else{
+                    System.out.println("Order payment already done!!");
+                }
+            } else{
+                System.out.println("Distributor / Order not present");
+            }
 
         } catch(Exception e){
             e.printStackTrace();

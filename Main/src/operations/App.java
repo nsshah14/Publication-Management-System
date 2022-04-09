@@ -162,11 +162,19 @@ public class App {
                                 break;
                     case "21" : 
                                 break;
-                    case "22" : System.out.println("Unimplemented");
+                    case "22" : Savepoint addDistOrder=con.setSavepoint("beforeDistAddOrder");
+                                if(Distribution.addOrderAndBillDist(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(addDistOrder);
                                 break;
                     case "23" : System.out.println("Unimplemented");
                                 break;
-                    case "24" : System.out.println("Unimplemented");
+                    case "24" : Savepoint updateDistReceipt=con.setSavepoint("beforeDistPayment");
+                                if(Distribution.changeBalOnPayment(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(updateDistReceipt);
                                 break;
                     case "25" : Savepoint distInsert=con.setSavepoint("beforeDistInsert");
                                 if(Distribution.newDist(con,inputReader))
