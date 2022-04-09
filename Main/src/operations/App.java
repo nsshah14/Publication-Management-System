@@ -140,31 +140,19 @@ public class App {
                                 else
                                     con.rollback(updateTextArticles);
                                 break;
-                    case "17" : Savepoint placeOrder=con.setSavepoint("beforeDistPlaceOrder");
-                                if(Distribution.addOrderAndBillDist(con,inputReader))
+                    case "17" : Savepoint findBooksByTopic=con.setSavepoint("beforefindBooksByTopic");
+                                if(Production.findBooksByTopic(con,inputReader))
                                     con.commit();
                                 else
-                                    con.rollback(placeOrder);
+                                    con.rollback(findBooksByTopic);
                                 break;
                     case "18" : System.out.println("Unimplemented");
                                 break;
-                    case "19" : Savepoint distInsert=con.setSavepoint("beforeDistInsert");
-                                if(Distribution.newDist(con,inputReader))
-                                    con.commit();
-                                else
-                                    con.rollback(distInsert);
+                    case "19" : 
                                 break;
-                    case "20" : Savepoint distUpdate=con.setSavepoint("beforeDistupdate");
-                                if(Distribution.updateDist(con,inputReader))
-                                    con.commit();
-                                else
-                                    con.rollback(distUpdate);
+                    case "20" :
                                 break;
-                    case "21" : Savepoint deldist=con.setSavepoint("beforeDistInsert");
-                                if(Distribution.deleteDist(con,inputReader))
-                                    con.commit();
-                                else
-                                    con.rollback(deldist);
+                    case "21" : 
                                 break;
                     case "22" : System.out.println("Unimplemented");
                                 break;
@@ -172,24 +160,51 @@ public class App {
                                 break;
                     case "24" : System.out.println("Unimplemented");
                                 break;
-                    case "25" : con.setSavepoint("beforeDistInsert");
-			                    if(Report.monthlyPublication(con,inputReader))
-			                        con.commit();
-			                    else
-			                        con.rollback();
+                    case "25" : Savepoint distInsert=con.setSavepoint("beforeDistInsert");
+                                if(Distribution.newDist(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(distInsert);
 			                    break;	
-                    case "26" : System.out.println("Unimplemented");
+                    case "26" : Savepoint distUpdate=con.setSavepoint("beforeDistupdate");
+                                if(Distribution.updateDist(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(distUpdate);
                                 break;
-                    case "27" : System.out.println("Unimplemented");
+                    case "27" : Savepoint deldist=con.setSavepoint("beforeDistInsert");
+                                if(Distribution.deleteDist(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(deldist);
                                 break;
-                    case "28" : System.out.println("Unimplemented");
+                    case "28" :
                                 break;
                     case "29" : System.out.println("Unimplemented");
                                 break;
                     case "30" : System.out.println("Unimplemented");
                                 break;
-                   
+                    
+                    case "31" : Savepoint monthlyPub= con.setSavepoint("beforeDistInsert");
+                                if(Report.monthlyPublication(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(monthlyPub);
+                                break;
 
+                    case "32" : System.out.println("Unimplemented");
+                                break;
+                
+                    case "33" : System.out.println("Unimplemented");
+                                break;
+                    case "34" : System.out.println("Unimplemented");
+                                break;
+                    
+                    case "35" : System.out.println("Unimplemented");
+                                break;
+
+                    case "36" : System.out.println("Unimplemented");
+                                break;
                     default:  System.out.println("Invalid Input");
                                 break;
                     
@@ -238,29 +253,34 @@ public class App {
         System.out.println("\t\t [14] - Enter/Update an article");
         System.out.println("\t\t [15] - Enter/Update an chapter");        
         System.out.println("\t\t [16] - Enter/Update text of an article");
-        System.out.println("\t\t [17] - Find books and articles by topic, date, author's name");
-        System.out.println("\t\t [18] - Enter payment for author or editor");
-        System.out.println("\t\t [19] - Keep track of when each payment was claimed by its addressee");
+        System.out.println("\t\t [17] - Find books by topic");
+        System.out.println("\t\t [18] - Find books by date");
+        System.out.println("\t\t [19] - Find books by author's name");
+        System.out.println("\t\t [20] - Find articles by topic");
+        System.out.println("\t\t [21] - Find articles by date");
+        System.out.println("\t\t [22] - Find articles by author's name");
+        System.out.println("\t\t [23] - Enter payment for author or editor");
+        System.out.println("\t\t [24] - Keep track of when each payment was claimed by its addressee");
         System.out.println();
     
         //instructions for distribution
         System.out.println("\tDistribution");
-        System.out.println("\t\t [20] - Enter new distributor");
-        System.out.println("\t\t [21] - Update distributor information");
-        System.out.println("\t\t [22] - Delete a distributor. ");
-        System.out.println("\t\t [23] - Input orders from distributors, for a book edition or an issue of a publication per distributor, for a certain date.");
-        System.out.println("\t\t [24] - Bill distributor for an order");
-        System.out.println("\t\t [25] - Change outstanding balance of a distributor on receipt of a payment.");
+        System.out.println("\t\t [25] - Enter new distributor");
+        System.out.println("\t\t [26] - Update distributor information");
+        System.out.println("\t\t [27] - Delete a distributor. ");
+        System.out.println("\t\t [28] - Input orders from distributors, for a book edition or an issue of a publication per distributor, for a certain date.");
+        System.out.println("\t\t [29] - Bill distributor for an order");
+        System.out.println("\t\t [30] - Change outstanding balance of a distributor on receipt of a payment.");
         System.out.println();   
         
         //instructions for reports
         System.out.println("\tReports");
-        System.out.println("\t\t [26] - Generate montly reports: number and total price of copies of each publication bought per distributor per month");
-        System.out.println("\t\t [27] - Generate montly reports: total revenue of the publishing house");
-        System.out.println("\t\t [28] - Generate montly reports: total expenses (i.e., shipping costs and salaries)");
-        System.out.println("\t\t [29] - Calculate the total current number of distributors");
-        System.out.println("\t\t [30] - Calculate total revenue (since inception) per city, per distributor, and per location");
-        System.out.println("\t\t [31] - Calculate total payments to the editors and authors, per time period and per work type (book authorship, article authorship, or editorial work)");
+        System.out.println("\t\t [31] - Generate montly reports: number and total price of copies of each publication bought per distributor per month");
+        System.out.println("\t\t [32] - Generate montly reports: total revenue of the publishing house");
+        System.out.println("\t\t [33] - Generate montly reports: total expenses (i.e., shipping costs and salaries)");
+        System.out.println("\t\t [34] - Calculate the total current number of distributors");
+        System.out.println("\t\t [35] - Calculate total revenue (since inception) per city, per distributor, and per location");
+        System.out.println("\t\t [36] - Calculate total payments to the editors and authors, per time period and per work type (book authorship, article authorship, or editorial work)");
         System.out.println();
         
 
