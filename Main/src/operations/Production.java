@@ -509,11 +509,11 @@ public class Production {
       
         try{
 
-        if(rs1.next())
+        while(rs1.next())
         {
-            String getBooksByTopic = "SELECT * from Books b,Publication p where p.PublicationID = b.PublicationID and b.PublicationID="+pubID+";";
+            String getBooksByTopic = "SELECT * from Books b,Publication p where p.PublicationID = b.PublicationID and p.Topics like '"+inputTopic+"%';";
             rs2=conn.createStatement().executeQuery(getBooksByTopic);
-            if(rs2.next()){
+            while(rs2.next()){
             System.out.println();
             System.out.println("-------Result for Book Searched by Topic-------");
             System.out.println("Title of Book: "+rs2.getString("Title"));
@@ -524,8 +524,7 @@ public class Production {
             System.out.println("Edition of Book: "+rs2.getString("Edition"));
             System.out.println("ISBN of Book: "+rs2.getString("ISBN"));
             }
-            else
-            System.out.print("no row");
+    
         }
         }
     catch(Exception e){
@@ -562,11 +561,11 @@ public class Production {
       
         try{
 
-        if(rs1.next())
+        while(rs1.next())
         {
-            String getBooksByDate = "SELECT * from Books b,Publication p where p.PublicationID = b.PublicationID and b.PublicationID="+pubID+";";
+            String getBooksByDate = "SELECT * from Books b,Publication p where p.PublicationID = b.PublicationID and p.Date = '"+inputDate+"';";
             rs2=conn.createStatement().executeQuery(getBooksByDate);
-            if(rs2.next()){
+            while(rs2.next()){
             System.out.println();
             System.out.println("-------Result for Book Searched by Date-------");
             System.out.println("Title of Book: "+rs2.getString("Title"));
@@ -577,8 +576,6 @@ public class Production {
             System.out.println("Edition of Book: "+rs2.getString("Edition"));
             System.out.println("ISBN of Book: "+rs2.getString("ISBN"));
             }
-            else
-            System.out.print("no row");
         }
         }
     catch(Exception e){
@@ -627,11 +624,11 @@ public class Production {
       
         try{
 
-        if(rs1.next())
+        while(rs1.next())
         {
-            String getBooksByAuthorName = "SELECT * from Books b,Publication p where p.PublicationID = b.PublicationID and b.PublicationID="+pubID+";";
+            String getBooksByAuthorName = "SELECT * from Books b,Publication p,Editor e where p.PublicationID = b.PublicationID and p.EID = e.EID and e.Name like '"+inputName+"%';";
             rs2=conn.createStatement().executeQuery(getBooksByAuthorName);
-            if(rs2.next()){
+            while(rs2.next()){
             System.out.println();
             System.out.println("-------Result for Book Searched by Author Name-------");
             System.out.println("Title of Book: "+rs2.getString("Title"));
@@ -642,8 +639,6 @@ public class Production {
             System.out.println("Edition of Book: "+rs2.getString("Edition"));
             System.out.println("ISBN of Book: "+rs2.getString("ISBN"));
             }
-            else
-            System.out.print("no row");
         }
         }
     catch(Exception e){

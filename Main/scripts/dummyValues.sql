@@ -4,7 +4,7 @@ INSERT INTO Distributor VALUES(3, 'Mark', 'Bookstore', '2520 Avent Ferry Road', 
 INSERT INTO Distributor VALUES(4, 'Steve', 'Library', '2514 Avent Ferry Road', '+19843483402', 'Mary', 400);
 INSERT INTO Distributor VALUES(5, 'Mike', 'Library', '2517 Avent Ferry Road', '+19863245402', 'Lucy', 772);
 INSERT INTO Editor VALUES(1, 'Johnny', '2512 Gorman Street Road', '+19848883402');
-INSERT INTO Editor VALUES(2, 'Kevin', '2522 Gorman Street Road', '+19842239405');
+INSERT INTO Editor VALUES(2, 'Johnny', '2522 Gorman Street Road', '+19842239405');
 INSERT INTO Editor VALUES(3, 'Mark', '2520 Gorman Street Road', '+191041239420');
 INSERT INTO Editor VALUES(4, 'Steve', '2514 Gorman Street Road', '+19843483402');
 INSERT INTO Editor VALUES(5, 'Mike', '2517 Gorman Street Road', '+19863245402');
@@ -24,7 +24,7 @@ INSERT INTO Publisher VALUES(3, "Suzane", "+191041239420", "2620 Kensington Park
 INSERT INTO Publisher VALUES(4, "Maria", "+19841298765", "2524 Kensington Park Road");
 INSERT INTO Publisher VALUES(5, "Michael", "+19863245402", "2519 Kensington Park Road");
 INSERT INTO Publication VALUES(1, "Introduction to Computing", '2020-01-21', "Science", "Yearly",12.45,1);
-INSERT INTO Publication VALUES(2, "Introduction to Databases", '2020-01-04', "Technology", "Yearly",10.97,1);
+INSERT INTO Publication VALUES(2, "Introduction to Databases", '2020-01-21', "Science", "Yearly",10.97,2);
 INSERT INTO Publication VALUES(3, "Autobiography of Sachin Tendulkar", '2019-03-19', "Sports", "Yearly",4.67,2);
 INSERT INTO Publication VALUES(4, "Mathematics Edition 1", '2021-02-13', "Mathematics", "Monthly",9.43,3);
 INSERT INTO Publication VALUES(5, "Marvel Comics", '2021-01-26', "Fictional", "Weekly",8.34,4);
