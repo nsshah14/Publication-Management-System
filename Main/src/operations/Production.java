@@ -534,4 +534,57 @@ public class Production {
     }
         return true;
      }
+
+     public static boolean findBooksByDate (Connection conn, Scanner inputreader){
+        System.out.println("Enter Date to find the Book for:");
+        String inputDate=inputreader.nextLine();
+        ResultSet rs;
+        ResultSet rs1;
+        ResultSet rs2;
+        int pubID=0;
+        try{
+            String query = "SELECT PublicationID from Publication where Date like '"+inputDate+"%';";
+            rs=conn.createStatement().executeQuery(query);
+            rs.next();
+            pubID = rs.getInt(1);
+        } catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+
+        try{
+            String queryFromBooks = "SELECT PublicationID from Books where PublicationID ="+pubID+";";
+             rs1=conn.createStatement().executeQuery(queryFromBooks);
+        } catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+      
+        try{
+
+        if(rs1.next())
+        {
+            String getBooksByDate = "SELECT * from Books b,Publication p where p.PublicationID = b.PublicationID and b.PublicationID="+pubID+";";
+            rs2=conn.createStatement().executeQuery(getBooksByDate);
+            if(rs2.next()){
+            System.out.println();
+            System.out.println("-------Result for Book Searched by Date-------");
+            System.out.println("Title of Book: "+rs2.getString("Title"));
+            System.out.println("Date of Publication of Book: "+rs2.getString("Date"));
+            System.out.println("Topic of Book: "+rs2.getString("Topics"));
+            System.out.println("Periodicity of Book: "+rs2.getString("Periodicity"));
+            System.out.println("Price of Book: "+rs2.getString("Price"));
+            System.out.println("Edition of Book: "+rs2.getString("Edition"));
+            System.out.println("ISBN of Book: "+rs2.getString("ISBN"));
+            }
+            else
+            System.out.print("no row");
+        }
+        }
+    catch(Exception e){
+        e.printStackTrace();
+        return false;
+    }
+        return true;
+     }
 }

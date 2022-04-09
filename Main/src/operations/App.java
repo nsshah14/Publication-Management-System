@@ -146,7 +146,11 @@ public class App {
                                 else
                                     con.rollback(findBooksByTopic);
                                 break;
-                    case "18" : System.out.println("Unimplemented");
+                    case "18" : Savepoint findBooksByDate=con.setSavepoint("beforefindBooksByDate");
+                                if(Production.findBooksByDate(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(findBooksByDate);
                                 break;
                     case "19" : 
                                 break;
