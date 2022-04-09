@@ -152,7 +152,11 @@ public class App {
                                 else
                                     con.rollback(findBooksByDate);
                                 break;
-                    case "19" : 
+                    case "19" : Savepoint findBooksByAuthorName=con.setSavepoint("beforefindBooksByAuthorName");
+                                if(Production.findBooksByAuthorName(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(findBooksByAuthorName);
                                 break;
                     case "20" :
                                 break;
