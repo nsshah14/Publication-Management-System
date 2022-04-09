@@ -647,4 +647,169 @@ public class Production {
     }
         return true;
      }
+
+     public static boolean findArticlesbyTopic (Connection conn, Scanner inputreader){
+        System.out.println("Enter Topic to find the Articles for:");
+        String inputTopic=inputreader.nextLine();
+        ResultSet rs;
+        ResultSet rs1;
+        ResultSet rs2;
+        int pubID=0;
+        try{
+            String query = "SELECT PublicationID from Publication where Topics like '"+inputTopic+"%';";
+            rs=conn.createStatement().executeQuery(query);
+            rs.next();
+            pubID = rs.getInt(1);
+        } catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+
+        try{
+            String queryFromArticles = "SELECT PublicationID from Articles where PublicationID ="+pubID+";";
+             rs1=conn.createStatement().executeQuery(queryFromArticles);
+        } catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+      
+        try{
+
+        while(rs1.next())
+        {
+            String getArticlesByTopic = "SELECT * from Articles a,Publication p where p.PublicationID = a.PublicationID and p.Topics like '"+inputTopic+"%';";
+            rs2=conn.createStatement().executeQuery(getArticlesByTopic);
+            while(rs2.next()){
+            System.out.println();
+            System.out.println("-------Result for Articles Searched by Topic-------");
+            System.out.println("Title of Article: "+rs2.getString("Title"));
+            System.out.println("Date of Publication of Article: "+rs2.getString("Date"));
+            System.out.println("Topic of Article: "+rs2.getString("Topics"));
+            System.out.println("Periodicity of Article: "+rs2.getString("Periodicity"));
+            System.out.println("Price of Article: "+rs2.getString("Price"));
+            System.out.println("Description of Article: "+rs2.getString("Description"));
+            System.out.println("Text of Article: "+rs2.getString("Text"));
+            }
+        }
+        }
+    catch(Exception e){
+        e.printStackTrace();
+        return false;
+    }
+        return true;
+     }
+
+     public static boolean findArticlesbyDate (Connection conn, Scanner inputreader){
+        System.out.println("Enter Date to find the Articles for:");
+        String inputDate=inputreader.nextLine();
+        ResultSet rs;
+        ResultSet rs1;
+        ResultSet rs2;
+        int pubID=0;
+        try{
+            String query = "SELECT PublicationID from Publication where Date like '"+inputDate+"%';";
+            rs=conn.createStatement().executeQuery(query);
+            rs.next();
+            pubID = rs.getInt(1);
+        } catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+
+        try{
+            String queryFromArticles = "SELECT PublicationID from Articles where PublicationID ="+pubID+";";
+             rs1=conn.createStatement().executeQuery(queryFromArticles);
+        } catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+      
+        try{
+
+        while(rs1.next())
+        {
+            String getArticlesByDate = "SELECT * from Articles a,Publication p where p.PublicationID = a.PublicationID and p.Date = '"+inputDate+"';";
+            rs2=conn.createStatement().executeQuery(getArticlesByDate);
+            while(rs2.next()){
+            System.out.println();
+            System.out.println("-------Result for Article Searched by Date-------");
+            System.out.println("Title of Article: "+rs2.getString("Title"));
+            System.out.println("Date of Publication of Article: "+rs2.getString("Date"));
+            System.out.println("Topic of Article: "+rs2.getString("Topics"));
+            System.out.println("Periodicity of Article: "+rs2.getString("Periodicity"));
+            System.out.println("Price of Article: "+rs2.getString("Price"));
+            System.out.println("Description of Article: "+rs2.getString("Description"));
+            System.out.println("Text of Article: "+rs2.getString("Text"));
+            }
+        }
+        }
+    catch(Exception e){
+        e.printStackTrace();
+        return false;
+    }
+        return true;
+     }
+
+     public static boolean findArticlesByAuthorName (Connection conn, Scanner inputreader){
+        System.out.println("Enter Author's name to find the Articles for:");
+        String inputName=inputreader.nextLine();
+        ResultSet rs;
+        ResultSet rs1;
+        ResultSet rs2;
+        ResultSet rs3;
+        int pubID=0;
+        int editorID =0;
+        try{            
+            String findidbyauthor = "SELECT EID from Editor where Name like '"+inputName+"%';";
+            rs3=conn.createStatement().executeQuery(findidbyauthor);
+            rs3.next();
+            editorID = rs3.getInt(1);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        try{
+            String query = "SELECT PublicationID from Publication where EID ="+editorID+";";
+            rs=conn.createStatement().executeQuery(query);
+            rs.next();
+            pubID = rs.getInt(1);
+        } catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+
+        try{
+            String queryFromArticles = "SELECT PublicationID from Articles where PublicationID ="+pubID+";";
+             rs1=conn.createStatement().executeQuery(queryFromArticles);
+        } catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+      
+        try{
+
+        while(rs1.next())
+        {
+            String getArticlesByAuthorName = "SELECT * from Articles a,Publication p,Editor e where p.PublicationID = a.PublicationID and p.EID = e.EID and e.Name like '"+inputName+"%';";
+            rs2=conn.createStatement().executeQuery(getArticlesByAuthorName);
+            while(rs2.next()){
+            System.out.println();
+            System.out.println("-------Result for Article Searched by Author Name-------");
+            System.out.println("Title of Article: "+rs2.getString("Title"));
+            System.out.println("Date of Publication of Article: "+rs2.getString("Date"));
+            System.out.println("Topic of Article: "+rs2.getString("Topics"));
+            System.out.println("Periodicity of Article: "+rs2.getString("Periodicity"));
+            System.out.println("Price of Article: "+rs2.getString("Price"));
+            System.out.println("Description of Article: "+rs2.getString("Description"));
+            System.out.println("Text of Article: "+rs2.getString("Text"));
+            }
+        }
+        }
+    catch(Exception e){
+        e.printStackTrace();
+        return false;
+    }
+        return true;
+     }
 }

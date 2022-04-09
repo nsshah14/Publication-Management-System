@@ -158,11 +158,23 @@ public class App {
                                 else
                                     con.rollback(findBooksByAuthorName);
                                 break;
-                    case "20" :
+                    case "20" :Savepoint findArticlesByTopic=con.setSavepoint("beforefindArticlessByTopic");
+                                if(Production.findArticlesbyTopic(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(findArticlesByTopic);
                                 break;
-                    case "21" : 
+                    case "21" : Savepoint findArticlesByDate=con.setSavepoint("beforefindArticlessByDate");
+                                if(Production.findArticlesbyDate(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(findArticlesByDate);
                                 break;
-                    case "22" : System.out.println("Unimplemented");
+                    case "22" : Savepoint findArticleByAuthorName=con.setSavepoint("beforefindArticlessByAuthor");
+                                if(Production.findArticlesByAuthorName(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(findArticleByAuthorName);
                                 break;
                     case "23" : System.out.println("Unimplemented");
                                 break;
