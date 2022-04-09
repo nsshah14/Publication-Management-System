@@ -37,17 +37,48 @@ public class Production {
         String pubPeriodicity=inputReader.nextLine();
         System.out.println("Enter the Price of Publication:");
         Double pubPrice=inputReader.nextDouble();
+        System.out.println("Enter the Editor ID for Publication:");
+        int pubEID=inputReader.nextInt();
         ResultSet rs = null;
-        String query = "INSERT INTO Publication (Title, Date,Topics,Periodicity,Price) VALUES(?,?,?,?,?);";
-
+        String query = "INSERT INTO Publication (Title, Date,Topics,Periodicity,Price,EID) VALUES(?,?,?,?,?,?);";
+        String matchEID = "SELECT * from Editor where EID = "+pubEID+";";
+        int flag = 0;
+        try{
+        ResultSet rs1=conn.createStatement().executeQuery(matchEID);
+        int EID = 0;
+        if(rs1.next()){
+            EID = rs1.getInt(1);
+        }
+        else{   
+            System.out.println("Enter the Editor First as it's not present");
+            flag=1;
+            // return false;
+        }
+        
+        }
+        catch(Exception e){
+            System.out.println("Enter the Editor First as it's not present");
+            return false;
+         }
+        if(flag==1)
+        {
+            System.out.println("Enter 0 to return to Prompt");
+            int returnToPrompt = inputReader.nextInt();
+            if(returnToPrompt==0)
+            {
+                return false;
+            }
+        }
         try{
             PreparedStatement stinsert=conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-
+            rs = stinsert.getGeneratedKeys();
+        
             stinsert.setString(1, pubTitle);
             stinsert.setDate(2,java.sql.Date.valueOf(date));
             stinsert.setString(3, pubTopics);
             stinsert.setString(4, pubPeriodicity);
             stinsert.setDouble(5, pubPrice);
+            stinsert.setInt(6,pubEID);
             stinsert.executeQuery();
 
             System.out.println("1 Row inserted!");
