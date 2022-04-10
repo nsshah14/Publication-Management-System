@@ -811,5 +811,48 @@ public class Production {
         return false;
     }
         return true;
-     }
+    }
+    public static boolean editorPayment(Connection conn,Scanner inputreader){
+        try{
+            System.out.println("Enter Editor ID:");
+            int eid=inputreader.nextInt();
+
+            ResultSet getEditor=conn.createStatement().executeQuery("SELECT * FROM Editor where EID="+eid);
+
+            if(getEditor.next()){
+                System.out.println("Enter Amount Paid to Editor:");
+                float amt=inputreader.nextFloat();
+
+                java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String currentTime = sdf.format(date);
+                
+                // System.out.println("SELECT * FROM Payment where EID="+eid+" and Date=`"+currentTime+"`;");
+                ResultSet geteidanddate=conn.createStatement().executeQuery("SELECT * FROM Payment where EID="+eid+" and Date='"+currentTime+"';");
+
+                if(geteidanddate.next()){
+                    System.out.println("Can't enter Transaction for the specified EID as 1 Transaction is already record today!");
+                    return false;
+                } else{
+                    PreparedStatement ps=conn.prepareStatement("Insert into Payment(EID,Amount,Date) values (?,?,?)");
+
+                    ps.setInt(1,eid);
+                    ps.setFloat(2, amt);
+                    ps.setDate(3, java.sql.Date.valueOf(currentTime));
+
+                    ps.executeQuery();
+
+                    System.out.println("Payment for Editor successful!!");
+                }
+        
+            } else{
+                System.out.println("Editor not present!! Please Enter Editor details first to continue");
+                return false;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

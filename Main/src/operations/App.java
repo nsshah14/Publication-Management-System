@@ -25,11 +25,11 @@ public class App {
             String userInput = "";
                     
             //drop, and re-create all tables
-            //Initializer.dropTables(con);
-            //Initializer.createTables(con);
+            Initializer.dropTables(con);
+            Initializer.createTables(con);
 
             System.out.println("\n\n+-------------------------------+\n|\tTABLES CREATED!!!\t|\n+-------------------------------+\n\n");
-            //Initializer.addDummyValues(con);
+            Initializer.addDummyValues(con);
 
             //USER INPUT PROCESSING
             do {
@@ -176,7 +176,11 @@ public class App {
                                 else
                                     con.rollback(findArticleByAuthorName);
                                 break;
-                    case "23" : System.out.println("Unimplemented");
+                    case "23" : Savepoint editPay=con.setSavepoint("beforeEditorPayment");
+                                if(Production.editorPayment(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(editPay);
                                 break;
                     case "24" : System.out.println("Unimplemented");
                                 break;
