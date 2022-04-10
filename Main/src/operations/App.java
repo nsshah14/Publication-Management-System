@@ -9,8 +9,8 @@ import operations.Report;
 
 public class App {
     //database parameters Replace with your parameters
-    static String user = "pthosan";
-    static String password = "200401606";
+    static String user = "psengo";
+    static String password = "csc540";
 
     public static void main(String[] args) throws Exception {
         
@@ -25,11 +25,11 @@ public class App {
             String userInput = "";
                     
             //drop, and re-create all tables
-            Initializer.dropTables(con);
-            Initializer.createTables(con);
+            //Initializer.dropTables(con);
+            //Initializer.createTables(con);
 
             System.out.println("\n\n+-------------------------------+\n|\tTABLES CREATED!!!\t|\n+-------------------------------+\n\n");
-            Initializer.addDummyValues(con);
+            //Initializer.addDummyValues(con);
 
             //USER INPUT PROCESSING
             do {
@@ -216,20 +216,33 @@ public class App {
                                 else
                                     con.rollback(updateDistReceipt);
                                 break;
-                    case "31" : Savepoint monthlyPub= con.setSavepoint("beforeDistInsert");
+                    case "31" : Savepoint monthlyPub= con.setSavepoint("beforeGetPubReport");
                                 if(Report.monthlyPublication(con,inputReader))
                                     con.commit();
                                 else
                                     con.rollback(monthlyPub);
                                 break;
 
-                    case "32" : System.out.println("Unimplemented");
-                                break;
+                    case "32" : Savepoint monthlyRev= con.setSavepoint("beforeGetRevReport");
+			                    if(Report.monthlyRevenue(con,inputReader))
+			                        con.commit();
+			                    else
+			                        con.rollback(monthlyRev);
+			                    break;
                 
-                    case "33" : System.out.println("Unimplemented");
-                                break;
-                    case "34" : System.out.println("Unimplemented");
-                                break;
+                    case "33" : Savepoint monthlyExp = con.setSavepoint("beforeGetExpReport");
+			                    if(Report.monthlyExpense(con,inputReader))
+			                        con.commit();
+			                    else
+			                        con.rollback(monthlyExp);
+			                    break;
+                  
+                    case "34" : Savepoint distCount= con.setSavepoint("beforeDistCountGet");
+			                    if(Report.totalDistributor(con,inputReader))
+			                        con.commit();
+			                    else
+			                        con.rollback(distCount);
+			                    break;
                     
                     case "35" : System.out.println("Unimplemented");
                                 break;
