@@ -220,6 +220,8 @@ public class Report {
         
 	}
 	
+	
+	//TODO
 	//System.out.println("\t\t [24] - Calculate total revenue (since inception) per city, per distributor, and per location");
 	public static boolean totalRevenuePerCity(Connection con, Scanner scan ){
 
@@ -237,13 +239,18 @@ public class Report {
 	
 	//System.out.println("\t\t [24] - Calculate total revenue (since inception) per city, per distributor, and per location");
 	public static boolean totalRevenuePerDistributor(Connection con, Scanner scan ){
-		//SELECT Orders.OrderID, PublicationID, Date, Distributor.distributorID, Name, Type, Address, Phone, ContactPerson, Balance, Status, Amount,(Price*NumCopies)+ShippingCost As DistPay FROM Orders JOIN AddOrUpdateOrder ON AddOrUpdateOrder.OrderID = Orders.orderID JOIN Distributor ON Distributor.distributorID = AddOrUpdateOrder.DistributorID;
-		//TODO: count distributor ids. 
+		//SELECT Distributor.distributorID,SUM((Price*NumCopies)+ShippingCost) As DistPay FROM Orders JOIN AddOrUpdateOrder ON AddOrUpdateOrder.OrderID = Orders.orderID JOIN Distributor ON Distributor.distributorID = AddOrUpdateOrder.DistributorID GROUP BY Distributor.distributorID;
+		
         try(Statement stmt = con.createStatement()){
-            //String inputStatement = String.format("INSERT into Publication VALUES(%s, '%s', '%s', '%s', '%s')", id, title, date, topics, periodicity);
-            //stmt.executeUpdate(inputStatement);
-            
-            System.out.println("Ok");
+            String inputStatement = "SELECT Distributor.distributorID,SUM((Price*NumCopies)+ShippingCost) As DistPay FROM Orders JOIN AddOrUpdateOrder ON AddOrUpdateOrder.OrderID = Orders.orderID JOIN Distributor ON Distributor.distributorID = AddOrUpdateOrder.DistributorID GROUP BY Distributor.distributorID";
+        	ResultSet rs1 = stmt.executeQuery(inputStatement);
+        	System.out.println(String.format("%s %20s", "Distribution ID" , "Total Revenue"));
+            while(rs1.next()) {
+            	String distID = rs1.getString("distributorID");
+            	String TotalRev = rs1.getString("DistPay");
+            	System.out.println(String.format("%s %20s", distID , TotalRev));
+            }
+        	System.out.println("Ok");
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -253,10 +260,16 @@ public class Report {
 		//System.out.println("\t\t [24] - Calculate total revenue (since inception) per city, per distributor, and per location");
 	public static boolean totalRevenuePerLocation(Connection con, Scanner scan ){
 
-		//TODO: count distributor ids. 
+		//SELECT Distributor.Address,(Price*NumCopies)+ShippingCost As DistPay FROM Orders JOIN AddOrUpdateOrder ON AddOrUpdateOrder.OrderID = Orders.orderID JOIN Distributor ON Distributor.distributorID = AddOrUpdateOrder.DistributorID GROUP BY Address;
         try(Statement stmt = con.createStatement()){
-            //String inputStatement = String.format("INSERT into Publication VALUES(%s, '%s', '%s', '%s', '%s')", id, title, date, topics, periodicity);
-            //stmt.executeUpdate(inputStatement);
+            String inputStatement = "SELECT Distributor.Address,(Price*NumCopies)+ShippingCost As DistPay FROM Orders JOIN AddOrUpdateOrder ON AddOrUpdateOrder.OrderID = Orders.orderID JOIN Distributor ON Distributor.distributorID = AddOrUpdateOrder.DistributorID GROUP BY Address";
+        	ResultSet rs1 = stmt.executeQuery(inputStatement);
+        	System.out.println(String.format("%s %20s", "Address" , "Total Revenue"));
+            while(rs1.next()) {
+            	String addr = rs1.getString("Address");
+            	String TotalRev = rs1.getString("DistPay");
+            	System.out.println(String.format("%s %20s", addr , TotalRev));
+            }
             
             System.out.println("Ok");
         }catch(SQLException e){
@@ -266,13 +279,38 @@ public class Report {
 	}	
 	
 	//System.out.println("\t\t [25] - Calculate total payments to the editors and authors, per time period and per work type (book authorship, article authorship, or editorial work)");
-	public static boolean totalPayment(Connection con, Scanner scan ){
+	public static boolean totalPaymentPerTime(Connection con, Scanner scan ){
 
 		//TODO: count distributor ids. 
         try(Statement stmt = con.createStatement()){
-            //String inputStatement = String.format("INSERT into Publication VALUES(%s, '%s', '%s', '%s', '%s')", id, title, date, topics, periodicity);
-            //stmt.executeUpdate(inputStatement);
+        
+        	//SELECT YEAR(Date), MONTH(Date), SUM(Amount) FROM Editor JOIN Payment ON Editor.EID = Payment.EID GROUP BY YEAR(Date), MONTH(Date);
+        	String inputStatement = "SELECT YEAR(Date), MONTH(Date), SUM(Amount) FROM Editor JOIN Payment ON Editor.EID = Payment.EID GROUP BY YEAR(Date), MONTH(Date)";
+        	ResultSet rs1 = stmt.executeQuery(inputStatement);
+        	System.out.println(String.format("%s %20s", "Date" , "Total Payment"));
+            while(rs1.next()) {
+            	String date = rs1.getString("MONTH(Date)") + "-" + rs1.getString("YEAR(Date)");
+            	String totPay = rs1.getString("SUM(Amount)");
+            	System.out.println(String.format("%s %20s", date , totPay));
+            }
+            System.out.println("Ok");
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return true;
+	}
+	
+	//TODO: Time period?? Work Type?
+	//System.out.println("\t\t [25] - Calculate total payments to the editors and authors, per time period and per work type (book authorship, article authorship, or editorial work)");
+	public static boolean totalPaymentPerWork(Connection con, Scanner scan ){
+
+		//TODO: count distributor ids. 
+        try(Statement stmt = con.createStatement()){
             
+        	
+        	//String inputStatement = String.format("INSERT into Publication VALUES(%s, '%s', '%s', '%s', '%s')", id, title, date, topics, periodicity);
+            //stmt.executeUpdate(inputStatement);
+        	
             System.out.println("Ok");
         }catch(SQLException e){
             e.printStackTrace();

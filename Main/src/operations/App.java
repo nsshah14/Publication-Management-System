@@ -243,12 +243,27 @@ public class App {
 			                    else
 			                        con.rollback(distCount);
 			                    break;
-                    
                     case "35" : System.out.println("Unimplemented");
-                                break;
-
-                    case "36" : System.out.println("Unimplemented");
-                                break;
+                    case "36" : Savepoint revPerDist = con.setSavepoint("beforeGetRevPerDist");
+			                    if(Report.totalRevenuePerDistributor(con,inputReader))
+			                        con.commit();
+			                    else
+			                        con.rollback(revPerDist);
+			                    break;
+                    case "37" : Savepoint revPerLoc = con.setSavepoint("beforeGetRevPerLocation");
+			                    if(Report.totalRevenuePerLocation(con,inputReader))
+			                        con.commit();
+			                    else
+			                        con.rollback(revPerLoc);
+			                    break;
+                    	
+                    case "38" : Savepoint payPerDate = con.setSavepoint("beforeGetPayPerDate");
+			                    if(Report.totalPaymentPerTime(con,inputReader))
+			                        con.commit();
+			                    else
+			                        con.rollback(payPerDate);
+			                    break;
+                    case "39" : System.out.println("Unimplemented");	
                     default:  System.out.println("Invalid Input");
                                 break;
                     
@@ -323,8 +338,11 @@ public class App {
         System.out.println("\t\t [32] - Generate montly reports: total revenue of the publishing house");
         System.out.println("\t\t [33] - Generate montly reports: total expenses (i.e., shipping costs and salaries)");
         System.out.println("\t\t [34] - Calculate the total current number of distributors");
-        System.out.println("\t\t [35] - Calculate total revenue (since inception) per city, per distributor, and per location");
-        System.out.println("\t\t [36] - Calculate total payments to the editors and authors, per time period and per work type (book authorship, article authorship, or editorial work)");
+        System.out.println("\t\t [35] - Calculate total revenue (since inception) per city");
+        System.out.println("\t\t [36] - Calculate total revenue (since inception) per distributor");
+        System.out.println("\t\t [37] - Calculate total revenue (since inception) per location");
+        System.out.println("\t\t [38] - Calculate total payments to the editors and authors, per time period ");
+        System.out.println("\t\t [39] - Calculate total payments to the editors and authors, per work type (book authorship, article authorship, or editorial work)");
         System.out.println();
         
 
