@@ -198,8 +198,8 @@ public class Production {
     
     public static boolean updateProd(Connection conn, Scanner inputreader){
 
-        List<String> condcolnames=new ArrayList();
-         List<Object> condcolvals=new ArrayList();
+        List<String> condcolnames=new ArrayList<String>();
+         List<Object> condcolvals=new ArrayList<Object>();
 
          System.out.println("Enter number of conditions:");
          int n=inputreader.nextInt();
@@ -242,8 +242,8 @@ public class Production {
      }
 
      public static boolean deleteProd(Connection conn, Scanner inputreader){
-        List<String> delcolnames=new ArrayList();
-        List<Object> delcolvals=new ArrayList();
+        List<String> delcolnames=new ArrayList<String>();
+        List<Object> delcolvals=new ArrayList<Object>();
 
         System.out.println("enter number of conditions:");
         int n=inputreader.nextInt();
@@ -278,8 +278,8 @@ public class Production {
 
      public static boolean updateArticles(Connection conn, Scanner inputreader){
 
-        List<String> condcolnames=new ArrayList();
-         List<Object> condcolvals=new ArrayList();
+        List<String> condcolnames=new ArrayList<String>();
+         List<Object> condcolvals=new ArrayList<Object>();
 
          System.out.println("Enter number of conditions:");
          int n=inputreader.nextInt();
@@ -324,8 +324,8 @@ public class Production {
      }
     
      public static boolean deleteArticles(Connection conn, Scanner inputreader){
-        List<String> delcolnames=new ArrayList();
-        List<Object> delcolvals=new ArrayList();
+        List<String> delcolnames=new ArrayList<String>();
+        List<Object> delcolvals=new ArrayList<Object>();
 
         System.out.println("enter number of conditions:");
         int n=inputreader.nextInt();
@@ -362,8 +362,8 @@ public class Production {
 
      public static boolean updateChapters(Connection conn, Scanner inputreader){
 
-        List<String> condcolnames=new ArrayList();
-        List<Object> condcolvals=new ArrayList();
+        List<String> condcolnames=new ArrayList<String>();
+        List<Object> condcolvals=new ArrayList<Object>();
 
          System.out.println("Enter number of conditions:");
          int n=inputreader.nextInt();
@@ -410,8 +410,8 @@ public class Production {
      }
 
      public static boolean deleteChapters(Connection conn, Scanner inputreader){
-        List<String> delcolnames=new ArrayList();
-        List<Object> delcolvals=new ArrayList();
+        List<String> delcolnames=new ArrayList<String>();
+        List<Object> delcolvals=new ArrayList<Object>();
 
         System.out.println("enter number of conditions:");
         int n=inputreader.nextInt();
@@ -449,8 +449,8 @@ public class Production {
      public static boolean updateTextOfArticle(Connection conn, Scanner inputreader){
 
        
-        List<String> condcolnames=new ArrayList();
-        List<Object> condcolvals=new ArrayList();
+        List<String> condcolnames=new ArrayList<String>();
+        List<Object> condcolvals=new ArrayList<Object>();
 
          System.out.println("Enter number of conditions:");
          int n=inputreader.nextInt();
