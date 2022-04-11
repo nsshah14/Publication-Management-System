@@ -145,7 +145,7 @@ public class Production {
                 String type=inputRead.nextLine();
                 System.out.println("Enter the Periodic Length of Publication:");
                 int periodicLength=inputRead.nextInt();  
-                inputreader.nextLine();
+                inputRead.nextLine();
 
                 System.out.println("Enter the Issue Date of Publication:");
                 String issueDate=inputRead.nextLine();                  
@@ -210,7 +210,6 @@ public class Production {
             System.out.println("Enter column value:");
             condcolvals.add(inputreader.nextLine());
          }
-        System.out.println(condcolvals);
          System.out.println("Enter Column Name to update:");
          String toUpdateCol=inputreader.nextLine();
 
