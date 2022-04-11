@@ -69,7 +69,7 @@ INSERT INTO PeriodicPublication VALUES(4, "Magazine", 5, '2020-06-21');
 INSERT INTO PeriodicPublication VALUES(5, "Journal", 1, '2020-03-03');
 
 INSERT INTO PeriodicPublication VALUES(1002, "Magazine", 1, '2020-02-24');
-INSERT INTO PeriodicPublication VALUES(1002, "Journal", 2, '2020-03-01');
+INSERT INTO PeriodicPublication VALUES(1003, "Journal", 2, '2020-03-01');
 
 
 INSERT INTO Chapters VALUES(1, 1, 400);

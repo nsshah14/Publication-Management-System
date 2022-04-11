@@ -92,7 +92,7 @@ public class Production {
             Scanner inputRead = new Scanner(System.in);  // Create a Scanner object
             String userInput = "";
             System.out.print("Input Command: ");
-            userInput = inputRead.next();
+            userInput = inputRead.nextLine();
 
             String getpublicationID = "SELECT PublicationID FROM Publication ORDER BY PublicationID DESC LIMIT 1";
             PreparedStatement getValueofID=conn.prepareStatement(getpublicationID);
@@ -103,9 +103,9 @@ public class Production {
             if(userInput.equals("1"))
             {
                 System.out.println("Enter ISBN for Books:");
-                String bookISBN=inputRead.next();
+                String bookISBN=inputRead.nextLine();
                 System.out.println("Enter the Edition of Book:");
-                inputRead.next();
+                inputRead.nextLine();
                 String bookEdition=inputRead.nextLine();   
                 String book_query = "INSERT INTO Books (PublicationID, ISBN,Edition) VALUES(?,?,?);";
                 PreparedStatement insertIntoBook=conn.prepareStatement(book_query);
@@ -119,7 +119,7 @@ public class Production {
                 
                 System.out.println("\t\t [1] Enter the Chapter Information in a Book:");
                 System.out.print("Input Command: ");
-                userInput = inputRead.next();
+                userInput = inputRead.nextLine();
 
                 if(userInput.equals("1"))
                 {
@@ -142,11 +142,13 @@ public class Production {
             else if(userInput.equals("2"))
             {
                 System.out.println("Enter Type of Periodic Publication:");
-                String type=inputRead.next();
+                String type=inputRead.nextLine();
                 System.out.println("Enter the Periodic Length of Publication:");
                 int periodicLength=inputRead.nextInt();  
+                inputreader.nextLine();
+
                 System.out.println("Enter the Issue Date of Publication:");
-                String issueDate=inputRead.next();                  
+                String issueDate=inputRead.nextLine();                  
                 String periodic_publication_query = "INSERT INTO PeriodicPublication (PublicationID,Type,Periodic_length,Issue_date) VALUES(?,?,?,?);";
                 PreparedStatement insertIntoPeriodicPublication=conn.prepareStatement(periodic_publication_query);
 
@@ -159,14 +161,14 @@ public class Production {
 
                 System.out.println("\t\t [1] Enter the Article Information in a Book:");
                 System.out.print("Input Command: ");
-                userInput = inputRead.next();
+                userInput = inputRead.nextLine();
 
                 if(userInput.equals("1"))
                 {
                     System.out.println("Enter the Article ID:");
                     int articleID=inputRead.nextInt();  
                     System.out.println("Enter the Description of Article:");
-                    String articleDesc=inputRead.next();  
+                    String articleDesc=inputRead.nextLine();  
                     System.out.println("Enter the Text of Article:");
                     String articleText=inputRead.nextLine();  
                     String article_query = "INSERT INTO Articles (PublicationID,ArticleID,Description,Text) VALUES(?,?,?,?);";
@@ -201,22 +203,23 @@ public class Production {
 
          System.out.println("Enter number of conditions:");
          int n=inputreader.nextInt();
+         inputreader.nextLine();
          for(int i=0;i<n;i++){
             System.out.println("Enter Column name:");
-            condcolnames.add(inputreader.next());
+            condcolnames.add(inputreader.nextLine());
             System.out.println("Enter column value:");
-            condcolvals.add(inputreader.next());
+            condcolvals.add(inputreader.nextLine());
          }
-
+        System.out.println(condcolvals);
          System.out.println("Enter Column Name to update:");
-         String toUpdateCol=inputreader.next();
+         String toUpdateCol=inputreader.nextLine();
 
          System.out.println("Enter new value:");
-         String toUpdateVal=inputreader.next();
+         String toUpdateVal=inputreader.nextLine();
 
 
          try{
-            StringBuilder query=new StringBuilder("UPDATE Publication SET "+toUpdateCol+"=? where ");
+            StringBuilder query=new StringBuilder("UPDATE Publication SET `"+toUpdateCol+"`=? where ");
             for(int i=0; i<condcolnames.size();i++){
                query.append(condcolnames.get(i) + "=? and ");
             }
@@ -247,9 +250,9 @@ public class Production {
         int n=inputreader.nextInt();
         for(int i=0;i<n;i++){
            System.out.println("Enter col name:");
-           delcolnames.add(inputreader.next());
+           delcolnames.add(inputreader.nextLine());
            System.out.println("Enter col value:");
-           delcolvals.add(inputreader.next());
+           delcolvals.add(inputreader.nextLine());
         }
         
         try{
@@ -283,17 +286,17 @@ public class Production {
          int n=inputreader.nextInt();
          for(int i=0;i<n;i++){
             System.out.println("Enter Column name:");
-            condcolnames.add(inputreader.next());
+            condcolnames.add(inputreader.nextLine());
             System.out.println("Enter column value:");
-            condcolvals.add(inputreader.next());
+            condcolvals.add(inputreader.nextLine());
          }
 
          System.out.println("Enter Column Name to update:");
-         String toUpdateCol=inputreader.next();
-         inputreader.next();
+         String toUpdateCol=inputreader.nextLine();
+         inputreader.nextLine();
 
          System.out.println("Enter new value:");
-         String toUpdateVal=inputreader.next();
+         String toUpdateVal=inputreader.nextLine();
 
 
          try{
@@ -327,11 +330,13 @@ public class Production {
 
         System.out.println("enter number of conditions:");
         int n=inputreader.nextInt();
+        inputreader.nextLine();
+
         for(int i=0;i<n;i++){
            System.out.println("Enter col name:");
-           delcolnames.add(inputreader.next());
+           delcolnames.add(inputreader.nextLine());
            System.out.println("Enter col value:");
-           delcolvals.add(inputreader.next());
+           delcolvals.add(inputreader.nextLine());
         }
         
         try{
@@ -363,19 +368,21 @@ public class Production {
 
          System.out.println("Enter number of conditions:");
          int n=inputreader.nextInt();
+         inputreader.nextLine();
+
          for(int i=0;i<n;i++){
             System.out.println("Enter Column name:");
-            condcolnames.add(inputreader.next());
+            condcolnames.add(inputreader.nextLine());
             System.out.println("Enter column value:");
-            condcolvals.add(inputreader.next());
+            condcolvals.add(inputreader.nextLine());
          }
 
          System.out.println("Enter Column Name to update:");
-         String toUpdateCol=inputreader.next();
-         inputreader.next();
+         String toUpdateCol=inputreader.nextLine();
+         inputreader.nextLine();
 
          System.out.println("Enter new value:");
-         String toUpdateVal=inputreader.next();
+         String toUpdateVal=inputreader.nextLine();
 
 
          try{
@@ -409,11 +416,13 @@ public class Production {
 
         System.out.println("enter number of conditions:");
         int n=inputreader.nextInt();
+        inputreader.nextLine();
+
         for(int i=0;i<n;i++){
            System.out.println("Enter col name:");
-           delcolnames.add(inputreader.next());
+           delcolnames.add(inputreader.nextLine());
            System.out.println("Enter col value:");
-           delcolvals.add(inputreader.next());
+           delcolvals.add(inputreader.nextLine());
         }
         
         try{
@@ -446,15 +455,17 @@ public class Production {
 
          System.out.println("Enter number of conditions:");
          int n=inputreader.nextInt();
+         inputreader.nextLine();
+
          for(int i=0;i<n;i++){
             System.out.println("Enter Column name:");
-            condcolnames.add(inputreader.next());
+            condcolnames.add(inputreader.nextLine());
             System.out.println("Enter column value:");
-            condcolvals.add(inputreader.next());
+            condcolvals.add(inputreader.nextLine());
          }
 
          System.out.println("Enter new value:");
-         String toUpdateVal=inputreader.next();
+         String toUpdateVal=inputreader.nextLine();
 
 
          try{
