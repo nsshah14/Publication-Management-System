@@ -55,7 +55,7 @@ public class Edit_Publish {
             
             String userInput = "";
             System.out.print("Input Command: ");
-            userInput = inputReader.next();
+            userInput = inputReader.nextLine();
             
             String getEID = "SELECT EID FROM Editor ORDER BY EID DESC LIMIT 1";
                 PreparedStatement getValueofID=conn.prepareStatement(getEID);
@@ -68,7 +68,7 @@ public class Edit_Publish {
             if(userInput.equals("1"))
             {
                 System.out.println("Enter Editor Experience:");
-                String experience=inputReader.next();
+                String experience=inputReader.nextLine();
                 String staffquery = "INSERT INTO StaffEditor (EID, Experience) VALUES(?,?);";
          
                 PreparedStatement stinsertstaff=conn.prepareStatement(staffquery, Statement.RETURN_GENERATED_KEYS);
@@ -83,7 +83,7 @@ public class Edit_Publish {
              else if(userInput.equals("2"))
             {
                 System.out.println("Enter Editor Date_of_invitation:");
-                String date=inputReader.next();
+                String date=inputReader.nextLine();
                 String authorquery = "INSERT INTO InvitedAuthor (EID, Date_of_invitation) VALUES(?,?);";
             
                 PreparedStatement authorstinsert=conn.prepareStatement(authorquery, Statement.RETURN_GENERATED_KEYS);
@@ -166,18 +166,20 @@ public class Edit_Publish {
 
           System.out.println("Enter number of conditions:");
           int n=inputreader.nextInt();
+          inputreader.nextLine();
+
           for(int i=0;i<n;i++){
              System.out.println("Enter Column name:");
-             condcolnames.add(inputreader.next());
+             condcolnames.add(inputreader.nextLine());
              System.out.println("Enter column value:");
-             condcolvals.add(inputreader.next());
+             condcolvals.add(inputreader.nextLine());
           }
 
           System.out.println("Enter Column Name to update:");
-          String toUpdateCol=inputreader.next();
+          String toUpdateCol=inputreader.nextLine();
 
           System.out.println("Enter new value:");
-          String toUpdateVal=inputreader.next();
+          String toUpdateVal=inputreader.nextLine();
 
 
           try{

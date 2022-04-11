@@ -40,15 +40,15 @@ public class Distribution {
       public static boolean newDist(Connection conn, Scanner inputReader){
 
          System.out.println("Enter Distributor name:");
-         String name=inputReader.next();
+         String name=inputReader.nextLine();
          System.out.println("Enter Distributor type:");
-         String type=inputReader.next();
+         String type=inputReader.nextLine();
          System.out.println("Enter Distributor Address:");
-         String add=inputReader.next();
+         String add=inputReader.nextLine();
          System.out.println("Enter Distributor Phone:");
-         String phone=inputReader.next();
+         String phone=inputReader.nextLine();
          System.out.println("Enter Distributor Contact person:");
-         String cp=inputReader.next();
+         String cp=inputReader.nextLine();
          System.out.println("Enter balance:");
          int bal=inputReader.nextInt();
 
@@ -80,18 +80,20 @@ public class Distribution {
 
           System.out.println("Enter number of conditions:");
           int n=inputreader.nextInt();
+          inputreader.nextLine();
+
           for(int i=0;i<n;i++){
              System.out.println("Enter Column name:");
-             condcolnames.add(inputreader.next());
+             condcolnames.add(inputreader.nextLine());
              System.out.println("Enter column value:");
-             condcolvals.add(inputreader.next());
+             condcolvals.add(inputreader.nextLine());
           }
 
           System.out.println("Enter Column Name to update:");
-          String toUpdateCol=inputreader.next();
+          String toUpdateCol=inputreader.nextLine();
 
           System.out.println("Enter new value:");
-          String toUpdateVal=inputreader.next();
+          String toUpdateVal=inputreader.nextLine();
 
 
           try{
@@ -124,11 +126,13 @@ public class Distribution {
 
         System.out.println("enter number of conditions:");
         int n=inputreader.nextInt();
+        inputreader.nextLine();
+
         for(int i=0;i<n;i++){
         System.out.println("Enter col name:");
-        delcolnames.add(inputreader.next());
+        delcolnames.add(inputreader.nextLine());
         System.out.println("Enter col value:");
-        delcolvals.add(inputreader.next());
+        delcolvals.add(inputreader.nextLine());
         }
          
         try{
