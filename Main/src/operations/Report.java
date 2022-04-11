@@ -4,12 +4,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Scanner;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Report {
     /**
@@ -184,10 +182,10 @@ public class Report {
         		}
         	}
         	
-        	Iterator hmIterator = monthlyExpense.entrySet().iterator();
+        	Iterator<Map.Entry<String, Double>> hmIterator = monthlyExpense.entrySet().iterator();
         	System.out.println(String.format("%s %20s", "Date:" , "Expense:"));
         	while(hmIterator.hasNext()) {
-        		Map.Entry mapElement = (Map.Entry)hmIterator.next();
+        		Map.Entry<String, Double> mapElement = (Map.Entry<String, Double>)hmIterator.next();
         		System.out.println(String.format("%s %20s", mapElement.getKey(), mapElement.getValue()));
         	}		
             System.out.println("Ok");

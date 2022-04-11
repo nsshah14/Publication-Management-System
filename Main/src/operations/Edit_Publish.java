@@ -1,11 +1,12 @@
 package operations;
-import java.util.Scanner;
-import java.util.Date;
-import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
 
 
 public class Edit_Publish {
@@ -52,10 +53,9 @@ public class Edit_Publish {
             System.out.println("\t\t [1] Enter Staff Editor Information");
             System.out.println("\t\t [2] Enter Invited Author Information");
             
-            Scanner inputRead = new Scanner(System.in);  // Create a Scanner object
             String userInput = "";
             System.out.print("Input Command: ");
-            userInput = inputRead.next();
+            userInput = inputReader.next();
             
             String getEID = "SELECT EID FROM Editor ORDER BY EID DESC LIMIT 1";
                 PreparedStatement getValueofID=conn.prepareStatement(getEID);
@@ -102,6 +102,8 @@ public class Edit_Publish {
          } catch(Exception e){
             e.printStackTrace();
             return false;
+         } finally{
+            inputReader.close();
          }
          return true;
       }
@@ -159,8 +161,8 @@ public class Edit_Publish {
 
    public static boolean updateEditor(Connection conn, Scanner inputreader){
 
-         List<String> condcolnames=new ArrayList();
-          List<Object> condcolvals=new ArrayList();
+         List<String> condcolnames=new ArrayList<String>();
+         List<Object> condcolvals=new ArrayList<Object>();
 
           System.out.println("Enter number of conditions:");
           int n=inputreader.nextInt();

@@ -1,11 +1,8 @@
 package operations;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Savepoint;
 import java.util.Scanner;
-import java.sql.*;
-import operations.Initializer;
-import operations.Production;
-import operations.Distribution;
-import operations.Edit_Publish;
-import operations.Report;
 
 public class App {
     //database parameters Replace with your parameters

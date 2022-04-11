@@ -1,12 +1,13 @@
 package operations;
-import java.util.Scanner;
-
-import javax.xml.transform.Result;
-
-import java.util.Date;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Scanner;
 public class Production {
     /**
      * System.out.println("\tProduction:");
@@ -29,7 +30,6 @@ public class Production {
 
       public static boolean newPublication(Connection conn, Scanner inputReader){
         // System.out.println("Enter Publication ID:");
-        int pubId;
         System.out.println("Enter Title for Publcation:");
         String pubTitle=inputReader.nextLine();
         System.out.println("Enter the Date of Publication (yyyy-mm-dd):");

@@ -3,9 +3,8 @@ package operations;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.sql.*;
-import java.util.Map;
-import static java.util.Map.entry; 
+import java.sql.Connection;
+import java.sql.Statement; 
 
 public class Initializer {
     public static void dropTables(Connection con){

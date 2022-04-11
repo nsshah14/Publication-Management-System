@@ -75,8 +75,8 @@ public class Distribution {
 
       public static boolean updateDist(Connection conn, Scanner inputreader){
 
-         List<String> condcolnames=new ArrayList();
-          List<Object> condcolvals=new ArrayList();
+         List<String> condcolnames=new ArrayList<String>();
+          List<Object> condcolvals=new ArrayList<Object>();
 
           System.out.println("Enter number of conditions:");
           int n=inputreader.nextInt();
@@ -119,8 +119,8 @@ public class Distribution {
       }
 
     public static boolean deleteDist(Connection conn, Scanner inputreader){
-        List<String> delcolnames=new ArrayList();
-        List<Object> delcolvals=new ArrayList();
+        List<String> delcolnames=new ArrayList<String>();
+        List<Object> delcolvals=new ArrayList<Object>();
 
         System.out.println("enter number of conditions:");
         int n=inputreader.nextInt();
