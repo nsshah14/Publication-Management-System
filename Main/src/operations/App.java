@@ -289,6 +289,7 @@ public class App {
             //close sql connection and scanner object
             con.close();
             inputReader.close();
+            System.out.println("DONE");
                
         }catch(Exception e){ 
             System.out.println(e);
