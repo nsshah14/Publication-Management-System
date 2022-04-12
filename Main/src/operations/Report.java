@@ -170,8 +170,9 @@ public class Report {
         		monthlyExpense.put(date, payment);
         	}
         	
-        	//get the monthly values for the shipping cost  
-        	String inputStatement2 = "SELECT YEAR(Date) AS Year, MONTH(Date) AS Month, SUM(ShippingCost) AS SumShipping FROM Orders GROUP BY Year, Month";
+        	//get the monthly values for the shipping cost 
+        	//SELECT YEAR(Date) AS Year, MONTH(Date) AS Month, SUM(ShippingCost) AS SumShipping FROM Orders JOIN AddOrUpdateOrder ON Orders.orderID = AddOrUpdateOrder.orderID GROUP BY Year, Month
+        	String inputStatement2 = "SELECT YEAR(Date) AS Year, MONTH(Date) AS Month, SUM(ShippingCost) AS SumShipping FROM Orders JOIN AddOrUpdateOrder ON Orders.orderID = AddOrUpdateOrder.orderID GROUP BY Year, Month";
         	ResultSet rs2 = stmt.executeQuery(inputStatement2);
             
         	while(rs2.next()) {
