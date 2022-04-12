@@ -10,20 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Distribution {
-    /**
-     * 
-     * CREATE TABLE IF NOT EXISTS Distributor(
-            distributorID INT,
-            Name VARCHAR(128) NOT NULL,
-            Type VARCHAR(128) NOT NULL,
-            Address VARCHAR(256) NOT NULL,
-            Phone VARCHAR(16) NOT NULL,
-            ContactPerson VARCHAR(128),
-            Balance INT NULL,
-            PRIMARY KEY(distributorID)
-      );
-
-     * //instructions for distribution
+     /* //instructions for distribution
         System.out.println("\tDistribution");
         System.out.println("\t\t [14] - Enter new distributor");
         System.out.println("\t\t [15] - Update distributor information");
@@ -45,6 +32,8 @@ public class Distribution {
          String type=inputReader.nextLine();
          System.out.println("Enter Distributor Address:");
          String add=inputReader.nextLine();
+         System.out.println("Enter Distributor City:");
+         String city=inputReader.nextLine();
          System.out.println("Enter Distributor Phone:");
          String phone=inputReader.nextLine();
          System.out.println("Enter Distributor Contact person:");
@@ -52,16 +41,17 @@ public class Distribution {
          System.out.println("Enter balance:");
          int bal=inputReader.nextInt();
 
-         String query = "INSERT INTO Distributor (Name, Type, Address, Phone, ContactPerson, Balance) VALUES(?,?,?,?,?,?);";
+         String query = "INSERT INTO Distributor (Name, Type, Address, City, Phone, ContactPerson, Balance) VALUES(?,?,?,?,?,?,?);";
          try{
             PreparedStatement stinsert=conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
             stinsert.setString(1, name);
             stinsert.setString(2, type);
             stinsert.setString(3, add);
-            stinsert.setString(4, phone);
-            stinsert.setString(5, cp);
-            stinsert.setInt(6, bal);
+            stinsert.setString(4, city);
+            stinsert.setString(5, phone);
+            stinsert.setString(6, cp);
+            stinsert.setInt(7, bal);
 
             stinsert.executeQuery();
 
@@ -148,7 +138,7 @@ public class Distribution {
 
             stdelete.executeQuery();
 
-            System.out.println("Rows Deleted");
+            System.out.println("Row/s Deleted");
         } catch(Exception e){
             e.printStackTrace();
             return false;

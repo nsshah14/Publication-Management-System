@@ -1,11 +1,11 @@
-INSERT INTO Distributor VALUES(1, 'john', 'Wholesale', '2518 Avent Ferry Road', '+19848883402', 'Mary', 400);
-INSERT INTO Distributor VALUES(2, 'Kevin', 'Wholesale', '2512 Avent Ferry Road', '+19842239405', 'Jake', 200);
-INSERT INTO Distributor VALUES(3, 'Mark', 'Bookstore', '2520 Avent Ferry Road', '+191041239420', 'Lily', 64);
-INSERT INTO Distributor VALUES(4, 'Steve', 'Library', '2514 Avent Ferry Road', '+19843483402', 'Mary', 400);
-INSERT INTO Distributor VALUES(5, 'Mike', 'Library', '2517 Avent Ferry Road', '+19863245402', 'Lucy', 772);
+INSERT INTO Distributor VALUES(1, 'john', 'Wholesale', '2518 Avent Ferry Road', 'Raleigh', '+19848883402', 'Mary', 400);
+INSERT INTO Distributor VALUES(2, 'Kevin', 'Wholesale', '2512 Avent Ferry Road', 'Durham', '+19842239405', 'Jake', 200);
+INSERT INTO Distributor VALUES(3, 'Mark', 'Bookstore', '2520 Avent Ferry Road', 'Raleigh', '+191041239420', 'Lily', 64);
+INSERT INTO Distributor VALUES(4, 'Steve', 'Library', '2514 Avent Ferry Road', 'Cary', '+19843483402', 'Mary', 400);
+INSERT INTO Distributor VALUES(5, 'Mike', 'Library', '2517 Avent Ferry Road', 'Charlotte', '+19863245402', 'Lucy', 772);
 
-INSERT INTO Distributor VALUES(2001, 'BookSell', 'Bookstore', '2200, A Street, NC', '+1919234567', 'Jason', 215);
-INSERT INTO Distributor VALUES(2002, 'BookDist', 'Wholesaler', '2200, B Street, NC', '+19291234568', 'Alex', 0);
+INSERT INTO Distributor VALUES(2001, 'BookSell', 'Bookstore', '2200, A Street, NC', 'Raleigh', '+1919234567', 'Jason', 215);
+INSERT INTO Distributor VALUES(2002, 'BookDist', 'Wholesaler', '2200, B Street, NC', 'Cary', '+19291234568', 'Alex', 0);
 
 
 INSERT INTO Editor VALUES(1, 'Johnny', '2512 Gorman Street Road', '+19848883402');
@@ -42,12 +42,12 @@ INSERT INTO Payment VALUES(3001,1000,'2020-04-01');
 INSERT INTO Payment VALUES(3002,1000,'2020-04-01');
 INSERT INTO Payment VALUES(3003,1200,'2020-04-01');
 
-
 INSERT INTO Publisher VALUES(1, "Angel", "+19848883402", "2512 Kensington Park Road");
 INSERT INTO Publisher VALUES(2, "Paul", "+19842239405", "2122 Kensington Park Road");
 INSERT INTO Publisher VALUES(3, "Suzane", "+191041239420", "2620 Kensington Park Road");
 INSERT INTO Publisher VALUES(4, "Maria", "+19841298765", "2524 Kensington Park Road");
 INSERT INTO Publisher VALUES(5, "Michael", "+19863245402", "2519 Kensington Park Road");
+
 INSERT INTO Publication VALUES(1, "Introduction to Computing", '2020-01-21', "Science", "",12.45,1);
 INSERT INTO Publication VALUES(2, "Introduction to Databases", '2020-01-21', "Science", "",10.97,2);
 INSERT INTO Publication VALUES(3, "Autobiography of Sachin Tendulkar", '2019-03-19', "Sports", "Yearly",4.67,2);
@@ -77,6 +77,7 @@ INSERT INTO Chapters VALUES(1, 2, 500);
 INSERT INTO Chapters VALUES(1, 3, 600);
 INSERT INTO Chapters VALUES(2, 4, 40);
 INSERT INTO Chapters VALUES(2, 5, 45);
+
 INSERT INTO Articles VALUES(3, 1, "ScienceDescription", "ScienceText");
 INSERT INTO Articles VALUES(3, 2, "MathDescription", "MathText");
 INSERT INTO Articles VALUES(4, 3, "ReadingDescription", "ReadingText");
@@ -87,6 +88,7 @@ INSERT INTO Articles VALUES(1002, 5, "", "ABC");
 INSERT INTO Management VALUES(1, "John", "Financial");
 INSERT INTO Management VALUES(2, "Steve", "Distribution");
 INSERT INTO Management VALUES(3, "Mike", "Financial");
+
 INSERT INTO Orders VALUES(1,100.00, 100.00, 1, 1, '2022-01-21');
 INSERT INTO Orders VALUES(2,200.00, 200.00, 2, 2, '2022-01-22');
 INSERT INTO Orders VALUES(3,300.00, 300.00, 3, 3,'2022-01-23');

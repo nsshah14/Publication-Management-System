@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS Distributor(
     Name VARCHAR(128) NOT NULL,
     Type VARCHAR(128) NOT NULL,
     Address VARCHAR(256) NOT NULL,
+    City VARCHAR(128),
     Phone VARCHAR(16) NOT NULL,
     ContactPerson VARCHAR(128),
     Balance DECIMAL(9,2) NULL,
