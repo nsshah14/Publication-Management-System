@@ -269,7 +269,14 @@ public class App {
 			                    else
 			                        con.rollback(payPerDate);
 			                    break;
-                    case "39" : System.out.println("Unimplemented");	
+                    case "39" : Savepoint payPerWork = con.setSavepoint("beforeGetPayPerWork");
+			                    if(Report.totalPaymentPerWork(con,inputReader))
+			                        con.commit();
+			                    else
+			                        con.rollback(payPerWork);
+			                    break;
+                    
+                    
                     default:  System.out.println("Invalid Input");
                                 break;
                     

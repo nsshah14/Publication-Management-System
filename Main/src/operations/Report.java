@@ -283,18 +283,20 @@ public class Report {
 	
 	//System.out.println("\t\t [25] - Calculate total payments to the editors and authors, per time period and per work type (book authorship, article authorship, or editorial work)");
 	public static boolean totalPaymentPerTime(Connection con, Scanner scan ){
-
+		System.out.println("Enter Start date(yyyy-mm-dd): ");
+		String startDate = scan.nextLine();
+		System.out.println("Enter End date(yyyy-mm-dd): ");
+		String endDate = scan.nextLine();
+		
 		//TODO: count distributor ids. 
         try(Statement stmt = con.createStatement()){
         
-        	//SELECT YEAR(Date), MONTH(Date), SUM(Amount) FROM Editor JOIN Payment ON Editor.EID = Payment.EID GROUP BY YEAR(Date), MONTH(Date);
-        	String inputStatement = "SELECT YEAR(Date), MONTH(Date), SUM(Amount) FROM Editor JOIN Payment ON Editor.EID = Payment.EID GROUP BY YEAR(Date), MONTH(Date)";
+        	//SELECT SUM(Amount)  FROM Editor JOIN Payment ON Editor.EID = Payment.EID WHERE Date > '2020-05-01' AND Date < '2022-01-01';
+        	String inputStatement = String.format("SELECT SUM(Amount) FROM Editor JOIN Payment ON Editor.EID = Payment.EID WHERE Date > '%s' AND Date < '%s'", startDate, endDate);
         	ResultSet rs1 = stmt.executeQuery(inputStatement);
-        	System.out.println(String.format("%s %20s", "Date" , "Total Payment"));
             while(rs1.next()) {
-            	String date = rs1.getString("MONTH(Date)") + "-" + rs1.getString("YEAR(Date)");
             	String totPay = rs1.getString("SUM(Amount)");
-            	System.out.println(String.format("%s %20s", date , totPay));
+            	System.out.println(String.format("Totals Amount: %s", totPay));
             }
             System.out.println("Ok");
         }catch(SQLException e){
@@ -310,11 +312,25 @@ public class Report {
 		//TODO: count distributor ids. 
         try(Statement stmt = con.createStatement()){
             
+        	//SELECT SUM(Amount) FROM InvitedAuthor JOIN Payment ON InvitedAuthor.EID = Payment.EID;
+        	String inputStatement1 = "SELECT SUM(Amount) FROM InvitedAuthor JOIN Payment ON InvitedAuthor.EID = Payment.EID";
+        	String inputStatement2 = "SELECT SUM(Amount) FROM StaffEditor JOIN Payment ON StaffEditor.EID = Payment.EID";
+     
+        	ResultSet rs1 = stmt.executeQuery(inputStatement1);
+        	ResultSet rs2 = stmt.executeQuery(inputStatement2);
         	
-        	//String inputStatement = String.format("INSERT into Publication VALUES(%s, '%s', '%s', '%s', '%s')", id, title, date, topics, periodicity);
-            //stmt.executeUpdate(inputStatement);
         	
-            System.out.println("Ok");
+			if(rs1.next()) {
+				String totPayInvitedAuthor = rs1.getString("SUM(Amount)");
+				System.out.println(String.format("Total Payment of InvitedAuthor: %s", totPayInvitedAuthor));
+			}
+			
+			if(rs2.next()) {
+				String totPayStaffEditor = rs2.getString("SUM(Amount)");
+	        	System.out.println(String.format("Total Payment of StaffEditor: %s", totPayStaffEditor));
+			}
+        	
+        	System.out.println("Ok");
         }catch(SQLException e){
             e.printStackTrace();
         }
