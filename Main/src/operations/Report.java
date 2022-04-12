@@ -87,7 +87,7 @@ public class Report {
         try(Statement stmt = con.createStatement()){	
         	//Insert TODO: add rows to Orders and AddOrUpdateOrder Tables
         	//SELECT YEAR(Date) AS Year, MONTH(Date) AS Month, DistributorID, PublicationID, SUM(NumCopies), SUM(Price*NumCopies) AS TotalPrice FROM Orders JOIN AddOrUpdateOrder ON AddOrUpdateOrder.OrderID = Orders.orderID GROUP BY Year, Month, DistributorID, PublicationID;
-            String inputStatement = "SELECT YEAR(Date) AS Year, MONTH(Date) AS Month, DistributorID, PublicationID, SUM(NumCopies), SUM(Price*NumCopies) AS TotalPrice FROM Orders JOIN AddOrUpdateOrder ON AddOrUpdateOrder.OrderID = Orders.orderID GROUP BY Year, Month, DistributorID, PublicationID";     
+            String inputStatement = "SELECT YEAR(Date) AS Year, MONTH(Date) AS Month, DistributorID, PublicationID, SUM(NumCopies), SUM(Price) AS TotalPrice FROM Orders JOIN AddOrUpdateOrder ON AddOrUpdateOrder.OrderID = Orders.orderID GROUP BY Year, Month, DistributorID, PublicationID";     
             ResultSet rs = stmt.executeQuery(inputStatement);
             String prevDateVal = "";
             String prevDistIdVal = "";
@@ -100,10 +100,13 @@ public class Report {
             	
             	if(!date.equals(prevDateVal)) {
             		System.out.println("Date: " + date);
+            		prevDateVal = date;
+            		prevDistIdVal = "";
             	}
             	
             	if(!distId.equals(prevDistIdVal)) {
             		System.out.println("\tDistributorID: " + distId);
+            		prevDistIdVal = distId;
             	}
             	
             	System.out.println("\t\tPublicationID: " + pubId + " SumCopies: " + sumCopies + " TotalPrice: " + totalPrice);
@@ -126,7 +129,7 @@ public class Report {
         	 	
         	//SELECT YEAR(Date) AS Year, MONTH(Date) AS Month, SUM((Price*NumCopies) + ShippingCost) AS TotalRevenue FROM Orders JOIN AddOrUpdateOrder ON AddOrUpdateOrder.OrderID = Orders.orderID GROUP BY Year, Month;
         	
-            String inputStatement = "SELECT YEAR(Date) AS Year, MONTH(Date) AS Month, SUM((Price*NumCopies) + ShippingCost) AS TotalRevenue FROM Orders JOIN AddOrUpdateOrder ON Ad"
+            String inputStatement = "SELECT YEAR(Date) AS Year, MONTH(Date) AS Month, SUM(Price + ShippingCost) AS TotalRevenue FROM Orders JOIN AddOrUpdateOrder ON Ad"
             		+ "dOrUpdateOrder.OrderID = Orders.orderID GROUP BY Year, Month";
             
             ResultSet rs = stmt.executeQuery(inputStatement);
