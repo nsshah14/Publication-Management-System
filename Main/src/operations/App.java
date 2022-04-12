@@ -244,7 +244,12 @@ public class App {
 			                    else
 			                        con.rollback(distCount);
 			                    break;
-                    case "35" : System.out.println("Unimplemented");
+                    case "35" : Savepoint revPerCity = con.setSavepoint("beforeGetRevPerCity");
+			                    if(Report.totalRevenuePerCity(con,inputReader))
+			                        con.commit();
+			                    else
+			                        con.rollback(revPerCity);
+			                    break;
                     case "36" : Savepoint revPerDist = con.setSavepoint("beforeGetRevPerDist");
 			                    if(Report.totalRevenuePerDistributor(con,inputReader))
 			                        con.commit();

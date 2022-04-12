@@ -223,12 +223,17 @@ public class Report {
 	//System.out.println("\t\t [24] - Calculate total revenue (since inception) per city, per distributor, and per location");
 	public static boolean totalRevenuePerCity(Connection con, Scanner scan ){
 
-		//TODO: count distributor ids. 
+		//SELECT Distributor.city,SUM((Price*NumCopies)+ShippingCost) As DistPay FROM Orders JOIN AddOrUpdateOrder ON AddOrUpdateOrder.OrderID = Orders.orderID JOIN Distributor ON Distributor.distributorID = AddOrUpdateOrder.DistributorID GROUP BY Distributor.city; 
         try(Statement stmt = con.createStatement()){
-            //String inputStatement = String.format("INSERT into Publication VALUES(%s, '%s', '%s', '%s', '%s')", id, title, date, topics, periodicity);
-            //stmt.executeUpdate(inputStatement);
-            
-            System.out.println("Ok");
+        	String inputStatement = "SELECT Distributor.city,SUM(Price+ShippingCost) As DistPay FROM Orders JOIN AddOrUpdateOrder ON AddOrUpdateOrder.OrderID = Orders.orderID JOIN Distributor ON Distributor.distributorID = AddOrUpdateOrder.DistributorID GROUP BY Distributor.city;";
+        	ResultSet rs1 = stmt.executeQuery(inputStatement);
+        	System.out.println(String.format("%s %20s", "City" , "Total Revenue"));
+            while(rs1.next()) {
+            	String city = rs1.getString("city");
+            	String TotalRev = rs1.getString("DistPay");
+            	System.out.println(String.format("%s %20s", city , TotalRev));
+            }
+        	System.out.println("Ok");
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -240,7 +245,7 @@ public class Report {
 		//SELECT Distributor.distributorID,SUM((Price*NumCopies)+ShippingCost) As DistPay FROM Orders JOIN AddOrUpdateOrder ON AddOrUpdateOrder.OrderID = Orders.orderID JOIN Distributor ON Distributor.distributorID = AddOrUpdateOrder.DistributorID GROUP BY Distributor.distributorID;
 		
         try(Statement stmt = con.createStatement()){
-            String inputStatement = "SELECT Distributor.distributorID,SUM((Price*NumCopies)+ShippingCost) As DistPay FROM Orders JOIN AddOrUpdateOrder ON AddOrUpdateOrder.OrderID = Orders.orderID JOIN Distributor ON Distributor.distributorID = AddOrUpdateOrder.DistributorID GROUP BY Distributor.distributorID";
+            String inputStatement = "SELECT Distributor.distributorID,SUM(Price+ShippingCost) As DistPay FROM Orders JOIN AddOrUpdateOrder ON AddOrUpdateOrder.OrderID = Orders.orderID JOIN Distributor ON Distributor.distributorID = AddOrUpdateOrder.DistributorID GROUP BY Distributor.distributorID";
         	ResultSet rs1 = stmt.executeQuery(inputStatement);
         	System.out.println(String.format("%s %20s", "Distribution ID" , "Total Revenue"));
             while(rs1.next()) {
@@ -260,7 +265,7 @@ public class Report {
 
 		//SELECT Distributor.Address,(Price*NumCopies)+ShippingCost As DistPay FROM Orders JOIN AddOrUpdateOrder ON AddOrUpdateOrder.OrderID = Orders.orderID JOIN Distributor ON Distributor.distributorID = AddOrUpdateOrder.DistributorID GROUP BY Address;
         try(Statement stmt = con.createStatement()){
-            String inputStatement = "SELECT Distributor.Address,(Price*NumCopies)+ShippingCost As DistPay FROM Orders JOIN AddOrUpdateOrder ON AddOrUpdateOrder.OrderID = Orders.orderID JOIN Distributor ON Distributor.distributorID = AddOrUpdateOrder.DistributorID GROUP BY Address";
+            String inputStatement = "SELECT Distributor.Address,SUM(Price+ShippingCost) As DistPay FROM Orders JOIN AddOrUpdateOrder ON AddOrUpdateOrder.OrderID = Orders.orderID JOIN Distributor ON Distributor.distributorID = AddOrUpdateOrder.DistributorID GROUP BY Address";
         	ResultSet rs1 = stmt.executeQuery(inputStatement);
         	System.out.println(String.format("%s %20s", "Address" , "Total Revenue"));
             while(rs1.next()) {
