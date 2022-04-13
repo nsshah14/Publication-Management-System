@@ -186,7 +186,7 @@ public class Distribution {
                 if(rs.next()){
                     orderId = rs.getInt(1);
                 }
-                insertOrder.executeQuery();
+                // insertOrder.executeQuery();
 
                 String addToRelation="Insert into AddOrUpdateOrder values ("+did+","+orderId+","+(final_amount+sc)+","+"0);";
                 Statement insertPlaceOrder=conn.createStatement();
