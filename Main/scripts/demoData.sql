@@ -1,0 +1,42 @@
+
+INSERT INTO Distributor VALUES(2001, 'BookSell', 'bookstore', '2200, A Street, NC', 'charlotte', '9191234567', 'Jason', 215);
+INSERT INTO Distributor VALUES(2002, 'BookDist', 'wholesaler', '2200, B Street, NC', 'Raleigh', '+9291234568', 'Alex', 0);
+
+INSERT INTO Editor VALUES(3001, 'John', '21 ABC St, NC 27', '9391234567');
+INSERT INTO Editor VALUES(3002, 'Ethen', '21 ABC St, NC 27606', '+9491234567');
+INSERT INTO Editor VALUES(3003, 'Cathy', '3300 AAA St, NC 27606', '9591234567');
+
+INSERT INTO StaffEditor VALUES(3001, '4 Years');
+INSERT INTO StaffEditor VALUES(3002, '5 Years');
+
+INSERT INTO InvitedAuthor VALUES(3003, '2022-04-02');
+
+INSERT INTO Payment VALUES(3001,1000,'2020-04-01', NULL);
+INSERT INTO Payment VALUES(3002,1000,'2020-04-01', NULL);
+INSERT INTO Payment VALUES(3003,1200,'2020-04-01', NULL);
+
+INSERT INTO Publication VALUES(1001,"introduction to database",'2018-10-10',"technology","",20,3001);
+INSERT INTO Publication VALUES(1002,"Healthy Diet",'2020-02-24',"health","Weekly",200,3002);
+INSERT INTO Publication VALUES(1003,"Animal Science",'2020-03-01',"Science","",10,NULL);
+
+INSERT INTO Books VALUES(1001, "12345", "2ed");
+
+INSERT INTO PeriodicPublication VALUES(1002, "Magazine", 1, '2020-02-24');
+INSERT INTO PeriodicPublication VALUES(1003, "Journal", 2, '2020-03-01');
+
+INSERT INTO Articles VALUES(1002, 5, "", "ABC");
+
+INSERT INTO Orders VALUES(4001,600.00, 30.00, 30, 1001, '2020-01-02');
+INSERT INTO Orders VALUES(4002,200.00, 15.00, 10, 1001, '2020-02-05');
+INSERT INTO Orders VALUES(4003,100.00, 15.00, 10, 1003, '2020-02-10');
+
+INSERT INTO TransactionDetails VALUES(4001, '2020-01-15');
+INSERT INTO TransactionDetails VALUES(4002, '2020-02-15');
+INSERT INTO TransactionDetails VALUES(4003, '2020-02-25');
+
+INSERT INTO AddOrUpdateOrder VALUES(2001,4001,630,1);
+INSERT INTO AddOrUpdateOrder VALUES(2001,4002,215,1);
+INSERT INTO AddOrUpdateOrder VALUES(2002,4003,115,1);
+
+
+

@@ -55,7 +55,8 @@ public class Initializer {
         StringBuffer sb = new StringBuffer();
         try
         {
-            FileReader fr = new FileReader(new File("scripts/dummyValues.sql"));
+        	//TODO: Replace with demoData.sql
+            FileReader fr = new FileReader(new File("scripts/demoData.sql"));
             // be sure to not have line starting with "--" or "/*" or any other non aplhabetical character
  
             BufferedReader br = new BufferedReader(fr);

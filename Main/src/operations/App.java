@@ -356,25 +356,25 @@ public class App {
     
         //instructions for distribution
         System.out.println("\tDistribution");
-        System.out.println("\t\t [25] - Enter new distributor");
-        System.out.println("\t\t [26] - Update distributor information");
-        System.out.println("\t\t [27] - Delete a distributor. ");
-        System.out.println("\t\t [28] - Input orders from distributors, for a book edition or an issue of a publication per distributor, for a certain date.");
-        System.out.println("\t\t [29] - Bill distributor for an order");
-        System.out.println("\t\t [30] - Change outstanding balance of a distributor on receipt of a payment.");
+        System.out.println("\t\t [26] - Enter new distributor");
+        System.out.println("\t\t [27] - Update distributor information");
+        System.out.println("\t\t [28] - Delete a distributor. ");
+        System.out.println("\t\t [29] - Input orders from distributors, for a book edition or an issue of a publication per distributor, for a certain date.");
+        System.out.println("\t\t [30] - Bill distributor for an order");
+        System.out.println("\t\t [31] - Change outstanding balance of a distributor on receipt of a payment.");
         System.out.println();   
         
         //instructions for reports
         System.out.println("\tReports");
-        System.out.println("\t\t [31] - Generate montly reports: number and total price of copies of each publication bought per distributor per month");
-        System.out.println("\t\t [32] - Generate montly reports: total revenue of the publishing house");
-        System.out.println("\t\t [33] - Generate montly reports: total expenses (i.e., shipping costs and salaries)");
-        System.out.println("\t\t [34] - Calculate the total current number of distributors");
-        System.out.println("\t\t [35] - Calculate total revenue (since inception) per city");
-        System.out.println("\t\t [36] - Calculate total revenue (since inception) per distributor");
-        System.out.println("\t\t [37] - Calculate total revenue (since inception) per location");
-        System.out.println("\t\t [38] - Calculate total payments to the editors and authors, per time period ");
-        System.out.println("\t\t [39] - Calculate total payments to the editors and authors, per work type (book authorship, article authorship, or editorial work)");
+        System.out.println("\t\t [32] - Generate montly reports: number and total price of copies of each publication bought per distributor per month");
+        System.out.println("\t\t [33] - Generate montly reports: total revenue of the publishing house");
+        System.out.println("\t\t [34] - Generate montly reports: total expenses (i.e., shipping costs and salaries)");
+        System.out.println("\t\t [35] - Calculate the total current number of distributors");
+        System.out.println("\t\t [36] - Calculate total revenue (since inception) per city");
+        System.out.println("\t\t [37] - Calculate total revenue (since inception) per distributor");
+        System.out.println("\t\t [38] - Calculate total revenue (since inception) per location");
+        System.out.println("\t\t [39] - Calculate total payments to the editors and authors, per time period ");
+        System.out.println("\t\t [40] - Calculate total payments to the editors and authors, per work type (book authorship, article authorship, or editorial work)");
         System.out.println();
         
 
