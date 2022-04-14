@@ -167,6 +167,7 @@ public class Production {
                 {
                     System.out.println("Enter the Article ID:");
                     int articleID=inputRead.nextInt();  
+                    inputreader.nextLine();
                     System.out.println("Enter the Description of Article:");
                     String articleDesc=inputRead.nextLine();  
                     System.out.println("Enter the Text of Article:");
@@ -247,6 +248,7 @@ public class Production {
 
         System.out.println("enter number of conditions:");
         int n=inputreader.nextInt();
+        inputreader.nextLine();
         for(int i=0;i<n;i++){
            System.out.println("Enter col name:");
            delcolnames.add(inputreader.nextLine());
@@ -283,7 +285,7 @@ public class Production {
 
          System.out.println("Enter number of conditions:");
          int n=inputreader.nextInt();
-         
+         inputreader.nextLine();
          for(int i=0;i<n;i++){
             System.out.println("Enter Column name:");
             condcolnames.add(inputreader.nextLine());
