@@ -167,7 +167,7 @@ public class Production {
                 {
                     System.out.println("Enter the Article ID:");
                     int articleID=inputRead.nextInt();  
-                    inputreader.nextLine();
+                    inputRead.nextLine();
                     System.out.println("Enter the Description of Article:");
                     String articleDesc=inputRead.nextLine();  
                     System.out.println("Enter the Text of Article:");
