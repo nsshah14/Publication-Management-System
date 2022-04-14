@@ -282,6 +282,7 @@ public class Production {
 
          System.out.println("Enter number of conditions:");
          int n=inputreader.nextInt();
+         
          for(int i=0;i<n;i++){
             System.out.println("Enter Column name:");
             condcolnames.add(inputreader.nextLine());
@@ -377,7 +378,6 @@ public class Production {
 
          System.out.println("Enter Column Name to update:");
          String toUpdateCol=inputreader.nextLine();
-         inputreader.nextLine();
 
          System.out.println("Enter new value:");
          String toUpdateVal=inputreader.nextLine();
