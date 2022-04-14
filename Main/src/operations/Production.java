@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -502,10 +501,7 @@ public class Production {
      public static boolean findBooksByTopic (Connection conn, Scanner inputreader){
         System.out.println("Enter Topic to find the Book for:");
         String inputTopic=inputreader.nextLine();
-        ResultSet rs;
-        ResultSet rs1;
         ResultSet rs2;
-        int pubID=0;
         // try{
         //     String query = "SELECT PublicationID from Publication where Topics like '"+inputTopic+"%';";
         //     rs=conn.createStatement().executeQuery(query);
@@ -558,10 +554,7 @@ public class Production {
      public static boolean findBooksByDate (Connection conn, Scanner inputreader){
         System.out.println("Enter Date to find the Book for:");
         String inputDate=inputreader.nextLine();
-        ResultSet rs;
-        ResultSet rs1;
         ResultSet rs2;
-        int pubID=0;
         // try{
         //     String query = "SELECT PublicationID from Publication where Date = '"+inputDate+"%';";
         //     rs=conn.createStatement().executeQuery(query);
@@ -617,12 +610,7 @@ public class Production {
      public static boolean findBooksByAuthorName (Connection conn, Scanner inputreader){
         System.out.println("Enter Author's name to find the Book for:");
         String inputName=inputreader.nextLine();
-        ResultSet rs;
-        ResultSet rs1;
         ResultSet rs2;
-        ResultSet rs3;
-        int pubID=0;
-        int editorID =0;
         // try{            
         //     String findidbyauthor = "SELECT EID from Editor where Name like '"+inputName+"%';";
         //     rs3=conn.createStatement().executeQuery(findidbyauthor);
@@ -684,10 +672,7 @@ public class Production {
      public static boolean findArticlesbyTopic (Connection conn, Scanner inputreader){
         System.out.println("Enter Topic to find the Articles for:");
         String inputTopic=inputreader.nextLine();
-        ResultSet rs;
-        ResultSet rs1;
         ResultSet rs2;
-        int pubID=0;
         // try{
         //     String query = "SELECT PublicationID from Publication where Topics like '"+inputTopic+"%';";
         //     rs=conn.createStatement().executeQuery(query);
@@ -739,10 +724,7 @@ public class Production {
      public static boolean findArticlesbyDate (Connection conn, Scanner inputreader){
         System.out.println("Enter Date to find the Articles for:");
         String inputDate=inputreader.nextLine();
-        ResultSet rs;
-        ResultSet rs1;
         ResultSet rs2;
-        int pubID=0;
         // try{
         //     String query = "SELECT PublicationID from Publication where Date like '"+inputDate+"%';";
         //     rs=conn.createStatement().executeQuery(query);
@@ -794,12 +776,7 @@ public class Production {
      public static boolean findArticlesByAuthorName (Connection conn, Scanner inputreader){
         System.out.println("Enter Author's name to find the Articles for:");
         String inputName=inputreader.nextLine();
-        ResultSet rs;
-        ResultSet rs1;
         ResultSet rs2;
-        ResultSet rs3;
-        int pubID=0;
-        int editorID =0;
         // try{            
         //     String findidbyauthor = "SELECT EID from Editor where Name like '"+inputName+"%';";
         //     rs3=conn.createStatement().executeQuery(findidbyauthor);
