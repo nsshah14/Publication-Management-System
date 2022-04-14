@@ -105,7 +105,6 @@ public class Production {
                 System.out.println("Enter ISBN for Books:");
                 String bookISBN=inputRead.nextLine();
                 System.out.println("Enter the Edition of Book:");
-                inputRead.nextLine();
                 String bookEdition=inputRead.nextLine();   
                 String book_query = "INSERT INTO Books (PublicationID, ISBN,Edition) VALUES(?,?,?);";
                 PreparedStatement insertIntoBook=conn.prepareStatement(book_query);
