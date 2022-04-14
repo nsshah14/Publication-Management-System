@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -891,5 +892,59 @@ public class Production {
             return false;
         }
         return true;
+    }
+    
+    
+    public static boolean claimPayment(Connection conn,Scanner inputreader) {
+    	try{
+            System.out.println("Enter Editor/Author ID:");
+            int eid=inputreader.nextInt();
+            inputreader.nextLine();
+            System.out.println("Enter Payment Send Date(yyyy-mm-dd):");
+            String sentDate=inputreader.next();
+            inputreader.nextLine();
+            System.out.println("Enter Payment Claim Date(yyyy-mm-dd)");
+            String claimDate=inputreader.next();
+            inputreader.nextLine();
+            
+            String query = "UPDATE Payment SET DateClaimed = ? WHERE EID = ? AND Date = ?";
+            PreparedStatement updateOrder = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            updateOrder.setObject(1, claimDate);
+            updateOrder.setInt(2, eid);
+            updateOrder.setObject(3, sentDate);
+            int i= updateOrder.executeUpdate();
+            if (i>0) {
+            	System.out.println("Editor/Author ID: "+ eid+ " claimed payment!");
+            }else {
+            	System.out.println("Failed to add values check if data sent is correct");
+            } 
+            
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true; 
+    } 
+    
+    
+    public static boolean trackPayment(Connection conn,Scanner inputreader) {
+    	try(Statement stmt = conn.createStatement()){
+    		 String query= "SELECT Editor.EID, Name, Amount, Date, DateClaimed FROM Payment JOIN Editor ON Payment.EID = Editor.EID WHERE DateClaimed IS NOT NULL ORDER BY DateClaimed";
+             ResultSet rs = stmt.executeQuery(query);
+             
+             System.out.println(String.format("%s %20s %20s %20s %20s", "EID", "Name", "Amount", "Send Date", "Claim Date") );
+             while (rs.next()) {
+            	 String eid = rs.getString("EID");
+            	 String name = rs.getString("Name");
+            	 String amount = rs.getString("Amount");
+            	 String sentDate = rs.getString("Date");
+            	 String claimDate = rs.getString("DateClaimed");
+            	 System.out.println(String.format("%s %20s %20s %20s %20s", eid, name, amount, sentDate, claimDate) );
+             }
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true; 
     }
 }

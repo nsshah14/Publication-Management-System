@@ -31,12 +31,12 @@ public class App {
             //USER INPUT PROCESSING
             do {
                 //Calls prompt method which gives the list of commands user could use.
-                System.out.println("Press Enter key to continue...");
-                try {
-                    System.in.read();
-                }  
-                catch(Exception e)
-                {}  
+                //System.out.println("Press Enter key to continue...");
+                //try {
+                //    System.in.read();
+                //}  
+                //catch(Exception e)
+                //{}  
                 prompt();
                 System.out.print("Input Command: ");
                 userInput = inputReader.nextLine();  // Read user input
@@ -185,97 +185,107 @@ public class App {
                                 else
                                     con.rollback(editPay);
                                 break;
-                    case "24" : System.out.println("Unimplemented");
-                                break;
-                    case "25" :  Savepoint distInsert=con.setSavepoint("beforeDistInsert");
+                    case "24" : Savepoint claimPay=con.setSavepoint("beforeclaimPay");
+			                    if(Production.claimPayment(con,inputReader))
+			                        con.commit();
+			                    else
+			                        con.rollback(claimPay);
+			                    break;
+                    case "25": Savepoint trackClaim=con.setSavepoint("beforetrackClaim");
+			                    if(Production.trackPayment(con,inputReader))
+			                        con.commit();
+			                    else
+			                        con.rollback(trackClaim);
+			                    break; 
+                    case "26" :  Savepoint distInsert=con.setSavepoint("beforeDistInsert");
                                 if(Distribution.newDist(con,inputReader))
                                     con.commit();
                                 else
                                     con.rollback(distInsert);
                                 break;  
-                    case "26" :  Savepoint distUpdate=con.setSavepoint("beforeDistupdate");
+                    case "27" :  Savepoint distUpdate=con.setSavepoint("beforeDistupdate");
                                 if(Distribution.updateDist(con,inputReader))
                                     con.commit();
                                 else
                                     con.rollback(distUpdate);
                                 break;
-                    case "27" : Savepoint deldist=con.setSavepoint("beforeDistInsert");
+                    case "28" : Savepoint deldist=con.setSavepoint("beforeDistInsert");
                                 if(Distribution.deleteDist(con,inputReader))
                                     con.commit();
                                 else
                                     con.rollback(deldist);
                                 break;
-                    case "28" :Savepoint addDistOrder=con.setSavepoint("beforeDistAddOrder");
+                    case "29" :Savepoint addDistOrder=con.setSavepoint("beforeDistAddOrder");
                                 if(Distribution.addOrderAndBillDist(con,inputReader))
                                     con.commit();
                                 else
                                     con.rollback(addDistOrder);
                                 break;
-                    case "29" :Savepoint addDistOrderBill=con.setSavepoint("beforeDistAddOrder");
+                    case "30" :Savepoint addDistOrderBill=con.setSavepoint("beforeDistAddOrder");
                                 if(Distribution.addOrderAndBillDist(con,inputReader))
                                     con.commit();
                                 else
                                     con.rollback(addDistOrderBill);
                                 break;
-                    case "30" : Savepoint updateDistReceipt=con.setSavepoint("beforeDistPayment");
+                    case "31" : Savepoint updateDistReceipt=con.setSavepoint("beforeDistPayment");
                                 if(Distribution.changeBalOnPayment(con,inputReader))
                                     con.commit();
                                 else
                                     con.rollback(updateDistReceipt);
                                 break;
-                    case "31" : Savepoint monthlyPub= con.setSavepoint("beforeGetPubReport");
+                    case "32" : Savepoint monthlyPub= con.setSavepoint("beforeGetPubReport");
                                 if(Report.monthlyPublication(con,inputReader))
                                     con.commit();
                                 else
                                     con.rollback(monthlyPub);
                                 break;
 
-                    case "32" : Savepoint monthlyRev= con.setSavepoint("beforeGetRevReport");
+                    case "33" : Savepoint monthlyRev= con.setSavepoint("beforeGetRevReport");
 			                    if(Report.monthlyRevenue(con,inputReader))
 			                        con.commit();
 			                    else
 			                        con.rollback(monthlyRev);
 			                    break;
                 
-                    case "33" : Savepoint monthlyExp = con.setSavepoint("beforeGetExpReport");
+                    case "34" : Savepoint monthlyExp = con.setSavepoint("beforeGetExpReport");
 			                    if(Report.monthlyExpense(con,inputReader))
 			                        con.commit();
 			                    else
 			                        con.rollback(monthlyExp);
 			                    break;
                   
-                    case "34" : Savepoint distCount= con.setSavepoint("beforeDistCountGet");
+                    case "35" : Savepoint distCount= con.setSavepoint("beforeDistCountGet");
 			                    if(Report.totalDistributor(con,inputReader))
 			                        con.commit();
 			                    else
 			                        con.rollback(distCount);
 			                    break;
-                    case "35" : Savepoint revPerCity = con.setSavepoint("beforeGetRevPerCity");
+                    case "36" : Savepoint revPerCity = con.setSavepoint("beforeGetRevPerCity");
 			                    if(Report.totalRevenuePerCity(con,inputReader))
 			                        con.commit();
 			                    else
 			                        con.rollback(revPerCity);
 			                    break;
-                    case "36" : Savepoint revPerDist = con.setSavepoint("beforeGetRevPerDist");
+                    case "37" : Savepoint revPerDist = con.setSavepoint("beforeGetRevPerDist");
 			                    if(Report.totalRevenuePerDistributor(con,inputReader))
 			                        con.commit();
 			                    else
 			                        con.rollback(revPerDist);
 			                    break;
-                    case "37" : Savepoint revPerLoc = con.setSavepoint("beforeGetRevPerLocation");
+                    case "38" : Savepoint revPerLoc = con.setSavepoint("beforeGetRevPerLocation");
 			                    if(Report.totalRevenuePerLocation(con,inputReader))
 			                        con.commit();
 			                    else
 			                        con.rollback(revPerLoc);
 			                    break;
                     	
-                    case "38" : Savepoint payPerDate = con.setSavepoint("beforeGetPayPerDate");
+                    case "39" : Savepoint payPerDate = con.setSavepoint("beforeGetPayPerDate");
 			                    if(Report.totalPaymentPerTime(con,inputReader))
 			                        con.commit();
 			                    else
 			                        con.rollback(payPerDate);
 			                    break;
-                    case "39" : Savepoint payPerWork = con.setSavepoint("beforeGetPayPerWork");
+                    case "40" : Savepoint payPerWork = con.setSavepoint("beforeGetPayPerWork");
 			                    if(Report.totalPaymentPerWork(con,inputReader))
 			                        con.commit();
 			                    else
@@ -340,7 +350,8 @@ public class App {
         System.out.println("\t\t [21] - Find articles by date");
         System.out.println("\t\t [22] - Find articles by author's name");
         System.out.println("\t\t [23] - Enter payment for author or editor");
-        System.out.println("\t\t [24] - Keep track of when each payment was claimed by its addressee");
+        System.out.println("\t\t [24] - Claim payment on behalf of addresee");
+        System.out.println("\t\t [25] - Keep track of when each payment was claimed by its addressee");
         System.out.println();
     
         //instructions for distribution

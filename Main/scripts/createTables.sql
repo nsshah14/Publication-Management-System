@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS Payment(
     EID INT,
     Amount DECIMAL(9,2) NOT NULL,
     Date DATE NOT NULL,
+    DateClaimed Date, 
     PRIMARY KEY(EID, Date),
     FOREIGN KEY(EID) REFERENCES Editor(EID) 
     ON UPDATE CASCADE
