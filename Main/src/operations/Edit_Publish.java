@@ -133,29 +133,31 @@ public class Edit_Publish {
          return true;
       }
 
-    public static boolean editorviewPublication(Connection conn, Scanner inputReader){
+      public static boolean editorviewPublication(Connection conn, Scanner inputReader){
          String query = "SELECT wp.EID, p.* FROM Publication p JOIN writesPublication wp on p.PublicationID=wp.PublicationID;";
-        try (Statement stmt = conn.createStatement()) {
-      ResultSet rs = stmt.executeQuery(query);
-      while (rs.next()) {
-        int EID=rs.getInt("EID");
-        int PublicationID=rs.getInt("PublicationID");
-        String Title=rs.getString("Title");
-        Date Date=rs.getDate("Date");
-        String Topics=rs.getString("Topics");
-        String Periodicity=rs.getString("Periodicity");
+         try (Statement stmt = conn.createStatement()) {
+            ResultSet rs = stmt.executeQuery(query);
+            if(!rs.isBeforeFirst()){
+               System.out.println("No rows selected!!");
+               return true;
+            }
+            while (rs.next()) {
+               int EID=rs.getInt("EID");
+               int PublicationID=rs.getInt("PublicationID");
+               String Title=rs.getString("Title");
+               Date Date=rs.getDate("Date");
+               String Topics=rs.getString("Topics");
+               String Periodicity=rs.getString("Periodicity");
 
-        System.out.println(EID + ", " + PublicationID + ", " + Title +
-                           ", " + Date + ", " + Topics+", "+Periodicity);
-        }
-        }
-      catch(Exception e){
-         e.printStackTrace();
-         return false;
+               System.out.println(EID + ", " + PublicationID + ", " + Title +
+                                 ", " + Date + ", " + Topics+", "+Periodicity);
+            }
+         } catch(Exception e){
+            e.printStackTrace();
+            return false;
+         }
+         return true;
       }
-      return true;
-
-    }
 
    public static boolean updateEditor(Connection conn, Scanner inputreader){
 

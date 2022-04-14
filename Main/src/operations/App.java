@@ -31,12 +31,12 @@ public class App {
             //USER INPUT PROCESSING
             do {
                 //Calls prompt method which gives the list of commands user could use.
-                //System.out.println("Press Enter key to continue...");
-                //try {
-                //    System.in.read();
-                //}  
-                //catch(Exception e)
-                //{}  
+                System.out.println("Press Enter key to continue...");
+                try {
+                   System.in.read();
+                }  
+                catch(Exception e)
+                {}  
                 prompt();
                 System.out.print("Input Command: ");
                 userInput = inputReader.nextLine();  // Read user input
