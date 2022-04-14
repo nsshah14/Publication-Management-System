@@ -134,8 +134,12 @@ public class Edit_Publish {
       }
 
       public static boolean editorviewPublication(Connection conn, Scanner inputReader){
-         String query = "SELECT wp.EID, p.* FROM Publication p JOIN writesPublication wp on p.PublicationID=wp.PublicationID;";
-         try (Statement stmt = conn.createStatement()) {
+         System.out.println("Enter Editor ID:");
+         int eid=inputReader.nextInt();
+
+         String query = "SELECT wp.EID, p.* FROM Publication p, writesPublication wp where p.PublicationID=wp.PublicationID and wp.EID="+eid+";";
+         try {
+            Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             if(!rs.isBeforeFirst()){
                System.out.println("No rows selected!!");

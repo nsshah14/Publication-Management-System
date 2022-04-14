@@ -45,34 +45,34 @@ public class Production {
         int pubEID=inputReader.nextInt();
         ResultSet rs = null;
         String query = "INSERT INTO Publication (Title, Date,Topics,Periodicity,Price,EID) VALUES(?,?,?,?,?,?);";
+        String insWritesPublication="INSERT INTO writesPublication (PublicationID,EID) VALUES(?,?);";
         String matchEID = "SELECT * from Editor where EID = "+pubEID+";";
-        int flag = 0;
-        try{
-        ResultSet rs1=conn.createStatement().executeQuery(matchEID);
+        // int flag = 0;
         int EID = 0;
-        if(rs1.next()){
-            EID = rs1.getInt(1);
-        }
-        else{   
-            System.out.println("Enter the Editor First as it's not present");
-            flag=1;
-            // return false;
-        }
-        
+        try{
+            ResultSet rs1=conn.createStatement().executeQuery(matchEID);
+            if(rs1.next()){
+                EID = rs1.getInt(1);
+            }
+            else{   
+                System.out.println("Enter the Editor First as it's not present");
+                // flag=1;
+                return false;
+            }
         }
         catch(Exception e){
             System.out.println("Enter the Editor First as it's not present");
             return false;
          }
-        if(flag==1)
-        {
-            System.out.println("Enter 0 to return to Prompt");
-            int returnToPrompt = inputReader.nextInt();
-            if(returnToPrompt==0)
-            {
-                return false;
-            }
-        }
+        // if(flag==1)
+        // {
+        //     System.out.println("Enter 0 to return to Prompt");
+        //     int returnToPrompt = inputReader.nextInt();
+        //     if(returnToPrompt==0)
+        //     {
+        //         return false;
+        //     }
+        // }
         try{
             PreparedStatement stinsert=conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             rs = stinsert.getGeneratedKeys();
@@ -100,6 +100,11 @@ public class Production {
             ResultSet publicationID =  getValueofID.executeQuery();
             publicationID.first();
             int PubID=publicationID.getInt("PublicationID");
+
+            PreparedStatement iwp=conn.prepareStatement(insWritesPublication);
+            iwp.setInt(1, PubID);
+            iwp.setInt(2, EID);
+            iwp.executeQuery();
 
             if(userInput.equals("1"))
             {
