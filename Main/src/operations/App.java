@@ -13,12 +13,12 @@ public class App {
         
         //connect to the database
         Class.forName("org.mariadb.jdbc.Driver"); 
+        //create scanner to read user input
+        Scanner inputReader = new Scanner(System.in);    // Create a Scanner object
 
         Connection con=DriverManager.getConnection("jdbc:mariadb://classdb2.csc.ncsu.edu:3306/" + user,user,password); 
         try{ 
             //INITIALIZE PROJECT
-            //create scanner to read user input
-            Scanner inputReader = new Scanner(System.in);  // Create a Scanner object
             String userInput = "";
                     
             //drop, and re-create all tables
@@ -31,6 +31,12 @@ public class App {
             //USER INPUT PROCESSING
             do {
                 //Calls prompt method which gives the list of commands user could use.
+                System.out.println("Press Enter key to continue...");
+                try {
+                    System.in.read();
+                }  
+                catch(Exception e)
+                {}  
                 prompt();
                 System.out.print("Input Command: ");
                 userInput = inputReader.nextLine();  // Read user input
@@ -294,6 +300,7 @@ public class App {
         }catch(Exception e){ 
             System.out.println(e);
         }finally{
+            inputReader.close();
             con.close();
         }
     }

@@ -498,48 +498,52 @@ public class Production {
         ResultSet rs1;
         ResultSet rs2;
         int pubID=0;
-        try{
-            String query = "SELECT PublicationID from Publication where Topics like '"+inputTopic+"%';";
-            rs=conn.createStatement().executeQuery(query);
-            rs.next();
-            pubID = rs.getInt(1);
-        } catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }
+        // try{
+        //     String query = "SELECT PublicationID from Publication where Topics like '"+inputTopic+"%';";
+        //     rs=conn.createStatement().executeQuery(query);
+        //     rs.next();
+        //     pubID = rs.getInt(1);
+        // } catch(Exception e){
+        //     e.printStackTrace();
+        //     return false;
+        // }
 
-        try{
-            String queryFromBooks = "SELECT PublicationID from Books where PublicationID ="+pubID+";";
-             rs1=conn.createStatement().executeQuery(queryFromBooks);
-        } catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }
+        // try{
+        //     String queryFromBooks = "SELECT PublicationID from Books where PublicationID ="+pubID+";";
+        //      rs1=conn.createStatement().executeQuery(queryFromBooks);
+        // } catch(Exception e){
+        //     e.printStackTrace();
+        //     return false;
+        // }
       
         try{
 
-        while(rs1.next())
-        {
-            String getBooksByTopic = "SELECT * from Books b,Publication p where p.PublicationID = b.PublicationID and p.Topics like '"+inputTopic+"%';";
+        // while(rs1.next())
+        // {
+            String getBooksByTopic = "SELECT * from Books b,Publication p where p.PublicationID = b.PublicationID and p.Topics like '%"+inputTopic+"%';";
             rs2=conn.createStatement().executeQuery(getBooksByTopic);
+            if(!rs2.isBeforeFirst()){
+                System.out.println("No Books found for the specified Topic!");
+                return true;
+            }
             while(rs2.next()){
-            System.out.println();
-            System.out.println("-------Result for Book Searched by Topic-------");
-            System.out.println("Title of Book: "+rs2.getString("Title"));
-            System.out.println("Date of Publication of Book: "+rs2.getString("Date"));
-            System.out.println("Topic of Book: "+rs2.getString("Topics"));
-            System.out.println("Periodicity of Book: "+rs2.getString("Periodicity"));
-            System.out.println("Price of Book: "+rs2.getString("Price"));
-            System.out.println("Edition of Book: "+rs2.getString("Edition"));
-            System.out.println("ISBN of Book: "+rs2.getString("ISBN"));
+                System.out.println();
+                System.out.println("-------Result for Book Searched by Topic-------");
+                System.out.println("Title of Book: "+rs2.getString("Title"));
+                System.out.println("Date of Publication of Book: "+rs2.getString("Date"));
+                System.out.println("Topic of Book: "+rs2.getString("Topics"));
+                System.out.println("Periodicity of Book: "+rs2.getString("Periodicity"));
+                System.out.println("Price of Book: "+rs2.getString("Price"));
+                System.out.println("Edition of Book: "+rs2.getString("Edition"));
+                System.out.println("ISBN of Book: "+rs2.getString("ISBN"));
             }
     
+        // }
         }
+        catch(Exception e){
+            e.printStackTrace();
+            return false;
         }
-    catch(Exception e){
-        e.printStackTrace();
-        return false;
-    }
         return true;
      }
 
@@ -550,47 +554,55 @@ public class Production {
         ResultSet rs1;
         ResultSet rs2;
         int pubID=0;
-        try{
-            String query = "SELECT PublicationID from Publication where Date like '"+inputDate+"%';";
-            rs=conn.createStatement().executeQuery(query);
-            rs.next();
-            pubID = rs.getInt(1);
-        } catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }
+        // try{
+        //     String query = "SELECT PublicationID from Publication where Date = '"+inputDate+"%';";
+        //     rs=conn.createStatement().executeQuery(query);
+        //     if(rs.next())
+        //         pubID = rs.getInt(1);
+        //     else{
+        //         System.out.println("No Books Found!!");
+        //         return true;
+        //     }
+        // } catch(Exception e){
+        //     e.printStackTrace();
+        //     return false;
+        // }
 
-        try{
-            String queryFromBooks = "SELECT PublicationID from Books where PublicationID ="+pubID+";";
-             rs1=conn.createStatement().executeQuery(queryFromBooks);
-        } catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }
+        // try{
+        //     String queryFromBooks = "SELECT PublicationID from Books where PublicationID ="+pubID+";";
+        //      rs1=conn.createStatement().executeQuery(queryFromBooks);
+        // } catch(Exception e){
+        //     e.printStackTrace();
+        //     return false;
+        // }
       
         try{
 
-        while(rs1.next())
-        {
-            String getBooksByDate = "SELECT * from Books b,Publication p where p.PublicationID = b.PublicationID and p.Date = '"+inputDate+"';";
-            rs2=conn.createStatement().executeQuery(getBooksByDate);
-            while(rs2.next()){
-            System.out.println();
-            System.out.println("-------Result for Book Searched by Date-------");
-            System.out.println("Title of Book: "+rs2.getString("Title"));
-            System.out.println("Date of Publication of Book: "+rs2.getString("Date"));
-            System.out.println("Topic of Book: "+rs2.getString("Topics"));
-            System.out.println("Periodicity of Book: "+rs2.getString("Periodicity"));
-            System.out.println("Price of Book: "+rs2.getString("Price"));
-            System.out.println("Edition of Book: "+rs2.getString("Edition"));
-            System.out.println("ISBN of Book: "+rs2.getString("ISBN"));
-            }
+            // while(rs1.next())
+            // {
+                String getBooksByDate = "SELECT * from Books b,Publication p where p.PublicationID = b.PublicationID and p.Date = '"+inputDate+"';";
+                rs2=conn.createStatement().executeQuery(getBooksByDate);
+                if(!rs2.isBeforeFirst()){
+                    System.out.println("No books found for this date!");
+                    return true;
+                }
+                while(rs2.next()){
+                    System.out.println();
+                    System.out.println("-------Result for Book Searched by Date-------");
+                    System.out.println("Title of Book: "+rs2.getString("Title"));
+                    System.out.println("Date of Publication of Book: "+rs2.getString("Date"));
+                    System.out.println("Topic of Book: "+rs2.getString("Topics"));
+                    System.out.println("Periodicity of Book: "+rs2.getString("Periodicity"));
+                    System.out.println("Price of Book: "+rs2.getString("Price"));
+                    System.out.println("Edition of Book: "+rs2.getString("Edition"));
+                    System.out.println("ISBN of Book: "+rs2.getString("ISBN"));
+                }
+            // }
         }
+        catch(Exception e){
+            e.printStackTrace();
+            return false;
         }
-    catch(Exception e){
-        e.printStackTrace();
-        return false;
-    }
         return true;
      }
 
@@ -603,57 +615,61 @@ public class Production {
         ResultSet rs3;
         int pubID=0;
         int editorID =0;
-        try{            
-            String findidbyauthor = "SELECT EID from Editor where Name like '"+inputName+"%';";
-            rs3=conn.createStatement().executeQuery(findidbyauthor);
-            rs3.next();
-            editorID = rs3.getInt(1);
+        // try{            
+        //     String findidbyauthor = "SELECT EID from Editor where Name like '"+inputName+"%';";
+        //     rs3=conn.createStatement().executeQuery(findidbyauthor);
+        //     rs3.next();
+        //     editorID = rs3.getInt(1);
+        // }
+        // catch(Exception e){
+        //     e.printStackTrace();
+        //     return false;
+        // }
+        // try{
+        //     String query = "SELECT PublicationID from Publication where EID ="+editorID+";";
+        //     rs=conn.createStatement().executeQuery(query);
+        //     rs.next();
+        //     pubID = rs.getInt(1);
+        // } catch(Exception e){
+        //     e.printStackTrace();
+        //     return false;
+        // }
+
+        // try{
+        //     String queryFromBooks = "SELECT PublicationID from Books where PublicationID ="+pubID+";";
+        //      rs1=conn.createStatement().executeQuery(queryFromBooks);
+        // } catch(Exception e){
+        //     e.printStackTrace();
+        //     return false;
+        // }
+      
+        try{
+
+        // while(rs1.next())
+        // {
+            String getBooksByAuthorName = "SELECT * from Books b,Publication p,Editor e where p.PublicationID = b.PublicationID and p.EID = e.EID and e.Name like '"+inputName+"%';";
+            rs2=conn.createStatement().executeQuery(getBooksByAuthorName);
+            if(!rs2.isBeforeFirst()){
+                System.out.println("No Books found for the specified Author!");
+                return true;
+            }
+            while(rs2.next()){
+                System.out.println();
+                System.out.println("-------Result for Book Searched by Author Name-------");
+                System.out.println("Title of Book: "+rs2.getString("Title"));
+                System.out.println("Date of Publication of Book: "+rs2.getString("Date"));
+                System.out.println("Topic of Book: "+rs2.getString("Topics"));
+                System.out.println("Periodicity of Book: "+rs2.getString("Periodicity"));
+                System.out.println("Price of Book: "+rs2.getString("Price"));
+                System.out.println("Edition of Book: "+rs2.getString("Edition"));
+                System.out.println("ISBN of Book: "+rs2.getString("ISBN"));
+            }
+        // }
         }
         catch(Exception e){
             e.printStackTrace();
             return false;
         }
-        try{
-            String query = "SELECT PublicationID from Publication where EID ="+editorID+";";
-            rs=conn.createStatement().executeQuery(query);
-            rs.next();
-            pubID = rs.getInt(1);
-        } catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }
-
-        try{
-            String queryFromBooks = "SELECT PublicationID from Books where PublicationID ="+pubID+";";
-             rs1=conn.createStatement().executeQuery(queryFromBooks);
-        } catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }
-      
-        try{
-
-        while(rs1.next())
-        {
-            String getBooksByAuthorName = "SELECT * from Books b,Publication p,Editor e where p.PublicationID = b.PublicationID and p.EID = e.EID and e.Name like '"+inputName+"%';";
-            rs2=conn.createStatement().executeQuery(getBooksByAuthorName);
-            while(rs2.next()){
-            System.out.println();
-            System.out.println("-------Result for Book Searched by Author Name-------");
-            System.out.println("Title of Book: "+rs2.getString("Title"));
-            System.out.println("Date of Publication of Book: "+rs2.getString("Date"));
-            System.out.println("Topic of Book: "+rs2.getString("Topics"));
-            System.out.println("Periodicity of Book: "+rs2.getString("Periodicity"));
-            System.out.println("Price of Book: "+rs2.getString("Price"));
-            System.out.println("Edition of Book: "+rs2.getString("Edition"));
-            System.out.println("ISBN of Book: "+rs2.getString("ISBN"));
-            }
-        }
-        }
-    catch(Exception e){
-        e.printStackTrace();
-        return false;
-    }
         return true;
      }
 
@@ -664,47 +680,51 @@ public class Production {
         ResultSet rs1;
         ResultSet rs2;
         int pubID=0;
-        try{
-            String query = "SELECT PublicationID from Publication where Topics like '"+inputTopic+"%';";
-            rs=conn.createStatement().executeQuery(query);
-            rs.next();
-            pubID = rs.getInt(1);
-        } catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }
+        // try{
+        //     String query = "SELECT PublicationID from Publication where Topics like '"+inputTopic+"%';";
+        //     rs=conn.createStatement().executeQuery(query);
+        //     rs.next();
+        //     pubID = rs.getInt(1);
+        // } catch(Exception e){
+        //     e.printStackTrace();
+        //     return false;
+        // }
 
-        try{
-            String queryFromArticles = "SELECT PublicationID from Articles where PublicationID ="+pubID+";";
-             rs1=conn.createStatement().executeQuery(queryFromArticles);
-        } catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }
+        // try{
+        //     String queryFromArticles = "SELECT PublicationID from Articles where PublicationID ="+pubID+";";
+        //      rs1=conn.createStatement().executeQuery(queryFromArticles);
+        // } catch(Exception e){
+        //     e.printStackTrace();
+        //     return false;
+        // }
       
         try{
 
-        while(rs1.next())
-        {
-            String getArticlesByTopic = "SELECT * from Articles a,Publication p where p.PublicationID = a.PublicationID and p.Topics like '"+inputTopic+"%';";
+        // while(rs1.next())
+        // {
+            String getArticlesByTopic = "SELECT * from Articles a,Publication p where p.PublicationID = a.PublicationID and p.Topics like '%"+inputTopic+"%';";
             rs2=conn.createStatement().executeQuery(getArticlesByTopic);
-            while(rs2.next()){
-            System.out.println();
-            System.out.println("-------Result for Articles Searched by Topic-------");
-            System.out.println("Title of Article: "+rs2.getString("Title"));
-            System.out.println("Date of Publication of Article: "+rs2.getString("Date"));
-            System.out.println("Topic of Article: "+rs2.getString("Topics"));
-            System.out.println("Periodicity of Article: "+rs2.getString("Periodicity"));
-            System.out.println("Price of Article: "+rs2.getString("Price"));
-            System.out.println("Description of Article: "+rs2.getString("Description"));
-            System.out.println("Text of Article: "+rs2.getString("Text"));
+            if(!rs2.isBeforeFirst()){
+                System.out.println("No Articles found for the specified topics:");
+                return true;
             }
+            while(rs2.next()){
+                System.out.println();
+                System.out.println("-------Result for Articles Searched by Topic-------");
+                System.out.println("Title of Article: "+rs2.getString("Title"));
+                System.out.println("Date of Publication of Article: "+rs2.getString("Date"));
+                System.out.println("Topic of Article: "+rs2.getString("Topics"));
+                System.out.println("Periodicity of Article: "+rs2.getString("Periodicity"));
+                System.out.println("Price of Article: "+rs2.getString("Price"));
+                System.out.println("Description of Article: "+rs2.getString("Description"));
+                System.out.println("Text of Article: "+rs2.getString("Text"));
+            }
+        // }
         }
+        catch(Exception e){
+            e.printStackTrace();
+            return false;
         }
-    catch(Exception e){
-        e.printStackTrace();
-        return false;
-    }
         return true;
      }
 
@@ -715,47 +735,51 @@ public class Production {
         ResultSet rs1;
         ResultSet rs2;
         int pubID=0;
-        try{
-            String query = "SELECT PublicationID from Publication where Date like '"+inputDate+"%';";
-            rs=conn.createStatement().executeQuery(query);
-            rs.next();
-            pubID = rs.getInt(1);
-        } catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }
+        // try{
+        //     String query = "SELECT PublicationID from Publication where Date like '"+inputDate+"%';";
+        //     rs=conn.createStatement().executeQuery(query);
+        //     rs.next();
+        //     pubID = rs.getInt(1);
+        // } catch(Exception e){
+        //     e.printStackTrace();
+        //     return false;
+        // }
 
-        try{
-            String queryFromArticles = "SELECT PublicationID from Articles where PublicationID ="+pubID+";";
-             rs1=conn.createStatement().executeQuery(queryFromArticles);
-        } catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }
+        // try{
+        //     String queryFromArticles = "SELECT PublicationID from Articles where PublicationID ="+pubID+";";
+        //      rs1=conn.createStatement().executeQuery(queryFromArticles);
+        // } catch(Exception e){
+        //     e.printStackTrace();
+        //     return false;
+        // }
       
         try{
 
-        while(rs1.next())
-        {
+        // while(rs1.next())
+        // {
             String getArticlesByDate = "SELECT * from Articles a,Publication p where p.PublicationID = a.PublicationID and p.Date = '"+inputDate+"';";
             rs2=conn.createStatement().executeQuery(getArticlesByDate);
-            while(rs2.next()){
-            System.out.println();
-            System.out.println("-------Result for Article Searched by Date-------");
-            System.out.println("Title of Article: "+rs2.getString("Title"));
-            System.out.println("Date of Publication of Article: "+rs2.getString("Date"));
-            System.out.println("Topic of Article: "+rs2.getString("Topics"));
-            System.out.println("Periodicity of Article: "+rs2.getString("Periodicity"));
-            System.out.println("Price of Article: "+rs2.getString("Price"));
-            System.out.println("Description of Article: "+rs2.getString("Description"));
-            System.out.println("Text of Article: "+rs2.getString("Text"));
+            if(!rs2.isBeforeFirst()){
+                System.out.println("No Article found for the specified Date!");
+                return true;
             }
+            while(rs2.next()){
+                System.out.println();
+                System.out.println("-------Result for Article Searched by Date-------");
+                System.out.println("Title of Article: "+rs2.getString("Title"));
+                System.out.println("Date of Publication of Article: "+rs2.getString("Date"));
+                System.out.println("Topic of Article: "+rs2.getString("Topics"));
+                System.out.println("Periodicity of Article: "+rs2.getString("Periodicity"));
+                System.out.println("Price of Article: "+rs2.getString("Price"));
+                System.out.println("Description of Article: "+rs2.getString("Description"));
+                System.out.println("Text of Article: "+rs2.getString("Text"));
+            }
+        // }
         }
+        catch(Exception e){
+            e.printStackTrace();
+            return false;
         }
-    catch(Exception e){
-        e.printStackTrace();
-        return false;
-    }
         return true;
      }
 
@@ -768,52 +792,56 @@ public class Production {
         ResultSet rs3;
         int pubID=0;
         int editorID =0;
-        try{            
-            String findidbyauthor = "SELECT EID from Editor where Name like '"+inputName+"%';";
-            rs3=conn.createStatement().executeQuery(findidbyauthor);
-            rs3.next();
-            editorID = rs3.getInt(1);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }
-        try{
-            String query = "SELECT PublicationID from Publication where EID ="+editorID+";";
-            rs=conn.createStatement().executeQuery(query);
-            rs.next();
-            pubID = rs.getInt(1);
-        } catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }
+        // try{            
+        //     String findidbyauthor = "SELECT EID from Editor where Name like '"+inputName+"%';";
+        //     rs3=conn.createStatement().executeQuery(findidbyauthor);
+        //     rs3.next();
+        //     editorID = rs3.getInt(1);
+        // }
+        // catch(Exception e){
+        //     e.printStackTrace();
+        //     return false;
+        // }
+        // try{
+        //     String query = "SELECT PublicationID from Publication where EID ="+editorID+";";
+        //     rs=conn.createStatement().executeQuery(query);
+        //     rs.next();
+        //     pubID = rs.getInt(1);
+        // } catch(Exception e){
+        //     e.printStackTrace();
+        //     return false;
+        // }
 
-        try{
-            String queryFromArticles = "SELECT PublicationID from Articles where PublicationID ="+pubID+";";
-             rs1=conn.createStatement().executeQuery(queryFromArticles);
-        } catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }
+        // try{
+        //     String queryFromArticles = "SELECT PublicationID from Articles where PublicationID ="+pubID+";";
+        //      rs1=conn.createStatement().executeQuery(queryFromArticles);
+        // } catch(Exception e){
+        //     e.printStackTrace();
+        //     return false;
+        // }
       
         try{
 
-        while(rs1.next())
-        {
+        // while(rs1.next())
+        // {
             String getArticlesByAuthorName = "SELECT * from Articles a,Publication p,Editor e where p.PublicationID = a.PublicationID and p.EID = e.EID and e.Name like '"+inputName+"%';";
             rs2=conn.createStatement().executeQuery(getArticlesByAuthorName);
-            while(rs2.next()){
-            System.out.println();
-            System.out.println("-------Result for Article Searched by Author Name-------");
-            System.out.println("Title of Article: "+rs2.getString("Title"));
-            System.out.println("Date of Publication of Article: "+rs2.getString("Date"));
-            System.out.println("Topic of Article: "+rs2.getString("Topics"));
-            System.out.println("Periodicity of Article: "+rs2.getString("Periodicity"));
-            System.out.println("Price of Article: "+rs2.getString("Price"));
-            System.out.println("Description of Article: "+rs2.getString("Description"));
-            System.out.println("Text of Article: "+rs2.getString("Text"));
+            if(!rs2.isBeforeFirst()){
+                System.out.println("No Article found for the given Author name!");
+                return true;
             }
-        }
+            while(rs2.next()){
+                System.out.println();
+                System.out.println("-------Result for Article Searched by Author Name-------");
+                System.out.println("Title of Article: "+rs2.getString("Title"));
+                System.out.println("Date of Publication of Article: "+rs2.getString("Date"));
+                System.out.println("Topic of Article: "+rs2.getString("Topics"));
+                System.out.println("Periodicity of Article: "+rs2.getString("Periodicity"));
+                System.out.println("Price of Article: "+rs2.getString("Price"));
+                System.out.println("Description of Article: "+rs2.getString("Description"));
+                System.out.println("Text of Article: "+rs2.getString("Text"));
+            }
+        // }
         }
     catch(Exception e){
         e.printStackTrace();
