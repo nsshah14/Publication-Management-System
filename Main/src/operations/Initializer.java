@@ -14,7 +14,7 @@ public class Initializer {
         StringBuffer sb = new StringBuffer();
         try
         {
-            FileReader fr = new FileReader(new File("scripts/dropTables.sql"));
+            FileReader fr = new FileReader(new File("scripts/pg_dropTables.sql"));
             // be sure to not have line starting with "--" or "/*" or any other non aplhabetical character
  
             BufferedReader br = new BufferedReader(fr);
@@ -56,7 +56,7 @@ public class Initializer {
         try
         {
         	//TODO: Replace with demoData.sql
-            FileReader fr = new FileReader(new File("scripts/demoData.sql"));
+            FileReader fr = new FileReader(new File("scripts/pg_demoData.sql"));
             // be sure to not have line starting with "--" or "/*" or any other non aplhabetical character
  
             BufferedReader br = new BufferedReader(fr);
@@ -100,7 +100,7 @@ public class Initializer {
         StringBuffer sb = new StringBuffer();
         try
         {
-            FileReader fr = new FileReader(new File("scripts/createTables.sql"));
+            FileReader fr = new FileReader(new File("scripts/pg_createTables.sql"));
             // be sure to not have line starting with "--" or "/*" or any other non aplhabetical character
  
             BufferedReader br = new BufferedReader(fr);

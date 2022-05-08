@@ -3,11 +3,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Savepoint;
 import java.util.Scanner;
+import java.net.URI;
 
 public class App {
     //database parameters Replace with your parameters
-    static String user = "psengo";
-    static String password = "csc540";
 
     public static void main(String[] args) throws Exception {
         
@@ -23,6 +22,8 @@ public class App {
         String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
 
         Connection con=DriverManager.getConnection(dbUrl,username,password); 
+
+
 
 
         //connect to the database
