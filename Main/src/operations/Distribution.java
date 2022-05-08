@@ -249,4 +249,26 @@ public class Distribution {
         }
         return true;
     }
+    public static boolean getDist(Connection conn, Scanner inputreader){
+        try{
+            System.out.println("Enter Distributor ID:");
+            int did=inputreader.nextInt();
+            String query = "Select * from Distributor where distributorID="+did+";";
+            ResultSet rs=conn.createStatement().executeQuery(query);
+            System.out.println("--------------DISTRIBUTORS--------------");
+            while(rs.next()){
+                System.out.println("Distributor ID:"+rs.getInt(1));
+                System.out.println("Distributor Name:"+rs.getString(2));
+                System.out.println("Distributor Type:"+rs.getString(3));
+                System.out.println("Distributor Address:"+rs.getString(3));
+                System.out.println("Distributor Phone:"+rs.getString(4));
+                System.out.println("Distributor ContactPerson:"+rs.getString(5));
+                System.out.println("Distributor Balance:"+rs.getFloat(6));
+            }            
+        } catch(Exception e){
+            System.out.println("Error occured");
+            return false;
+        }
+        return true;
+    }
 }

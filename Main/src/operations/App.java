@@ -1,6 +1,8 @@
 package operations;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.Savepoint;
 import java.util.Scanner;
 import java.net.URI;
@@ -307,6 +309,24 @@ public class App {
 			                        con.rollback(payPerWork);
 			                    break;
                     
+                                case "41":  Savepoint beforeGetDist = con.setSavepoint("beforeGetDist");
+                                if(Distribution.getDist(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(beforeGetDist);
+                                break;
+                    
+                    case "42":  Savepoint beforeGetOrder = con.setSavepoint("beforeGetOrder");
+                                if(Production.getOrders(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(beforeGetOrder);
+                                break;
+                    case "43":  Savepoint beforeCustomQuery = con.setSavepoint("beforeCustomQuery");
+                                if(customQuery(con,inputReader))
+                                    con.commit();
+                                else
+                                    con.rollback(beforeCustomQuery);
                     
                     default:  System.out.println("Invalid Input");
                                 break;
@@ -320,16 +340,45 @@ public class App {
             //close sql connection and scanner object
             con.close();
             inputReader.close();
-            System.out.println("DONE");
                
         }catch(Exception e){ 
             System.out.println(e);
         }finally{
             inputReader.close();
             con.close();
+            System.out.println("DONE");
         }
     }
 
+    static boolean customQuery(Connection con,Scanner inputreader){
+        try{
+            System.out.println("Enter a custom query:");
+            String s=inputreader.nextLine();
+            if(s.split(" ")[0].toLowerCase()!="update"){
+                ResultSet rs=con.createStatement().executeQuery(s);
+                ResultSetMetaData rsmd = rs.getMetaData();
+                System.out.println("querying "+s);
+                int columnsNumber = rsmd.getColumnCount();
+                while (rs.next()) {
+                    for (int i = 1; i <= columnsNumber; i++) {
+                        if (i > 1) System.out.print(",  ");
+                        String columnValue = rs.getString(i);
+                        System.out.print(columnValue + " " + rsmd.getColumnName(i));
+                    }
+                    System.out.println("");
+                }
+            } else{
+                con.createStatement().executeUpdate(s);
+                System.out.println("update successful!");
+            }
+            
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    
     public static void prompt(){
         System.out.println();
         System.out.println("DBMS Group 22 Project");

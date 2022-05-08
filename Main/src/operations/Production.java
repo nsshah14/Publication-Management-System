@@ -931,4 +931,25 @@ public class Production {
         }
         return true; 
     }
+    public static boolean getOrders(Connection conn,Scanner inputreader){
+        try{
+            System.out.println("Enter Order ID:");
+            int oid=inputreader.nextInt();
+            String query = "Select * from Orders where OrderID="+oid+";";
+            ResultSet rs=conn.createStatement().executeQuery(query);
+            System.out.println("--------------ORDERS--------------");
+            while(rs.next()){
+                System.out.println("Order ID:"+rs.getInt(1));
+                System.out.println("Price:"+rs.getFloat(2));
+                System.out.println("Shipping Cost:"+rs.getFloat(3));
+                System.out.println("Number of Copies:"+rs.getInt(4));
+                System.out.println("Publication ID:"+rs.getInt(5));
+                System.out.println("Order Date:"+rs.getString(6));
+            }            
+        } catch(Exception e){
+            System.out.println("Error occured");
+            return false;
+        }
+        return true;
+    }
 }
