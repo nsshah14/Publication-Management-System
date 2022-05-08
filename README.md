@@ -1,4 +1,4 @@
-# csc540_project README
+# CSC540 Project 
 
 ## Thing to remember when adding to database: 
 * When you add an order add a transaction detail for given order.
