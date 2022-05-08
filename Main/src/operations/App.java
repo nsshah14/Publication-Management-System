@@ -440,6 +440,14 @@ public class App {
         System.out.println("\t\t [39] - Calculate total payments to the editors and authors, per time period ");
         System.out.println("\t\t [40] - Calculate total payments to the editors and authors, per work type (book authorship, article authorship, or editorial work)");
         System.out.println();
+
+        System.out.println("\t Read Tables");
+        System.out.println("\t\t [41] - Select all Distributors");
+        System.out.println("\t\t [42] - Select all Orders");
+
+        System.out.println("\t Custom Query");
+        System.out.println("\t\t [41] - Type any cutom query");
+
         
 
     }
