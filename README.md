@@ -1,5 +1,9 @@
 # CSC540 Project 
 
+## Major Change
+
+The project was initially developed for MariaDB Database but later changed to PostgreSQL.
+
 ## Thing to remember when adding to database: 
 * When you add an order add a transaction detail for given order.
 * on order being submitted increment pastOrders value for order number
