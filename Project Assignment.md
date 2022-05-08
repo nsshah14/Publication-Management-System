@@ -21,13 +21,14 @@ The project is recommended to be a team effort, each team consisting ideally of 
 
 The team will have the following functional roles. Every member will have to do some database design and application programming, so the roles can be rotated among the members. Each team member will write the same number of application programs. The prime and backup application programmers will do this first. 
 
-Software Engineer (prime and backup) 
+**Software Engineer (prime and backup)**
 Responsible for designing the software architecture, including transaction logic. 
-Database Designer / Administrator (prime and backup) 
+**Database Designer / Administrator (prime and backup)**
 Responsible for designing E/R diagrams and relational schemas, based on the informal specifications given in the narrative. Also responsible for database-schema maintenance and analysis of query execution. Develops advanced transactions in collaboration with the software engineer. 
-Application Programmer (prime and backup) 
+**Application Programmer (prime and backup)**
 Responsible for designing and implementing the actual applications (operations) that use the designed database. 
-Test Plan Engineer (prime and backup) 
+**Test Plan Engineer (prime and backup)**
 Ensures code quality by designing and implementing test plans for the applications in the project. Also responsible for documentation. 
-Grading
+
+## Grading
 The programming project will be implemented in a system and described in reports. The reports will include E/R diagrams, relational schemas and their justifications, physical design and its justification, description of the queries and transactions (embedded SQL and program logic). The grading for the project will be totaled over four modules as follows. Some of these categories correspond to specific items in project reports (as listed). The others are spread over several items. 
