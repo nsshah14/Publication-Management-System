@@ -11,12 +11,26 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         
-        //connect to the database
-        Class.forName("org.mariadb.jdbc.Driver"); 
         //create scanner to read user input
         Scanner inputReader = new Scanner(System.in);    // Create a Scanner object
+        //connect to the database
+        Class.forName("org.postgresql.Driver"); 
 
-        Connection con=DriverManager.getConnection("jdbc:mariadb://classdb2.csc.ncsu.edu:3306/" + user,user,password); 
+        URI dbUri = new URI("postgres://phmnluhuxdxgct:82123ee3ed6a7872756201639369f4bcf02d78d10f22df76d7f258080767cb58@ec2-52-4-104-184.compute-1.amazonaws.com:5432/d6ro0qi2eetufd");
+
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
+
+        Connection con=DriverManager.getConnection(dbUrl,username,password); 
+
+
+        //connect to the database
+        // Class.forName("org.mariadb.jdbc.Driver"); 
+        // //create scanner to read user input
+        // Scanner inputReader = new Scanner(System.in);    // Create a Scanner object
+
+        // Connection con=DriverManager.getConnection("jdbc:mariadb://classdb2.csc.ncsu.edu:3306/" + user,user,password); 
         try{ 
             //INITIALIZE PROJECT
             String userInput = "";
