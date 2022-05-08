@@ -38,7 +38,7 @@ Else:
     ```
 3. In order to execute the java files use the following command:
     ```
-    java -classpath src/:lib/mariadb-java-client-3.0.4.jar operations.App
+    java -classpath src/:lib/postgresql-42.3.5.jar operations.App
     ```
 
 ## Development Help
