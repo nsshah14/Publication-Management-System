@@ -193,11 +193,12 @@ public class Production {
             else{
                 System.out.println("Wrong Input Given");
             }
-
+            inputRead.close();
         } catch(Exception e){
            e.printStackTrace();
            return false;
         }
+
         return true;
     }
     
